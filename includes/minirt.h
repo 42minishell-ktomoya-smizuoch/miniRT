@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/04/26 14:52:39 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:07:34 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 # include "mlx.h"
 # include "../lib/libft/libft.h"
+# include "../lib/libft/get_next_line/get_next_line.h"
+# include "../lib/libft/get_next_line/get_next_line_bonus.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 1024
@@ -31,5 +33,13 @@ typedef struct s_vector
 	double	y;
 	double	z;
 }	t_vector;
+
+typedef struct s_camera
+{
+	t_vector	origin;
+	t_vector	direction;
+	double		fov;
+}	t_camera;
+
 
 #endif
