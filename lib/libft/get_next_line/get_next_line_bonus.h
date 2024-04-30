@@ -1,45 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/04/27 14:07:34 by smizuoch         ###   ########.fr       */
+/*   Created: 2023/05/31 11:16:11 by smizuoch          #+#    #+#             */
+/*   Updated: 2023/06/17 12:01:37 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdio.h>
+# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <math.h>
+# include <limits.h>
 
-# include "mlx.h"
-# include "../lib/libft/libft.h"
-# include "../lib/libft/get_next_line/get_next_line.h"
-# include "../lib/libft/get_next_line/get_next_line_bonus.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 1024
+char	*get_next_line(int fd);
 
-//構造体
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vector;
-
-typedef struct s_camera
-{
-	t_vector	origin;
-	t_vector	direction;
-	double		fov;
-}	t_camera;
-
+size_t	ft_strlens(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *s, int c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *s1);
 
 #endif
