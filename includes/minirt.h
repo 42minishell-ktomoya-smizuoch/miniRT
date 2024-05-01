@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 14:28:09 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:53:37 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+
+# define KEY_ESC 53
+# define ON_DESTROY 17
 
 #define ERR_OPEN_FILE "Error: failed to open the file"
 #define ERR_READ_FILE "Error: failed to read the file"
