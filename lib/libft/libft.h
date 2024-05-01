@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/04/30 12:46:56 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:07:16 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_sscanf
+{
+	int		count;
+	int		*ip;
+	double	*dp;
+	char	*s;
+	char	*c;
+}	t_sscanf;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -73,5 +82,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 int		ft_sscanf(const char *str, const char *format, ...);
+double	read_double(const char **str, int s);
+double	ft_atof(const char *str);
 
 #endif

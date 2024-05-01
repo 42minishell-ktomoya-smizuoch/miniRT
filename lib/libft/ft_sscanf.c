@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:32:44 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/04/30 13:34:30 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:03:06 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,31 @@ static void	read_char(const char **str, char *c, int s)
 
 int	parse_format(const char **str, const char **p, va_list args)
 {
-	int		count;
-	int		*ip;
-	char	*s;
-	char	*c;
+	t_sscanf	ss;
 
-	count = 0;
+	ss.count = 0;
 	(*p)++;
 	if (**p == 'd')
 	{
-		ip = va_arg(args, int *);
-		*ip = read_int(str, count++);
+		ss.ip = va_arg(args, int *);
+		*ss.ip = read_int(str, ss.count++);
 	}
 	else if (**p == 's')
 	{
-		s = va_arg(args, char *);
-		read_str(str, s, count++);
+		ss.s = va_arg(args, char *);
+		read_str(str, ss.s, ss.count++);
 	}
 	else if (**p == 'c')
 	{
-		c = va_arg(args, char *);
-		read_char(str, c, count++);
+		ss.c = va_arg(args, char *);
+		read_char(str, ss.c, ss.count++);
 	}
-	(*p)++;
-	return (count);
+	else if (**p == 'l' && *(*p + 1) == 'f' && (*p)++)
+	{
+		ss.dp = va_arg(args, double *);
+		*ss.dp = read_double(str, ss.count++);
+	}
+	return ((*p)++, ss.count);
 }
 
 int	ft_sscanf(const char *str, const char *format, ...)
