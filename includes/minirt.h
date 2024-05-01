@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 13:51:18 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:25:32 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <math.h>
 
-# include "mlx.h"
+# include "../lib/minilibx_opengl/mlx.h"
 # include "../lib/libft/libft.h"
 # include "../lib/libft/get_next_line/get_next_line.h"
 # include "../lib/libft/get_next_line/get_next_line_bonus.h"
