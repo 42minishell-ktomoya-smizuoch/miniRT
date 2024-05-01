@@ -1,4 +1,4 @@
-NAME = playground
+NAME = playground.out
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -11,8 +11,9 @@ LIBFT_DIR = ../lib/libft
 MINILIBX_DIR = ../lib/minilibx_opengl
 
 # Source files
-SRC = write_pixel.c \
+SRC = main.c \
 #	mlx_init.c \
+#	write_pixel.c \
 
 # Objects directory
 OBJDIR = ./objs
