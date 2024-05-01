@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/04/30 15:07:16 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:16:00 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <limits.h>
+# include "./get_next_line/get_next_line.h"
+# include "./get_next_line/get_next_line_bonus.h"
 
 typedef struct s_list
 {
@@ -84,5 +86,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_sscanf(const char *str, const char *format, ...);
 double	read_double(const char **str, int s);
 double	ft_atof(const char *str);
+size_t	ft_strlens(const char *s);
 
 #endif
