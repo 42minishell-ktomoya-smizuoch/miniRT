@@ -11,9 +11,13 @@ LIBFT_DIR = ./lib/libft
 MINILIBX_DIR = ./lib/minilibx_opengl
 
 # Source files
-SRC = main.c \
+SRC = srcs/main.c \
       srcs/parser/parser.c \
-      srcs/ray/put_pixel.c
+      srcs/ray/put_pixel.c \
+	  srcs/init_data.c \
+	  srcs/wait_input.c \
+	  srcs/esc_close.c \
+	  srcs/exit_on_close.c \
 
 # Objects directory
 OBJDIR = ./objs

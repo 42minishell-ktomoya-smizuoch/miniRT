@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 11:25:32 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:53:37 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+
+# define KEY_ESC 53
+# define ON_DESTROY 17
 
 #define ERR_OPEN_FILE "Error: failed to open the file"
 #define ERR_READ_FILE "Error: failed to read the file"
@@ -48,5 +51,21 @@ typedef struct s_camera
 	double		fov;
 }	t_camera;
 
+typedef struct s_data
+{
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
+// 関数
+void	init_data(t_data *data);
+void	wait_input(t_data *data);
+int 	esc_close(int keycode, t_data *data);
+int		exit_on_close(t_data *data);
 
 #endif
