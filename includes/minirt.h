@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 08:53:20 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:51:18 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+
+#define ERR_OPEN_FILE "Error: failed to open the file"
+#define ERR_READ_FILE "Error: failed to read the file"
+#define ERR_PARSE_FILE "Error: failed to parse the file"
+#define ERR_MALLOC "Error: failed to allocate memory"
+#define ERR_ARG "Error: invalid argument"
+#define ERR_FILE_FORMAT "Error: invalid file format"
 
 //構造体
 typedef struct s_vector

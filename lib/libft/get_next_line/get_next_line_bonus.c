@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:14:41 by smizuoch          #+#    #+#             */
-/*   Updated: 2023/06/17 12:53:47 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:12:56 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static char	*save_save(char *save)
 	return (save);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
 	char		buf[BUFFER_SIZE + 1];
 	char		*line;

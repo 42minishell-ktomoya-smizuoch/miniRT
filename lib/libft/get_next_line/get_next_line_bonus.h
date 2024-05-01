@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:16:11 by smizuoch          #+#    #+#             */
-/*   Updated: 2023/06/17 12:01:37 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:17:24 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@
 # include <unistd.h>
 # include <limits.h>
 
+# include "../libft.h"
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
 
-char	*get_next_line(int fd);
+char	*get_next_line_bonus(int fd);
 
 size_t	ft_strlens(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
