@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 14:53:37 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/05 16:25:34 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ typedef struct s_vector
 	double	y;
 	double	z;
 }	t_vector;
+
+typedef struct s_color
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
 
 typedef struct s_camera
 {
