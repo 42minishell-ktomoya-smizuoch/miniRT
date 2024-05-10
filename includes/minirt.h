@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/10 15:08:39 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:18:10 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,8 @@ void	init_data(t_data *data);
 void	wait_input(t_data *data);
 int 	esc_close(int keycode, t_data *data);
 int		exit_on_close(t_data *data);
+
+//mlx
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif
