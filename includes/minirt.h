@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/05 16:25:34 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:08:39 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@
 #define ERR_FILE_FORMAT "Error: invalid file format"
 
 //構造体
-typedef struct s_vector
+typedef struct s_vec3
 {
 	double	x;
 	double	y;
 	double	z;
-}	t_vector;
+}	t_vec3;
 
 typedef struct s_color
 {
@@ -51,13 +51,17 @@ typedef struct s_color
 	double	b;
 }	t_color;
 
+typedef struct  s_ray {
+    t_vec3 origin;
+    t_vec3 direction;
+}               t_ray;
+
 typedef struct s_camera
 {
-	t_vector	origin;
-	t_vector	direction;
+	t_vec3		origin;
+	t_vec3		normal;
 	double		fov;
 }	t_camera;
-
 typedef struct s_data
 {
 	void	*mlx;

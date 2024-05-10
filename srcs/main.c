@@ -1,6 +1,14 @@
 #include "../includes/minirt.h"
 
-//オレンジを表示mlxで
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+
 int main(void)
 {
 	int		x;
@@ -10,40 +18,27 @@ int main(void)
 	x = 0;
 	y = 0;
 
-	// 使用例
-    const char *buf = "123 456 test A 3.1415926";
-	double d;
-    int n1, n2;
-    char str[10], ch;
-
-    if (ft_sscanf(buf, "%d %d %s %c %lf", &n1, &n2, str, &ch ,&d) == 5) {
-        printf("Read int: %d\n", n1);
-        printf("Read int: %d\n", n2);
-        printf("Read string: %s\n", str);
-        printf("Read char: %c\n", ch);
-		printf("Read double: %lf\n", d);
-    } else {
-        printf("Error in sscanf\n");
-    }
-	printf("=====================================\n");
-	sscanf(buf, "%d %d %s %c %lf", &n1, &n2, str, &ch ,&d);
-	printf("Read int: %d\n", n1);
-	printf("Read int: %d\n", n2);
-	printf("Read string: %s\n", str);
-	printf("Read char: %c\n", ch);
-	printf("Read double: %lf\n", d);
-
 	init_data(&data);
-	while (y < WINDOW_HEIGHT)
-	{
-		while (x < WINDOW_WIDTH)
-		{
-			mlx_pixel_put(data.mlx, data.win, x, y, 0x00FFA500);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
+	//画面をグラデーションで塗りつぶす
+    while (y < WINDOW_HEIGHT)
+    {
+        x = 0;
+        while (x < WINDOW_WIDTH)
+        {
+            float t = (float)x / WINDOW_WIDTH;
+            float u = (float)y / WINDOW_HEIGHT;
+
+            int red = (1 - t) * (1 - u) * 255 + t * (1 - u) * 0 + (1 - t) * u * 255 + t * u * 0;
+            int green = (1 - t) * (1 - u) * 0 + t * (1 - u) * 0 + (1 - t) * u * 255 + t * u * 255;
+            int blue = (1 - t) * (1 - u) * 0 + t * (1 - u) * 0 + (1 - t) * u * 0 + t * u * 255;
+
+            int color = (red << 16) | (green << 8) | blue; // Combine red, green, and blue values into color value
+            my_mlx_pixel_put(&data, x, y, color);
+            x++;
+        }
+        y++;
+    }
+	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	wait_input(&data);
 	return (0);
 }
