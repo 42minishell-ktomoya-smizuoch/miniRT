@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 14:16:00 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 08:31:43 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,8 @@ int		ft_sscanf(const char *str, const char *format, ...);
 double	read_double(const char **str, int s);
 double	ft_atof(const char *str);
 size_t	ft_strlens(const char *s);
+
+int		ft_rand(void);
+void	ft_srand(unsigned int seed);
 
 #endif
