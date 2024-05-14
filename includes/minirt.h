@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/14 15:19:27 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:19:53 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,38 @@ typedef struct s_camera
 	double		fov;
 }	t_camera;
 
+typedef struct s_hit_record
+{
+    t_vec3 point;
+    t_vec3 normal;
+    double t;
+    int front_face;
+    t_color color;
+}	t_hit_record;
+
+struct s_hittable;
+typedef int (*hit_fn)(struct s_hittable *, t_ray *, double, double, t_hit_record *);
+
+// ヒッタブル構造体
+typedef struct s_hittable
+{
+    void *data;
+    hit_fn hit;
+}	t_hittable;
+
+typedef struct s_hittable_list {
+    t_hittable *objects;
+    int size;
+    int capacity;
+} t_hittable_list;
+
 typedef struct s_sphere
 {
-	t_vec3 center;
-	double radius;
-	t_color color;
+    t_vec3 center;
+    double radius;
+    t_color color;
 } t_sphere;
+
 typedef struct s_data
 {
 	void	*mlx;

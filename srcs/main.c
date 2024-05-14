@@ -1,39 +1,109 @@
 #include "../includes/minirt.h"
 
-int hit_sphere(t_ray *ray, t_sphere *sphere, double *t)
+// 球のヒット関数
+int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
 {
+    t_sphere *sphere = (t_sphere *)self->data;
     t_vec3 oc = vec_sub(ray->origin, sphere->center);
     double a = vec_dot(ray->direction, ray->direction);
     double half_b = vec_dot(oc, ray->direction);
     double c = vec_dot(oc, oc) - sphere->radius * sphere->radius;
     double discriminant = half_b * half_b - a * c;
+
     if (discriminant < 0)
-    {
         return 0;
+
+    double sqrt_d = sqrt(discriminant);
+    double root = (-half_b - sqrt_d) / a;
+
+    if (root < t_min || root > t_max) {
+        root = (-half_b + sqrt_d) / a;
+        if (root < t_min || root > t_max)
+            return 0;
     }
-    else
-    {
-        *t = (-half_b - sqrt(discriminant)) / a;
-        return 1;
-    }
+
+    rec->t = root;
+    rec->point = ray_at(*ray, rec->t);
+    t_vec3 outward_normal = vec_sub(rec->point, sphere->center);
+    rec->normal = vec_normalize(outward_normal);
+    rec->front_face = vec_dot(ray->direction, rec->normal) < 0;
+    rec->color = sphere->color;
+    if (!rec->front_face)
+        rec->normal = vec_scalar(rec->normal, -1);
+    
+    return 1;
 }
 
-
-t_color ray_color(t_ray *ray, t_sphere *sphere)
+// 球の初期化関数
+t_hittable new_sphere(t_vec3 center, double radius, t_color color)
 {
-    double t;
-    if (hit_sphere(ray, sphere, &t))
+    t_sphere *sphere_data = malloc(sizeof(t_sphere));
+    sphere_data->center = center;
+    sphere_data->radius = radius;
+    sphere_data->color = color;
+
+    t_hittable hittable_sphere;
+    hittable_sphere.data = sphere_data;
+    hittable_sphere.hit = hit_sphere;
+
+    return hittable_sphere;
+}
+
+t_hittable_list *new_hittable_list(int initial_capacity)
+{
+    t_hittable_list *list = malloc(sizeof(t_hittable_list));
+    list->objects = malloc(sizeof(t_hittable) * initial_capacity);
+    list->size = 0;
+    list->capacity = initial_capacity;
+    return list;
+}
+
+void add_hittable(t_hittable_list *list, t_hittable object)
+{
+    if (list->size == list->capacity) {
+        list->capacity *= 2;
+        list->objects = realloc(list->objects, sizeof(t_hittable) * list->capacity);
+    }
+    list->objects[list->size++] = object;
+}
+
+int hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
+{
+    t_hit_record temp_rec;
+    int hit_anything = 0;
+    double closest_so_far = t_max;
+
+    for (int i = 0; i < list->size; i++) {
+        if (list->objects[i].hit(&list->objects[i], ray, t_min, closest_so_far, &temp_rec)) {
+            hit_anything = 1;
+            closest_so_far = temp_rec.t;
+            *rec = temp_rec;
+        }
+    }
+
+    return hit_anything;
+}
+
+// レイの色を計算する関数
+t_color	vec3_to_color(t_vec3 v)
+{
+	return ((t_color){v.x, v.y, v.z});
+}
+
+t_color ray_color(t_ray *ray, t_hittable_list *world)
+{
+    t_hit_record rec;
+    if (hit_list(world, ray, 0.001, INFINITY, &rec))
     {
-        t_vec3 hit_point = ray_at(*ray, t);
-        t_vec3 normal = vec_normalize(vec_sub(hit_point, sphere->center));
-        return (t_color){(normal.x + 1) * 0.5, (normal.y + 1) * 0.5, (normal.z + 1) * 0.5};
+        // 法線ベクトルに基づいた色を返す
+		return vec3_to_color(vec_scalar(vec_add(rec.normal, vec_new(1, 1, 1)), 0.5));
     }
     t_vec3 unit_direction = vec_normalize(ray->direction);
-    t = 0.5 * (unit_direction.y + 1.0);
+    double t = 0.5 * (unit_direction.y + 1.0);
     return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
 }
 
-void render(t_data *data, t_camera *camera, t_sphere *sphere)
+void render(t_data *data, t_camera *camera, t_hittable_list *world)
 {
     int x, y;
     double viewport_height = 2.0;
@@ -49,13 +119,13 @@ void render(t_data *data, t_camera *camera, t_sphere *sphere)
         for (x = 0; x < WINDOW_WIDTH; x++)
         {
             double u = (double)x / (double)(WINDOW_WIDTH - 1);
-            double v = (double)(WINDOW_HEIGHT - 1 - y) / (double)(WINDOW_HEIGHT - 1);  // yを逆にする
+            double v = (double)(WINDOW_HEIGHT - 1 - y) / (double)(WINDOW_HEIGHT - 1);
 
             t_ray ray;
             ray.origin = camera->origin;
             ray.direction = vec_sub(vec_add(vec_add(lower_left_corner, vec_scalar(horizontal, u)), vec_scalar(vertical, v)), camera->origin);
 
-            t_color pixel_color = ray_color(&ray, sphere);
+            t_color pixel_color = ray_color(&ray, world);
             int color = vec_to_color(pixel_color);
             my_mlx_pixel_put(data, x, y, color);
         }
@@ -67,16 +137,19 @@ int main(void)
 {
     t_data data;
     t_camera camera;
-    t_sphere sphere;
+    t_hittable_list *world;
 
     init_data(&data);
     camera.origin = vec_new(0, 0, 0);
-    sphere.center = vec_new(0, 0, -1);
-    sphere.radius = 0.5;
-    sphere.color = (t_color){1, 0, 0};
 
-    render(&data, &camera, &sphere);
+    world = new_hittable_list(1);
+    add_hittable(world, new_sphere(vec_new(0, 0, -1), 0.5, (t_color){1, 0, 0}));
+
+    render(&data, &camera, world);
     wait_input(&data);
+
+    free(world->objects);
+    free(world);
 
     return 0;
 }
