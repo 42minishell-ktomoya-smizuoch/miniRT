@@ -12,12 +12,18 @@ MINILIBX_DIR = ./lib/minilibx_opengl
 
 # Source files
 SRC = srcs/main.c \
-      srcs/parser/parser.c \
-      srcs/ray/put_pixel.c \
 	  srcs/init_data.c \
 	  srcs/wait_input.c \
 	  srcs/esc_close.c \
 	  srcs/exit_on_close.c \
+
+SRC += srcs/parser/parser.c \
+
+SRC += srcs/ray/ray_math.c \
+	   srcs/ray/ray_math2.c \
+
+SRC += srcs/mlx/my_mlx_pixel_put.c \
+	srcs/mlx/put_pixel.c \
 
 # Objects directory
 OBJDIR = ./objs
