@@ -4,19 +4,20 @@ int hit_sphere(t_ray *ray, t_sphere *sphere, double *t)
 {
     t_vec3 oc = vec_sub(ray->origin, sphere->center);
     double a = vec_dot(ray->direction, ray->direction);
-    double b = 2.0 * vec_dot(oc, ray->direction);
+    double half_b = vec_dot(oc, ray->direction);
     double c = vec_dot(oc, oc) - sphere->radius * sphere->radius;
-    double discriminant = b * b - 4 * a * c;
+    double discriminant = half_b * half_b - a * c;
     if (discriminant < 0)
     {
         return 0;
     }
     else
     {
-        *t = (-b - sqrt(discriminant)) / (2.0 * a);
+        *t = (-half_b - sqrt(discriminant)) / a;
         return 1;
     }
 }
+
 
 t_color ray_color(t_ray *ray, t_sphere *sphere)
 {
