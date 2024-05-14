@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/10 16:18:10 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:19:27 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 #define ERR_ARG "Error: invalid argument"
 #define ERR_FILE_FORMAT "Error: invalid file format"
 
-//構造体
+//structure
 typedef struct s_vec3
 {
 	double	x;
@@ -62,6 +62,13 @@ typedef struct s_camera
 	t_vec3		normal;
 	double		fov;
 }	t_camera;
+
+typedef struct s_sphere
+{
+	t_vec3 center;
+	double radius;
+	t_color color;
+} t_sphere;
 typedef struct s_data
 {
 	void	*mlx;
@@ -73,13 +80,23 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
-// 関数
+// mlx
 void	init_data(t_data *data);
 void	wait_input(t_data *data);
 int 	esc_close(int keycode, t_data *data);
 int		exit_on_close(t_data *data);
-
-//mlx
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+
+//ray
+t_vec3	vec_new(double x, double y, double z);
+t_vec3	vec_add(t_vec3 a, t_vec3 b);
+t_vec3	vec_sub(t_vec3 a, t_vec3 b);
+t_vec3	vec_scalar(t_vec3 a, double t);
+double	vec_dot(t_vec3 a, t_vec3 b);
+double	vec_length(t_vec3 a);
+t_vec3	vec_normalize(t_vec3 a);
+t_vec3	ray_at(t_ray ray, double t);
+t_vec3	vec_uint(t_vec3 v);
+int		vec_to_color(t_color col);
 
 #endif
