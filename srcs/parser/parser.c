@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 14:09:06 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:48:46 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	parser(const char *file)
 		return (error_msg(ERR_OPEN_FILE));
 	while (1)
 	{
-		line = get_next_line_bonus(fd);
+		line = get_next_line(fd);
 		if (!line)
 			break ;
 		ret = parse_line(line);

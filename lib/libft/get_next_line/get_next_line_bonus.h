@@ -3,34 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 11:16:11 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 14:17:24 by smizuoch         ###   ########.fr       */
+/*   Created: 2023/06/15 14:29:20 by ktomoya           #+#    #+#             */
+/*   Updated: 2023/06/27 21:53:00 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <stdio.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
 
-# include "../libft.h"
-
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 42
 # endif
 
-char	*get_next_line_bonus(int fd);
+# define END_OF_FILE 0
+# define READ_ERROR -1
 
-size_t	ft_strlens(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strdup(const char *s1);
+char		*get_next_line(int fd);
+char		*ft_strchr(const char *s, int c);
+void		ft_bzero(void *s, size_t n);
+void		*ft_calloc(size_t count, size_t size);
+size_t		ft_strlen(const char *s);
+void		*ft_memmove(void *dst, const void *src, size_t len);
+char		*gnl_strjoin(char *s1, char *s2);
 
 #endif
