@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:00:07 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 13:10:29 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:24:21 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	*ft_realloc(void *ptr, size_t new_size)
 {
 	void	*new_ptr;
-	size_t	old_size;
 
 	if (ptr == NULL)
 		return (malloc(new_size));
