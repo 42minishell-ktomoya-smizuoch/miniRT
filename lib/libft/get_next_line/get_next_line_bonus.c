@@ -3,129 +3,117 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 11:14:41 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/01 14:12:56 by smizuoch         ###   ########.fr       */
+/*   Created: 2023/06/15 14:31:00 by ktomoya           #+#    #+#             */
+/*   Updated: 2023/06/28 18:54:28 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line_bonus.h"
+#include "get_next_line_bonus.h"
 
-static char	*save_buf(int fd, char *buf, char *save)
+static char	*free_and_return_null(char **target)
 {
-	ssize_t	read_size;
-	char	*tmp;
+	free(*target);
+	*target = NULL;
+	return (NULL);
+}
 
-	read_size = 1;
-	while (!ft_strchr(save, '\n') && read_size != 0)
+static char	*saverest(char *origin, int delim)
+{
+	char	*rest;
+	size_t	count;
+	size_t	i;
+
+	i = 0;
+	count = 0;
+	while (origin[i] != delim)
 	{
-		read_size = read (fd, buf, BUFFER_SIZE);
-		if (read_size == -1)
-			return (NULL);
-		if (read_size == 0)
+		if (origin[i] == '\0')
+			return (free_and_return_null(&origin));
+		i++;
+	}
+	i++;
+	while (origin[i + count] != '\0')
+		count++;
+	rest = ft_calloc(count + 1, sizeof(char));
+	if (rest == NULL)
+		return (free_and_return_null(&origin));
+	ft_memmove(rest, &origin[i], count);
+	free(origin);
+	return (rest);
+}
+
+static char	*trimdelim(char *before, int delim)
+{
+	char	*after;
+	size_t	len;
+
+	len = 0;
+	while (before[len] != delim)
+	{
+		if (before[len] == '\0')
+			return (free_and_return_null(&before));
+		len++;
+	}
+	after = ft_calloc(len + 2, sizeof(char));
+	if (after == NULL)
+		return (NULL);
+	ft_memmove(after, before, len + 1);
+	return (after);
+}
+
+static char	*read_delim(int fd, char *save, int delim)
+{
+	char	*buf;
+	ssize_t	read_size;
+
+	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (buf == NULL && save != NULL)
+		return (free_and_return_null(&save));
+	while (1)
+	{
+		read_size = read(fd, buf, BUFFER_SIZE);
+		if (read_size == READ_ERROR)
+			break ;
+		else if (read_size == END_OF_FILE)
 			break ;
 		buf[read_size] = '\0';
-		if (!save)
-			save = ft_strjoin(buf, "");
-		else
-		{
-			tmp = ft_strjoin(save, buf);
-			free (save);
-			save = tmp;
-		}
-		if (!save)
+		save = gnl_strjoin(save, buf);
+		if (save == NULL)
+			break ;
+		if (ft_strchr(buf, delim) != NULL)
 			break ;
 	}
-	buf = NULL;
+	free(buf);
+	if (read_size == READ_ERROR && save != NULL)
+		return (free_and_return_null(&save));
 	return (save);
 }
 
-static char	*line_s(char *save)
+char	*get_next_line(int fd)
 {
-	size_t	i;
-	size_t	n;
-	char	*line;
+	char		*line;
+	static char	*save[OPEN_MAX];
 
-	i = 0;
-	n = 0;
-	if (!save)
+	if (fd == -1 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
 		return (NULL);
-	while (save[i] != '\n' && save[i] != '\0')
-		i ++;
-	line = ft_substr(save, 0, i + 1);
-	if (ft_strlens(line) == 0)
+	line = NULL;
+	save[fd] = read_delim(fd, save[fd], '\n');
+	if (save[fd] == NULL)
+		return (NULL);
+	if (save[fd][0] == '\0')
+		return (free_and_return_null(&save[fd]));
+	if (ft_strchr(save[fd], '\n') != NULL)
 	{
-		free (line);
-		return (NULL);
-	}
-	return (line);
-}
-
-static char	*save_save(char *save)
-{
-	size_t	i;
-	size_t	n;
-	char	*tmp;
-
-	i = 0;
-	n = 0;
-	if (!save)
-		return (NULL);
-	while (save[i] != '\n' && save[i] != '\0')
-		i ++;
-	if (save[i] == '\n')
-	{
-		n = i + 1;
-		while (save[i] != '\0')
-			i ++;
-		tmp = ft_substr(save, n, i - n);
-		free (save);
-		save = tmp;
+		line = trimdelim(save[fd], '\n');
+		save[fd] = saverest(save[fd], '\n');
 	}
 	else
 	{
-		free (save);
-		save = NULL;
+		line = gnl_strjoin(line, save[fd]);
+		free(save[fd]);
+		save[fd] = NULL;
 	}
-	return (save);
-}
-
-char	*get_next_line_bonus(int fd)
-{
-	char		buf[BUFFER_SIZE + 1];
-	char		*line;
-	static char	*save[OPEN_MAX + 1];
-
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
-		return (NULL);
-	save[fd] = save_buf(fd, buf, save[fd]);
-	if (!save[fd])
-		return (NULL);
-	line = line_s(save[fd]);
-	if (!line)
-	{
-		free (save[fd]);
-		return (NULL);
-	}
-	save[fd] = save_save(save[fd]);
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	int		a = 6;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	while (a)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("> %s", line);
-// 		free(line);
-// 		a --;
-// 	}
-// 	int close(int fd);
-// 	return (0);
-// }

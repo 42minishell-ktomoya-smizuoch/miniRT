@@ -2,6 +2,7 @@ NAME = playground.out
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+DEBUGFLAGS = -g
 
 # Include directories
 INCDIR = ../includes
@@ -11,7 +12,8 @@ LIBFT_DIR = ../lib/libft
 MINILIBX_DIR = ../lib/minilibx_opengl
 
 # Source files
-SRC = main.c \
+SRC = parser.c \
+#	main.c \
 #	mlx_init.c \
 #	write_pixel.c \
 
@@ -51,5 +53,11 @@ fclean: clean
 	$(MAKE) -C $(MINILIBX_DIR) clean
 
 re: fclean all
+
+ifeq ($(MAKECMDGOALS), debug)
+CFLAGS += $(DEBUGFLAGS)
+endif
+
+debug: re
 
 .PHONY: all clean fclean re
