@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 15:35:43 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/14 17:19:53 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/05/15 09:14:01 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@
 # include "../lib/libft/get_next_line/get_next_line.h"
 # include "../lib/libft/get_next_line/get_next_line_bonus.h"
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
 
 # define KEY_ESC 53
 # define ON_DESTROY 17
 
-#define ERR_OPEN_FILE "Error: failed to open the file"
-#define ERR_READ_FILE "Error: failed to read the file"
-#define ERR_PARSE_FILE "Error: failed to parse the file"
-#define ERR_MALLOC "Error: failed to allocate memory"
-#define ERR_ARG "Error: invalid argument"
-#define ERR_FILE_FORMAT "Error: invalid file format"
+# define ERR_OPEN_FILE "Error: failed to open the file"
+# define ERR_READ_FILE "Error: failed to read the file"
+# define ERR_PARSE_FILE "Error: failed to parse the file"
+# define ERR_MALLOC "Error: failed to allocate memory"
+# define ERR_ARG "Error: invalid argument"
+# define ERR_FILE_FORMAT "Error: invalid file format"
 
 //structure
 typedef struct s_vec3
@@ -51,49 +51,25 @@ typedef struct s_color
 	double	b;
 }	t_color;
 
-typedef struct  s_ray {
-    t_vec3 origin;
-    t_vec3 direction;
-}               t_ray;
+typedef struct s_ray
+{
+	t_vec3	origin;
+	t_vec3	direction;
+}	t_ray;
 
 typedef struct s_camera
 {
-	t_vec3		origin;
-	t_vec3		normal;
-	double		fov;
+	t_vec3	origin;
+	t_vec3	normal;
+	double	fov;
 }	t_camera;
-
-typedef struct s_hit_record
-{
-    t_vec3 point;
-    t_vec3 normal;
-    double t;
-    int front_face;
-    t_color color;
-}	t_hit_record;
-
-struct s_hittable;
-typedef int (*hit_fn)(struct s_hittable *, t_ray *, double, double, t_hit_record *);
-
-// ヒッタブル構造体
-typedef struct s_hittable
-{
-    void *data;
-    hit_fn hit;
-}	t_hittable;
-
-typedef struct s_hittable_list {
-    t_hittable *objects;
-    int size;
-    int capacity;
-} t_hittable_list;
 
 typedef struct s_sphere
 {
-    t_vec3 center;
-    double radius;
-    t_color color;
-} t_sphere;
+	t_vec3	center;
+	double	radius;
+	t_color	color;
+}	t_sphere;
 
 typedef struct s_data
 {
@@ -109,7 +85,7 @@ typedef struct s_data
 // mlx
 void	init_data(t_data *data);
 void	wait_input(t_data *data);
-int 	esc_close(int keycode, t_data *data);
+int		esc_close(int keycode, t_data *data);
 int		exit_on_close(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 

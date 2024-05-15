@@ -1,37 +1,58 @@
 #include "../includes/minirt.h"
+#include "../includes/hittable.h"
+
+int hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
 
 // 球のヒット関数
 int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
 {
-    t_sphere *sphere = (t_sphere *)self->data;
-    t_vec3 oc = vec_sub(ray->origin, sphere->center);
-    double a = vec_dot(ray->direction, ray->direction);
-    double half_b = vec_dot(oc, ray->direction);
-    double c = vec_dot(oc, oc) - sphere->radius * sphere->radius;
-    double discriminant = half_b * half_b - a * c;
+	t_sphere *sphere = (t_sphere *)self->data;
+	t_vec3 oc = vec_sub(ray->origin, sphere->center);
+	double a = vec_dot(ray->direction, ray->direction);
+	double half_b = vec_dot(oc, ray->direction);
+	double c = vec_dot(oc, oc) - sphere->radius * sphere->radius;
+	double discriminant = half_b * half_b - a * c;
 
-    if (discriminant < 0)
-        return 0;
+	if (discriminant < 0)
+		return 0;
 
-    double sqrt_d = sqrt(discriminant);
-    double root = (-half_b - sqrt_d) / a;
+	double sqrt_d = sqrt(discriminant);
+	double root = (-half_b - sqrt_d) / a;
 
-    if (root < t_min || root > t_max) {
-        root = (-half_b + sqrt_d) / a;
-        if (root < t_min || root > t_max)
-            return 0;
+	if (root < t_min || root > t_max)
+	{
+		root = (-half_b + sqrt_d) / a;
+		if (root < t_min || root > t_max)
+			return 0;
+	}
+
+	rec->t = root;
+	rec->point = ray_at(*ray, rec->t);
+	t_vec3 outward_normal = vec_normalize(vec_sub(rec->point, sphere->center));
+	set_face_normal(rec, ray, outward_normal);
+	rec->color = sphere->color;
+
+	return 1;
+}
+
+// t_color型に変換する関数
+t_color	vec3_to_color(t_vec3 v)
+{
+    return ((t_color){v.x, v.y, v.z});
+}
+
+// レイの色を計算する関数
+t_color ray_color(t_ray *ray, t_hittable_list *world)
+{
+    t_hit_record rec;
+    if (hit_list(world, ray, 0.001, INFINITY, &rec))
+    {
+        // 法線ベクトルに基づいた色を返す
+        return vec3_to_color(vec_scalar(vec_add(rec.normal, vec_new(1, 1, 1)), 0.5));
     }
-
-    rec->t = root;
-    rec->point = ray_at(*ray, rec->t);
-    t_vec3 outward_normal = vec_sub(rec->point, sphere->center);
-    rec->normal = vec_normalize(outward_normal);
-    rec->front_face = vec_dot(ray->direction, rec->normal) < 0;
-    rec->color = sphere->color;
-    if (!rec->front_face)
-        rec->normal = vec_scalar(rec->normal, -1);
-    
-    return 1;
+    t_vec3 unit_direction = vec_normalize(ray->direction);
+    double t = 0.5 * (unit_direction.y + 1.0);
+    return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
 }
 
 // 球の初期化関数
@@ -82,25 +103,6 @@ int hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hi
     }
 
     return hit_anything;
-}
-
-// レイの色を計算する関数
-t_color	vec3_to_color(t_vec3 v)
-{
-	return ((t_color){v.x, v.y, v.z});
-}
-
-t_color ray_color(t_ray *ray, t_hittable_list *world)
-{
-    t_hit_record rec;
-    if (hit_list(world, ray, 0.001, INFINITY, &rec))
-    {
-        // 法線ベクトルに基づいた色を返す
-		return vec3_to_color(vec_scalar(vec_add(rec.normal, vec_new(1, 1, 1)), 0.5));
-    }
-    t_vec3 unit_direction = vec_normalize(ray->direction);
-    double t = 0.5 * (unit_direction.y + 1.0);
-    return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
 }
 
 void render(t_data *data, t_camera *camera, t_hittable_list *world)

@@ -23,7 +23,6 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
-	srcs/mlx/put_pixel.c \
 
 # Objects directory
 OBJDIR = ./objs
