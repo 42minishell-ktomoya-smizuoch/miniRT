@@ -1,4 +1,5 @@
 #include "hittable.h"
+#include "math_utils.h"
 #include "minirt.h"
 
 // t_color型に変換する関数
@@ -68,12 +69,6 @@ int main(void)
     wait_input(&data);
 
     // メモリの解放
-    for (int i = 0; i < world->size; i++) {
-        free(world->objects[i].data);
-    }
-    free(world->objects);
-    free(world);
-
+    free_hittable_list(world);
     return 0;
 }
-

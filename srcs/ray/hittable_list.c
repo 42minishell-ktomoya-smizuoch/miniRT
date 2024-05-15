@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:23:19 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 12:27:12 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:26:41 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,13 @@ int hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hi
     }
 
     return hit_anything;
+}
+
+void free_hittable_list(t_hittable_list *list)
+{
+    for (int i = 0; i < list->size; i++) {
+        list->objects[i].free_data(list->objects[i].data);
+    }
+    free(list->objects);
+    free(list);
 }
