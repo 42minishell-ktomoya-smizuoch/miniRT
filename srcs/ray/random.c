@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rand.c                                          :+:      :+:    :+:   */
+/*   random.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 08:30:08 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 14:49:42 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/05/15 14:30:15 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/05/15 14:47:29 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minirt.h"
 
-unsigned long int	g_next = 1;
-
-int ft_rand(void)
+double random_double()
 {
-    g_next = g_next * 1103515245 + 12345;
-    return((unsigned)(g_next/65536) % 32768);
+    return (rand() / (RAND_MAX + 1.0));
 }
 
-void	ft_srand(unsigned int seed)
+double random_double_range(double min, double max)
 {
-	g_next = seed;
+    return (min + (max - min) * random_double());
 }
-
-// int main() {
-//     ft_srand(12345);  // シードを設定
-//     for (int i = 0; i < 10; i++) {
-//         printf("%d\n", ft_rand());
-//     }
-//     return 0;
-// }

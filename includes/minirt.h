@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 09:14:01 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:29:44 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,9 @@ t_vec3	vec_normalize(t_vec3 a);
 t_vec3	ray_at(t_ray ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
+
+//random
+double random_double();
+double random_double_range(double min, double max);
 
 #endif
