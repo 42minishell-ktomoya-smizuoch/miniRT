@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 08:31:43 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:11:20 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ size_t	ft_strlens(const char *s);
 
 int		ft_rand(void);
 void	ft_srand(unsigned int seed);
+void	*ft_realloc(void *ptr, size_t new_size);
 
 #endif
