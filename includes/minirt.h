@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 14:29:44 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:54:28 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ typedef struct s_data
 	int		line_length;
 	int		endian;
 }	t_data;
+
+//utils
+void print_progress(int current, int total);
 
 // mlx
 void	init_data(t_data *data);

@@ -3,23 +3,19 @@
 #include "minirt.h"
 
 // t_color型に変換する関数
-t_color vec3_to_color(t_vec3 v)
-{
-	return ((t_color){v.x, v.y, v.z});
+t_color vec3_to_color(t_vec3 v) {
+    return (t_color){v.x, v.y, v.z};
 }
 
 // t_vec3型に変換する関数
-t_vec3 color_to_vec3(t_color c)
-{
-	return ((t_vec3){c.r, c.g, c.b});
+t_vec3 color_to_vec3(t_color c) {
+    return (t_vec3){c.r, c.g, c.b};
 }
 
 // レイの色を計算する関数
-t_color ray_color(t_ray *ray, t_hittable_list *world)
-{
+t_color ray_color(t_ray *ray, t_hittable_list *world) {
     t_hit_record rec;
-    if (hit_list(world, ray, 0.001, INFINITY, &rec))
-	{
+    if (hit_list(world, ray, 0.001, INFINITY, &rec)) {
         // 法線ベクトルに基づいた色を返す
         return vec3_to_color(vec_scalar(vec_add(rec.normal, vec_new(1, 1, 1)), 0.5));
     }
@@ -29,8 +25,7 @@ t_color ray_color(t_ray *ray, t_hittable_list *world)
 }
 
 // ピクセルカラーをスケールし、サンプルの平均を計算
-t_color scale_color(t_color color, int samples_per_pixel)
-{
+t_color scale_color(t_color color, int samples_per_pixel) {
     double scale = 1.0 / samples_per_pixel;
     color.r = sqrt(scale * color.r);
     color.g = sqrt(scale * color.g);
@@ -38,8 +33,7 @@ t_color scale_color(t_color color, int samples_per_pixel)
     return color;
 }
 
-void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_per_pixel)
-{
+void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_per_pixel) {
     int x, y, s;
     double viewport_height = 2.0;
     double viewport_width = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT * viewport_height;
@@ -49,15 +43,12 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_
     t_vec3 vertical = vec_new(0.0, viewport_height, 0.0);
     t_vec3 lower_left_corner = vec_sub(vec_sub(vec_sub(camera->origin, vec_scalar(horizontal, 0.5)), vec_scalar(vertical, 0.5)), vec_new(0.0, 0.0, focal_length));
 
-    for (y = 0; y < WINDOW_HEIGHT; y++)
-	{
-        for (x = 0; x < WINDOW_WIDTH; x++)
-		{
+    for (y = 0; y < WINDOW_HEIGHT; y++) {
+        for (x = 0; x < WINDOW_WIDTH; x++) {
             t_color pixel_color = {0, 0, 0};
-            for (s = 0; s < samples_per_pixel; s++)
-			{
+            for (s = 0; s < samples_per_pixel; s++) {
                 double u = (x + random_double()) / (WINDOW_WIDTH - 1);
-                double v = ((WINDOW_HEIGHT - 1 - y) + random_double()) / (WINDOW_HEIGHT - 1);  // ここを修正
+                double v = ((WINDOW_HEIGHT - 1 - y) + random_double()) / (WINDOW_HEIGHT - 1);
                 t_ray ray;
                 ray.origin = camera->origin;
                 ray.direction = vec_sub(vec_add(vec_add(lower_left_corner, vec_scalar(horizontal, u)), vec_scalar(vertical, v)), camera->origin);
@@ -67,12 +58,13 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_
             int color = vec_to_color(pixel_color);
             my_mlx_pixel_put(data, x, y, color);
         }
+        print_progress(y + 1, WINDOW_HEIGHT);
     }
+    printf("\n");
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
-int main(void)
-{
+int main(void) {
     t_data data;
     t_camera camera;
     t_hittable_list *world;

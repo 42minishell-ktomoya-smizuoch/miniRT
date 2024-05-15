@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:19:20 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 14:19:33 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:01:37 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 
 double	degrees_to_radians(double degrees)
 {
-	return degrees * PI / 180.0;
+	return (degrees * PI / 180.0);
 }
