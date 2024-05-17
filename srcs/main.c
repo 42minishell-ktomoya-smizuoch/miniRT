@@ -1,6 +1,6 @@
 #include "hittable.h"
-#include "math_utils.h"
 #include "minirt.h"
+#include "math_utils.h"
 
 // t_color型に変換する関数
 t_color vec3_to_color(t_vec3 v) {
@@ -13,12 +13,18 @@ t_vec3 color_to_vec3(t_color c) {
 }
 
 // レイの色を計算する関数
-t_color ray_color(t_ray *ray, t_hittable_list *world) {
+t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
     t_hit_record rec;
+    if (depth <= 0)
+        return (t_color){0, 0, 0};
+
     if (hit_list(world, ray, 0.001, INFINITY, &rec)) {
-        // 法線ベクトルに基づいた色を返す
-        return vec3_to_color(vec_scalar(vec_add(rec.normal, vec_new(1, 1, 1)), 0.5));
+        t_vec3 target = vec_add(rec.point, vec_add(rec.normal, random_unit_vector()));
+        t_ray scattered = {rec.point, vec_sub(target, rec.point)};
+        t_color scattered_color = ray_color(&scattered, world, depth - 1);
+        return vec3_to_color(vec_scalar(color_to_vec3(scattered_color), 0.5));
     }
+
     t_vec3 unit_direction = vec_normalize(ray->direction);
     double t = 0.5 * (unit_direction.y + 1.0);
     return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
@@ -33,7 +39,7 @@ t_color scale_color(t_color color, int samples_per_pixel) {
     return color;
 }
 
-void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_per_pixel) {
+void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_per_pixel, int max_depth) {
     int x, y, s;
     double viewport_height = 2.0;
     double viewport_width = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT * viewport_height;
@@ -52,7 +58,7 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, int samples_
                 t_ray ray;
                 ray.origin = camera->origin;
                 ray.direction = vec_sub(vec_add(vec_add(lower_left_corner, vec_scalar(horizontal, u)), vec_scalar(vertical, v)), camera->origin);
-                pixel_color = vec3_to_color(vec_add(color_to_vec3(pixel_color), color_to_vec3(ray_color(&ray, world))));
+                pixel_color = vec3_to_color(vec_add(color_to_vec3(pixel_color), color_to_vec3(ray_color(&ray, world, max_depth))));
             }
             pixel_color = scale_color(pixel_color, samples_per_pixel);
             int color = vec_to_color(pixel_color);
@@ -69,6 +75,7 @@ int main(void) {
     t_camera camera;
     t_hittable_list *world;
     int samples_per_pixel = 100;
+    int max_depth = 50;
 
     init_data(&data);
     camera.origin = vec_new(0, 0, 0);
@@ -77,7 +84,7 @@ int main(void) {
     add_hittable(world, new_sphere(vec_new(0, 0, -1), 0.5, (t_color){1, 0, 0}));
     add_hittable(world, new_sphere(vec_new(0, -100.5, -1), 100, (t_color){0.8, 0.8, 0.0})); // 地面の球
 
-    render(&data, &camera, world, samples_per_pixel);
+    render(&data, &camera, world, samples_per_pixel, max_depth);
     wait_input(&data);
 
     // メモリの解放
