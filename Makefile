@@ -24,6 +24,8 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
 	   srcs/ray/hittable_list.c \
 	   srcs/ray/sphere.c \
+	   srcs/ray/random.c \
+	   srcs/ray/progress.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 

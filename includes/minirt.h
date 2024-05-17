@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 09:14:01 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:26:49 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+//utils
+void print_progress(int current, int total);
+
 // mlx
 void	init_data(t_data *data);
 void	wait_input(t_data *data);
@@ -100,5 +103,12 @@ t_vec3	vec_normalize(t_vec3 a);
 t_vec3	ray_at(t_ray ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
+
+//random
+double random_double(); // 0から1の間のランダムな浮動小数点数を生成
+double random_double_range(double min, double max); // 指定された範囲のランダムな浮動小数点数を生成
+t_vec3 random_in_unit_sphere();
+t_vec3 random_unit_vector();
+t_vec3 random_in_hemisphere(const t_vec3 *normal);
 
 #endif

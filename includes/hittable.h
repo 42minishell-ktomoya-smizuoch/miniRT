@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:10:40 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 12:31:51 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:24:27 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_hittable
 {
 	void		*data;
 	t_hit_fn	hit;
+	void (*free_data)(void *);
 }	t_hittable;
 
 typedef struct s_hittable_list
@@ -47,6 +48,7 @@ void			set_face_normal(t_hit_record *rec, t_ray *r, t_vec3 outward_normal);
 t_hittable_list	*new_hittable_list(int initial_capacity);
 void			add_hittable(t_hittable_list *list, t_hittable object);
 int				hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
+void			free_hittable_list(t_hittable_list *list);
 
 int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
 t_hittable new_sphere(t_vec3 center, double radius, t_color color);
