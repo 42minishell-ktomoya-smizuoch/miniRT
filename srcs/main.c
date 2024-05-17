@@ -78,8 +78,8 @@ int main(void) {
     t_data data;
     t_camera camera;
     t_hittable_list *world;
-    int samples_per_pixel = 100;
-    int max_depth = 50;
+    int samples_per_pixel = 100;// サンプル数(1ピクセルあたりのサンプル数)(アンチエイリアスの数)(大きいほど滑らかな画像になるけど処理が重くなる)
+    int max_depth = 50;// レイの最大反射回数
 
     init_data(&data);
     camera.origin = vec_new(0, 0, 0);
