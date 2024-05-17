@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 08:30:08 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 14:49:42 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:15:24 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_srand(unsigned int seed)
 }
 
 // int main() {
-//     ft_srand(12345);  // シードを設定
+//     ft_srand(12345);
 //     for (int i = 0; i < 10; i++) {
 //         printf("%d\n", ft_rand());
 //     }

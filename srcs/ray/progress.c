@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:55:07 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 15:00:37 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:25:59 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	print_progress(int current, int total)
 			printf(" ");
 		i++;
 	}
-	printf("] %d%%\r", (int)(progress * 100.0));
-	fflush(stdout);
+	printf("] %d%%", (int)(progress * 100.0));
+	if (current < total)
+		printf("\r");
+	else
+		printf("\n");
 }
