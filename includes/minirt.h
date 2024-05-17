@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/17 13:21:44 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:26:49 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ double random_double(); // 0から1の間のランダムな浮動小数点数を
 double random_double_range(double min, double max); // 指定された範囲のランダムな浮動小数点数を生成
 t_vec3 random_in_unit_sphere();
 t_vec3 random_unit_vector();
+t_vec3 random_in_hemisphere(const t_vec3 *normal);
 
 #endif

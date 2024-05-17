@@ -19,7 +19,7 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
         return (t_color){0, 0, 0};
 
     if (hit_list(world, ray, 0.001, INFINITY, &rec)) {
-        t_vec3 target = vec_add(rec.point, vec_add(rec.normal, random_unit_vector()));
+        t_vec3 target = vec_add(rec.point, random_in_hemisphere(&rec.normal));
         t_ray scattered = {rec.point, vec_sub(target, rec.point)};
         t_color scattered_color = ray_color(&scattered, world, depth - 1);
         return vec3_to_color(vec_scalar(color_to_vec3(scattered_color), 0.5));
