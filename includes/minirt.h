@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 08:38:10 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:58:08 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_camera
 typedef struct s_sphere
 {
 	t_vec3	center;
+	double	diameter;
 	double	radius;
 	t_color	color;
 }	t_sphere;

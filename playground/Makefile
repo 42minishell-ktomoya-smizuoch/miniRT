@@ -12,7 +12,7 @@ LIBFT_DIR = ../lib/libft
 MINILIBX_DIR = ../lib/minilibx_opengl
 
 # Source files
-SRC = parser.c \
+SRC = ./srcs/parser.c \
 #	main.c \
 #	mlx_init.c \
 #	write_pixel.c \
