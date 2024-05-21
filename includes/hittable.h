@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:10:40 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/21 11:58:05 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:33:42 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_hit_record {
     int front_face;
     t_color color;
     double fuzz; // 金属のぼやけ具合
+	double ref_idx; // 屈折率
+	t_material_type material; // マテリアルタイプ
 } t_hit_record;
 
 struct s_hittable;

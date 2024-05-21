@@ -37,7 +37,9 @@ int hit_metal(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_re
     t_vec3 outward_normal = vec_normalize(vec_sub(rec->point, metal->center));
     set_face_normal(rec, ray, outward_normal);
     rec->color = metal->color;
-    rec->fuzz = metal->fuzz < 1 ? metal->fuzz : 1; // fuzzの値を1以下に制限
+    rec->fuzz = metal->fuzz;
+    rec->ref_idx = 0;
+    rec->material = METAL;
 
     return 1;
 }

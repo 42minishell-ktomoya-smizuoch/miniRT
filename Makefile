@@ -28,6 +28,7 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/progress.c \
 	   srcs/ray/lambertian.c \
 	   srcs/ray/metal.c \
+	   srcs/ray/dielectric.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 

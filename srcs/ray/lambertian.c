@@ -33,6 +33,8 @@ int hit_lambertian(t_hittable *self, t_ray *ray, double t_min, double t_max, t_h
     set_face_normal(rec, ray, outward_normal);
     rec->color = lambertian->color;
     rec->fuzz = 0;
+    rec->ref_idx = 0;
+    rec->material = LAMBERTIAN;
 
     return 1;
 }

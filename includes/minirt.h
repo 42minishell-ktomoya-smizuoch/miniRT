@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/21 12:00:43 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:38:10 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@
 # define ERR_MALLOC "Error: failed to allocate memory"
 # define ERR_ARG "Error: invalid argument"
 # define ERR_FILE_FORMAT "Error: invalid file format"
+
+# define LAMBERTIAN 1
+# define METAL 2
+# define DIELECTRIC 3
+
+//int型のt_material_typeを定義
+typedef int t_material_type;
 
 //structure
 typedef struct s_vec3
