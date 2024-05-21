@@ -5,6 +5,7 @@ typedef struct s_metal {
     t_vec3 center;
     double radius;
     t_color color;
+    double fuzz; // 反射のぼやけ具合
 } t_metal;
 
 t_vec3 reflect(t_vec3 v, t_vec3 n) {
@@ -36,15 +37,17 @@ int hit_metal(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_re
     t_vec3 outward_normal = vec_normalize(vec_sub(rec->point, metal->center));
     set_face_normal(rec, ray, outward_normal);
     rec->color = metal->color;
+    rec->fuzz = metal->fuzz < 1 ? metal->fuzz : 1; // fuzzの値を1以下に制限
 
     return 1;
 }
 
-t_hittable new_metal(t_vec3 center, double radius, t_color color) {
+t_hittable new_metal(t_vec3 center, double radius, t_color color, double fuzz) {
     t_metal *metal_data = malloc(sizeof(t_metal));
     metal_data->center = center;
     metal_data->radius = radius;
     metal_data->color = color;
+    metal_data->fuzz = fuzz;
 
     t_hittable hittable_metal;
     hittable_metal.data = metal_data;

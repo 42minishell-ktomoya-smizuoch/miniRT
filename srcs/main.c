@@ -31,12 +31,12 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
             scattered.direction = vec_sub(target, rec.point);
             attenuation = rec.color;
         } else {
-            // 金属反射（完全な鏡面反射）
+            // 金属反射
             scattered.origin = rec.point;
-            scattered.direction = reflected;
-            attenuation = rec.color;
+            scattered.direction = vec_add(reflected, vec_scalar(random_in_unit_sphere(), rec.fuzz));
             if (vec_dot(scattered.direction, rec.normal) <= 0)
                 return (t_color){0, 0, 0};
+            attenuation = rec.color;
         }
         t_color scattered_color = ray_color(&scattered, world, depth - 1);
         return vec3_to_color(vec_mul(color_to_vec3(attenuation), color_to_vec3(scattered_color)));
@@ -91,16 +91,16 @@ int main(void) {
     t_data data;
     t_camera camera;
     t_hittable_list *world;
-    int samples_per_pixel = 10;
+    int samples_per_pixel = 1000;
     int max_depth = 50;
 
     init_data(&data);
     camera.origin = vec_new(0, 0, 0);
 
     world = new_hittable_list(4); // 初期容量を4に設定
-    add_hittable(world, new_metal(vec_new(-1, 0, -1), 0.5, (t_color){0.8, 0.8, 0.8})); // 左の金属球（完全な鏡面反射）
+    add_hittable(world, new_metal(vec_new(-1, 0, -1), 0.5, (t_color){0.8, 0.8, 0.8}, 0.01)); // 左の金属球（完全な鏡面反射）
     add_hittable(world, new_lambertian(vec_new(0, 0, -1), 0.5, (t_color){0.8, 0.3, 0.3})); // 中央の拡散球（茶色）
-    add_hittable(world, new_metal(vec_new(1, 0, -1), 0.5, (t_color){0.8, 0.6, 0.2})); // 右の金属球（金色）
+    add_hittable(world, new_metal(vec_new(1, 0, -1), 0.5, (t_color){0.8, 0.6, 0.2}, 0.5)); // 右の金属球（金色、ぼやけた反射）
     add_hittable(world, new_lambertian(vec_new(0, -100.5, -1), 100, (t_color){0.8, 0.8, 0.0})); // 地面の球
 
     render(&data, &camera, world, samples_per_pixel, max_depth);
