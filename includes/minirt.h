@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/17 13:26:49 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:00:43 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_vec3	vec_normalize(t_vec3 a);
 t_vec3	ray_at(t_ray ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
+t_vec3 vec_mul(t_vec3 a, t_vec3 b);
 
 //random
 double random_double(); // 0から1の間のランダムな浮動小数点数を生成
