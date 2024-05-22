@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:06:40 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/18 17:36:55 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:41:42 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int	check_file_extension(const char *file_path, const char *extension)
 	return (0);
 }
 
+void	print_struct(t_data data)
+{
+	printf("sphere.center.x:%lf\nsphere.center.y:%lf\nsphere.center.z:%lf\nsphere.diameter:%lf\nsphere.color.r:%lf\nsphere.color.g:%lf\nsphere.color.b:%lf\n",
+	data.sp->center.x, data.sp->center.y, data.sp->center.z, data.sp->diameter, data.sp->color.r, data.sp->color.g, data.sp->color.b);
+}
+
 int	main(int argc, char *argv[])
 {
 	int		fd;
@@ -43,12 +49,12 @@ int	main(int argc, char *argv[])
 	char		*text;
 	char		type[10] = {0};
 	int			i;
-	t_sphere	sphere;
+	t_data		data;
 	
-	sphere.center.x = 0;
-	sphere.center.y = 0;
-	sphere.center.z = 0;
-	text = NULL;
+	data.sp = ft_calloc(1, sizeof(t_sphere));
+	data.sp->center.x = 0;
+	data.sp->center.y = 0;
+	data.sp->center.z = 0;
 	while (1)
 	{
 		i = 0;
@@ -60,24 +66,21 @@ int	main(int argc, char *argv[])
 			printf("newline\n");
 		} else { 
 			// “sp 0.0,0.0,20.6 12.6  10,0,255”
-			while (text[i] == ' ')
-				i++;
+			i += ft_strspn(text, " \t");
 			printf("&text[i]:%s\n", &text[i]);
-			if (ft_strncmp(&text[i], "sp", ft_strlen("sp")) == 0) {
-				if (sscanf(text, "%s %lf,%lf,%lf %lf %d,%d,%d", type,
-					&sphere.center.x, &sphere.center.y, &sphere.center.z, &sphere.diameter, &sphere.color.r, &sphere.color.g, &sphere.color.b) != 8) {
-					printf("x:%lf, y:%lf, z:%lf, diameter:%lf\n, r:%d, g:%d, b:%d",
-					sphere.center.x, sphere.center.y, sphere.center.z, sphere.diameter, sphere.color.r, sphere.color.g, sphere.color.b);
+			if (ft_strncmp(&text[i], "sp ", ft_strlen("sp ")) == 0) {
+				if (sscanf(text, "%s %lf,%lf,%lf %lf %lf,%lf,%lf", type,
+					&data.sp->center.x, &data.sp->center.y, &data.sp->center.z, &data.sp->diameter, &data.sp->color.r, &data.sp->color.g, &data.sp->color.b) != 8) {
+					print_struct(data);
 					printf("Error1\n");
 					exit(1);
 				}
-				printf("x:%lf, y:%lf, z:%lf, diameter:%lf, r:%d, g:%d, b:%d\n",
-					sphere.center.x, sphere.center.y, sphere.center.z, sphere.diameter, sphere.color.r, sphere.color.g, sphere.color.b);
+				print_struct(data);
 			}
 		}
 		free(text);
-		text = NULL;
 	}
+	free(data.sp);
 	close(fd);
 }
 
