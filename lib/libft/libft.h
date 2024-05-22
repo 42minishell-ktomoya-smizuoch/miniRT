@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 13:11:20 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/22 09:40:54 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
+char	*ft_strchrnul(const char *s, int c);
+size_t	ft_strspn(const char *s, const char *accept);
+size_t	ft_strcspn(const char *s, const char *reject);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

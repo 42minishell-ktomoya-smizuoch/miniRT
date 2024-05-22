@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 08:38:10 by smizuoch         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -64,6 +52,12 @@ typedef struct s_ray
 	t_vec3	direction;
 }	t_ray;
 
+typedef struct s_amblight
+{
+	double	ratio;
+	t_color	color;
+}	t_amblight;
+
 typedef struct s_camera
 {
 	t_vec3	origin;
@@ -81,17 +75,22 @@ typedef struct s_sphere
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	t_sphere	*sp;
+	t_amblight	*amb;
 }	t_data;
 
 //utils
 void print_progress(int current, int total);
+
+//checker
+int		check_file_extension(const char *file_path, const char *extension);
 
 // mlx
 void	init_data(t_data *data);
