@@ -35,7 +35,7 @@ int hit_metal(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_re
     rec->t = root;
     rec->point = ray_at(*ray, rec->t);
     t_vec3 outward_normal = vec_normalize(vec_sub(rec->point, metal->center));
-    set_face_normal(rec, ray, outward_normal);
+    set_face_normal_with_radius(rec, ray, outward_normal, metal->radius);
     rec->color = metal->color;
     rec->fuzz = metal->fuzz;
     rec->ref_idx = 0;

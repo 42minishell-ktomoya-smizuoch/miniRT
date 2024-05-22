@@ -23,12 +23,20 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
 
     if (hit_list(world, ray, 0.001, INFINITY, &rec)) {
         t_ray scattered;
-        t_color attenuation = {0, 0, 0}; // 初期化
-        if (rec.material == LAMBERTIAN) {
-            // ランバーティアン
-            t_vec3 target = vec_add(rec.point, vec_add(rec.normal, random_unit_vector()));
-            scattered.origin = rec.point;
-            scattered.direction = vec_sub(target, rec.point);
+        t_color attenuation;
+        t_vec3 unit_direction = vec_normalize(ray->direction);
+        double etai_over_etat = (rec.front_face) ? (1.0 / rec.ref_idx) : (rec.ref_idx);
+        double cos_theta = fmin(vec_dot(vec_scalar(unit_direction, -1), rec.normal), 1.0);
+        double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+        if (rec.material == DIELECTRIC) {
+            // 屈折と全反射
+            if (etai_over_etat * sin_theta > 1.0 || schlick(cos_theta, etai_over_etat) > random_double()) {
+                t_vec3 reflected = reflect(unit_direction, rec.normal);
+                scattered = (t_ray){rec.point, reflected};
+            } else {
+                t_vec3 refracted = refract(unit_direction, rec.normal, etai_over_etat);
+                scattered = (t_ray){rec.point, refracted};
+            }
             attenuation = rec.color;
         } else if (rec.material == METAL) {
             // 金属反射
@@ -39,35 +47,12 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
             if (vec_dot(scattered.direction, rec.normal) <= 0) {
                 return (t_color){0, 0, 0};
             }
-        } else if (rec.material == DIELECTRIC) {
-            // 誘電体
-            t_vec3 outward_normal;
-            t_vec3 refracted;
-            double ni_over_nt;
-            double reflect_prob;
-            double cosine;
-            if (vec_dot(ray->direction, rec.normal) > 0) {
-                outward_normal = vec_scalar(rec.normal, -1);
-                ni_over_nt = rec.ref_idx;
-                cosine = ni_over_nt * vec_dot(ray->direction, rec.normal) / vec_length(ray->direction);
-            } else {
-                outward_normal = rec.normal;
-                ni_over_nt = 1.0 / rec.ref_idx;
-                cosine = -vec_dot(ray->direction, rec.normal) / vec_length(ray->direction);
-            }
-            if (vec_length(refract(ray->direction, outward_normal, ni_over_nt)) > 0.0) {
-                refracted = refract(ray->direction, outward_normal, ni_over_nt);
-                reflect_prob = schlick(cosine, rec.ref_idx);
-            } else {
-                scattered = (t_ray){rec.point, reflect(ray->direction, rec.normal)};
-                reflect_prob = 1.0;
-            }
-            if (random_double() < reflect_prob) {
-                scattered = (t_ray){rec.point, reflect(ray->direction, rec.normal)};
-            } else {
-                scattered = (t_ray){rec.point, refracted};
-            }
-            attenuation = rec.color; // 誘電体の場合も初期化
+        } else {
+            // ランバーティアン
+            t_vec3 target = vec_add(rec.point, vec_add(rec.normal, random_unit_vector()));
+            scattered.origin = rec.point;
+            scattered.direction = vec_sub(target, rec.point);
+            attenuation = rec.color;
         }
 
         t_color scattered_color = ray_color(&scattered, world, depth - 1);
@@ -129,11 +114,12 @@ int main(void) {
     init_data(&data);
     camera.origin = vec_new(0, 0, 0);
 
-    world = new_hittable_list(5); // 初期容量を5に設定
+    world = new_hittable_list(6); // 初期容量を6に設定
     add_hittable(world, new_metal(vec_new(-1, 0, -1), 0.5, (t_color){0.8, 0.8, 0.8}, 0.0)); // 左の金属球（完全な鏡面反射）
     add_hittable(world, new_lambertian(vec_new(0, 0, -1), 0.5, (t_color){0.8, 0.3, 0.3})); // 中央の拡散球（茶色）
     add_hittable(world, new_metal(vec_new(1, 0, -1), 0.5, (t_color){0.8, 0.6, 0.2}, 0.3)); // 右の金属球（金色、ぼやけた反射）
-    // add_hittable(world, new_dielectric(vec_new(-1, 0, -1), 0.5, 1.2)); // 中央の誘電体球（屈折率1.5）
+    add_hittable(world, new_dielectric(vec_new(-1, 0, 1), 0.5, 1.5)); // 左の誘電体球（外側）
+    add_hittable(world, new_dielectric(vec_new(-1, 0, 1), -0.45, 1.5)); // 左の誘電体球（内側）
     add_hittable(world, new_lambertian(vec_new(0, -100.5, -1), 100, (t_color){0.8, 0.8, 0.0})); // 地面の球
 
     render(&data, &camera, world, samples_per_pixel, max_depth);

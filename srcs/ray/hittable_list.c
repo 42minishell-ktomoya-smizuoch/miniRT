@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:23:19 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/21 11:50:35 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/22 09:58:47 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 void set_face_normal(t_hit_record *rec, t_ray *r, t_vec3 outward_normal) {
     rec->front_face = vec_dot(r->direction, outward_normal) < 0;
     rec->normal = rec->front_face ? outward_normal : vec_scalar(outward_normal, -1);
+}
+
+void set_face_normal_with_radius(t_hit_record *rec, t_ray *r, t_vec3 outward_normal, double radius) {
+    if (radius < 0) {
+        outward_normal = vec_scalar(outward_normal, -1);
+    }
+    set_face_normal(rec, r, outward_normal);
 }
 
 t_hittable_list	*new_hittable_list(int initial_capacity)
