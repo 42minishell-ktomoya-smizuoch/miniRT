@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:13:35 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/14 15:17:57 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:00:36 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,9 @@ int	vec_to_color(t_color col)
 	b = (int)(255.999 * col.b);
 	return ((r << 16) | (g << 8) | b);
 }
+
+t_vec3 vec_mul(t_vec3 a, t_vec3 b)
+{
+	return ((t_vec3){a.x * b.x, a.y * b.y, a.z * b.z});
+}
+

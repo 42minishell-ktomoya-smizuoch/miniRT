@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:10:40 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 14:24:27 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:33:42 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@
 # include "minirt.h"
 
 // ヒット情報を格納する構造体
-typedef struct s_hit_record
-{
-	t_vec3	point;
-	t_vec3	normal;
-	double	t;
-	int		front_face;
-	t_color	color;
-}	t_hit_record;
+typedef struct s_hit_record {
+    t_vec3 point;
+    t_vec3 normal;
+    double t;
+    int front_face;
+    t_color color;
+    double fuzz; // 金属のぼやけ具合
+	double ref_idx; // 屈折率
+	t_material_type material; // マテリアルタイプ
+} t_hit_record;
 
-struct		s_hittable;
-typedef int	(*t_hit_fn)(struct s_hittable *,
-	t_ray *, double, double, t_hit_record *);
+struct s_hittable;
+typedef int (*hit_fn)(struct s_hittable *, t_ray *, double, double, t_hit_record *);
 
 // ヒッタブル構造体
-typedef struct s_hittable
-{
-	void		*data;
-	t_hit_fn	hit;
+typedef struct s_hittable {
+    void *data;
+    hit_fn hit;
 	void (*free_data)(void *);
-}	t_hittable;
+} t_hittable;
 
 typedef struct s_hittable_list
 {

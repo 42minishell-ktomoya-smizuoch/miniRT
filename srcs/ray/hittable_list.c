@@ -6,19 +6,15 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:23:19 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/17 13:49:24 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:50:35 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable.h"
 
-void	set_face_normal(t_hit_record *rec, t_ray *r, t_vec3 outward_normal)
-{
-	rec->front_face = vec_dot(r->direction, outward_normal) < 0;
-	if (rec->front_face)
-		rec->normal = outward_normal;
-	else
-		rec->normal = vec_scalar(outward_normal, -1);
+void set_face_normal(t_hit_record *rec, t_ray *r, t_vec3 outward_normal) {
+    rec->front_face = vec_dot(r->direction, outward_normal) < 0;
+    rec->normal = rec->front_face ? outward_normal : vec_scalar(outward_normal, -1);
 }
 
 t_hittable_list	*new_hittable_list(int initial_capacity)
