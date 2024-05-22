@@ -65,6 +65,13 @@ typedef struct s_camera
 	double	fov;
 }	t_camera;
 
+typedef struct s_light
+{
+	t_vec3	origin;
+	double	ratio;
+	t_color	color;
+}	t_light;
+
 typedef struct s_sphere
 {
 	t_vec3	center;
@@ -72,6 +79,22 @@ typedef struct s_sphere
 	double	radius;
 	t_color	color;
 }	t_sphere;
+
+typedef struct s_plane
+{
+	t_vec3	origin;
+	t_vec3	normal;
+	t_color	color;
+}	t_plane;
+
+typedef struct s_cylinder
+{
+	t_vec3	center;
+	t_vec3	axisnorm;
+	double	diameter;
+	double	height;
+	t_color	color;
+}	t_cylinder;
 
 typedef struct s_data
 {
@@ -82,8 +105,12 @@ typedef struct s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	t_sphere	*sp;
 	t_amblight	*amb;
+	t_camera	*camera;
+	t_light		*light;
+	t_sphere	*sphere;
+	t_plane		*plane;
+	t_cylinder	*cylinder;
 }	t_data;
 
 //utils
