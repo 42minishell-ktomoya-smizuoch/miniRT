@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 09:14:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 08:22:36 by ktomoya          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -35,6 +23,13 @@
 # define ERR_MALLOC "Error: failed to allocate memory"
 # define ERR_ARG "Error: invalid argument"
 # define ERR_FILE_FORMAT "Error: invalid file format"
+
+# define LAMBERTIAN 1
+# define METAL 2
+# define DIELECTRIC 3
+
+//int型のt_material_typeを定義
+typedef int t_material_type;
 
 //structure
 typedef struct s_vec3
@@ -105,6 +100,7 @@ t_vec3	vec_normalize(t_vec3 a);
 t_vec3	ray_at(t_ray ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
+t_vec3 vec_mul(t_vec3 a, t_vec3 b);
 
 //random
 double random_double(); // 0から1の間のランダムな浮動小数点数を生成
