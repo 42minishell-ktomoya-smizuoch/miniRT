@@ -52,6 +52,12 @@ typedef struct s_ray
 	t_vec3	direction;
 }	t_ray;
 
+typedef struct s_ambient_light
+{
+	double	ratio;
+	t_color	color;
+}
+
 typedef struct s_camera
 {
 	t_vec3	origin;
