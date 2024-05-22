@@ -52,11 +52,11 @@ typedef struct s_ray
 	t_vec3	direction;
 }	t_ray;
 
-typedef struct s_ambient_light
+typedef struct s_amblight
 {
 	double	ratio;
 	t_color	color;
-}
+}	t_amblight;
 
 typedef struct s_camera
 {
@@ -75,14 +75,15 @@ typedef struct s_sphere
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
 	t_sphere	*sp;
+	t_amblight	*amb;
 }	t_data;
 
 //utils
