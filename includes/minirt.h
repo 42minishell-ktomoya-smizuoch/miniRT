@@ -74,6 +74,7 @@ typedef struct s_camera
 typedef struct s_sphere
 {
 	t_vec3	center;
+	double	diameter;
 	double	radius;
 	t_color	color;
 }	t_sphere;
