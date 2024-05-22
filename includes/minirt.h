@@ -82,6 +82,9 @@ typedef struct s_data
 //utils
 void print_progress(int current, int total);
 
+//checker
+int		check_file_extension(const char *file_path, const char *extension);
+
 // mlx
 void	init_data(t_data *data);
 void	wait_input(t_data *data);
