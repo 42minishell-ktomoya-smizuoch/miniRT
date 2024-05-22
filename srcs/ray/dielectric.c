@@ -44,7 +44,7 @@ int hit_dielectric(t_hittable *self, t_ray *ray, double t_min, double t_max, t_h
     rec->t = root;
     rec->point = ray_at(*ray, rec->t);
     t_vec3 outward_normal = vec_normalize(vec_sub(rec->point, dielectric->center));
-    set_face_normal(rec, ray, outward_normal);
+    set_face_normal_with_radius(rec, ray, outward_normal, dielectric->radius);
     rec->color = (t_color){1.0, 1.0, 1.0}; // 誘電体は透明
     rec->fuzz = 0; // 誘電体にはぼやけはない
     rec->ref_idx = dielectric->ref_idx;

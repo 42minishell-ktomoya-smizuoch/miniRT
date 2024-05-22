@@ -30,7 +30,7 @@ int hit_lambertian(t_hittable *self, t_ray *ray, double t_min, double t_max, t_h
     rec->t = root;
     rec->point = ray_at(*ray, rec->t);
     t_vec3 outward_normal = vec_normalize(vec_sub(rec->point, lambertian->center));
-    set_face_normal(rec, ray, outward_normal);
+    set_face_normal_with_radius(rec, ray, outward_normal, lambertian->radius);
     rec->color = lambertian->color;
     rec->fuzz = 0;
     rec->ref_idx = 0;
