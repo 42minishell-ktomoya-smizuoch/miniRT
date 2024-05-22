@@ -58,12 +58,14 @@ typedef struct s_amblight
 	t_color	color;
 }	t_amblight;
 
-typedef struct s_camera
-{
-	t_vec3	origin;
-	t_vec3	normal;
-	double	fov;
-}	t_camera;
+typedef struct s_camera {
+    t_vec3 origin;
+    t_vec3 lower_left_corner;
+    t_vec3 horizontal;
+    t_vec3 vertical;
+    t_vec3 u, v, w;
+    double lens_radius;
+} t_camera;
 
 typedef struct s_light
 {
@@ -138,6 +140,7 @@ t_vec3	ray_at(t_ray ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
 t_vec3 vec_mul(t_vec3 a, t_vec3 b);
+t_vec3 vec_cross(t_vec3 a, t_vec3 b);
 
 //random
 double random_double(); // 0から1の間のランダムな浮動小数点数を生成
