@@ -6,11 +6,12 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:06:40 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/23 12:04:50 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:16:18 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdbool.h>
 
 int	check_file_extension(const char *file_path, const char *extension)
 {
@@ -27,6 +28,16 @@ int	check_file_extension(const char *file_path, const char *extension)
 		return (1);
 	}
 	return (0);
+}
+
+bool	in_range(double num, double lower, double upper)
+{
+	return (lower <= num && num <= upper);
+}
+
+bool	is_rgb_in_range(double r, double g, double b)
+{
+	return (in_range(r, 0, 255) && in_range(g, 0, 255) && in_range(b, 0, 255));
 }
 
 void	print_struct(t_data data)
@@ -139,6 +150,12 @@ int	main(int argc, char *argv[])
 				{
 					print_struct(data);
 					printf("Error1\n");
+					exit(1);
+				}
+				if (in_range(data.amb.ratio, 0, 1) == false && !is_rgb_in_range(data.amb.color.r, data.amb.color.g, data.amb.color.b))
+				{
+					print_struct(data);
+					printf("Error1-B\n");
 					exit(1);
 				}
 			}
