@@ -6,9 +6,9 @@ SRCS += ft_lstadd_front.c ft_lstlast.c ft_lstnew.c ft_lstsize.c ft_lstadd_back.c
 
 OBJS = $(SRCS:.c=.o)
 
-CC = cc
+CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -O2 -Wall -Wextra -Werror -g
 
 all: $(NAME)
 

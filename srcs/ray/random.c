@@ -6,16 +6,25 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:15 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/17 13:40:31 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:02:07 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+// not use rand() function
 double	random_double(void)
 {
-	return (rand() / (RAND_MAX + 1.0));
+	static unsigned long int next = 1;
+
+	next = next * 1103515245 + 12345;
+	return ((unsigned)(next / 65536) % 32768) / 32768.0;
 }
+
+// double	random_double(void)
+// {
+// 	return (rand() / (RAND_MAX + 1.0));
+// }
 
 double	random_double_range(double min, double max)
 {
