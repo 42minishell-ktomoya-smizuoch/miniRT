@@ -34,10 +34,10 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
             // 屈折と全反射
             if (etai_over_etat * sin_theta > 1.0 || schlick(cos_theta, etai_over_etat) > random_double()) {
                 t_vec3 reflected = reflect(unit_direction, rec.normal);
-                scattered = (t_ray){rec.point, reflected, ray->time};
+                scattered = (t_ray){rec.point, reflected, ray->time}; // 修正
             } else {
                 t_vec3 refracted = refract(unit_direction, rec.normal, etai_over_etat);
-                scattered = (t_ray){rec.point, refracted, ray->time};
+                scattered = (t_ray){rec.point, refracted, ray->time}; // 修正
             }
             attenuation = rec.color;
         } else if (rec.material == METAL) {
@@ -45,6 +45,7 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
             t_vec3 reflected = reflect(vec_normalize(ray->direction), rec.normal);
             scattered.origin = rec.point;
             scattered.direction = vec_add(reflected, vec_scalar(random_in_unit_sphere(), rec.fuzz));
+            scattered.time = ray->time; // 修正
             attenuation = rec.color;
             if (vec_dot(scattered.direction, rec.normal) <= 0) {
                 return (t_color){0, 0, 0};
@@ -54,6 +55,7 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, int depth) {
             t_vec3 target = vec_add(rec.point, vec_add(rec.normal, random_unit_vector()));
             scattered.origin = rec.point;
             scattered.direction = vec_sub(target, rec.point);
+            scattered.time = ray->time; // 修正
             attenuation = rec.color;
         }
 
@@ -159,5 +161,3 @@ int main(void) {
 
     return 0;
 }
-
-
