@@ -107,12 +107,12 @@ typedef struct s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	t_amblight	*amb;
-	t_camera	*camera;
-	t_light		*light;
-	t_sphere	*sphere;
-	t_plane		*plane;
-	t_cylinder	*cylinder;
+	t_amblight	amb;
+	t_camera	camera;
+	t_light		light;
+	t_sphere	sphere;
+	t_plane		plane;
+	t_cylinder	cylinder;
 }	t_data;
 
 //utils
