@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 09:40:54 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/28 13:49:02 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ double	read_double(const char **str, int s);
 double	ft_atof(const char *str);
 size_t	ft_strlens(const char *s);
 
-int		ft_rand(void);
-void	ft_srand(unsigned int seed);
 void	*ft_realloc(void *ptr, size_t new_size);
 
 #endif
