@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:10:40 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 10:27:46 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:24:34 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ int				hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t
 void			free_hittable_list(t_hittable_list *list);
 
 int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
-t_hittable new_sphere(t_vec3 center, double radius, t_color color);
+t_hittable new_sphere(t_vec3 center0, t_vec3 center1, double time0, double time1, double radius, t_color color, t_material_type material, double fuzz, double ref_idx);
 
-
+t_vec3 reflect(t_vec3 v, t_vec3 n);
+t_vec3 refract(t_vec3 uv, t_vec3 n, double etai_over_etat);
+double schlick(double cosine, double ref_idx);
 
 #endif

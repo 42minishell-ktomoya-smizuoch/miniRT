@@ -76,13 +76,15 @@ typedef struct s_light
 	t_color	color;
 }	t_light;
 
-typedef struct s_sphere
-{
-	t_vec3	center;
-	double	diameter;
-	double	radius;
-	t_color	color;
-}	t_sphere;
+typedef struct s_sphere {
+    t_vec3 center0, center1;
+    double time0, time1;
+    double radius;
+    t_color color;
+    t_material_type material;
+    double fuzz; // 金属のぼやけ具合
+    double ref_idx; // 屈折率
+} t_sphere;
 
 typedef struct s_plane
 {
