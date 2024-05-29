@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rand.c                                          :+:      :+:    :+:   */
+/*   xmalloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 08:30:08 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 16:15:24 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/05/24 14:00:38 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/05/24 14:01:34 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
-unsigned long int	g_next = 1;
-
-int ft_rand(void)
+void *xmalloc(size_t size)
 {
-    g_next = g_next * 1103515245 + 12345;
-    return((unsigned)(g_next/65536) % 32768);
-}
+	void *ptr;
 
-void	ft_srand(unsigned int seed)
-{
-	g_next = seed;
+	errno = 0;
+	ptr = malloc(size);
+	if (!ptr || errno != 0)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	return (ptr);
 }
-
-// int main() {
-//     ft_srand(12345);
-//     for (int i = 0; i < 10; i++) {
-//         printf("%d\n", ft_rand());
-//     }
-//     return 0;
-// }

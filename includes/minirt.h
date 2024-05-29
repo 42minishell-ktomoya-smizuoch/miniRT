@@ -50,6 +50,7 @@ typedef struct s_ray
 {
 	t_vec3	origin;
 	t_vec3	direction;
+	double	time;
 }	t_ray;
 
 typedef struct s_amblight
@@ -65,6 +66,7 @@ typedef struct s_camera {
     t_vec3 vertical;
     t_vec3 u, v, w;
     double lens_radius;
+    double time0, time1; // 新しく追加: シャッターの開閉時間
 } t_camera;
 
 typedef struct s_light

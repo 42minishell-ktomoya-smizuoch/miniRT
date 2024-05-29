@@ -1,7 +1,7 @@
 NAME = miniRT
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -O2 -Wall -Wextra -Werror
 
 # Include directories
 INCDIR = ./includes
@@ -32,6 +32,7 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/metal.c \
 	   srcs/ray/dielectric.c \
 	   srcs/ray/camera.c \
+	   srcs/ray/moving_sphere.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 

@@ -3,7 +3,7 @@
 
 t_vec3 random_in_unit_disk();
 
-t_camera camera_new(t_vec3 lookfrom, t_vec3 lookat, t_vec3 vup, double vfov, double aspect_ratio, double aperture, double focus_dist) {
+t_camera camera_new(t_vec3 lookfrom, t_vec3 lookat, t_vec3 vup, double vfov, double aspect_ratio, double aperture, double focus_dist, double time0, double time1) {
     t_camera cam;
     double theta = vfov * M_PI / 180.0;
     double h = tan(theta / 2);
@@ -20,17 +20,21 @@ t_camera camera_new(t_vec3 lookfrom, t_vec3 lookat, t_vec3 vup, double vfov, dou
     cam.lower_left_corner = vec_sub(vec_sub(vec_sub(cam.origin, vec_scalar(cam.horizontal, 0.5)), vec_scalar(cam.vertical, 0.5)), vec_scalar(cam.w, focus_dist));
 
     cam.lens_radius = aperture / 2;
+    cam.time0 = time0;
+    cam.time1 = time1;
     return cam;
 }
 
 t_ray get_ray(t_camera *cam, double s, double t) {
     t_vec3 rd = vec_scalar(random_in_unit_disk(), cam->lens_radius);
     t_vec3 offset = vec_add(vec_scalar(cam->u, rd.x), vec_scalar(cam->v, rd.y));
+    double time = cam->time0 + random_double() * (cam->time1 - cam->time0);
 
     t_ray ray;
     ray.origin = vec_add(cam->origin, offset);
     ray.direction = vec_sub(vec_add(vec_add(cam->lower_left_corner, vec_scalar(cam->horizontal, s)), vec_scalar(cam->vertical, t)), cam->origin);
     ray.direction = vec_sub(ray.direction, offset);
+    ray.time = time; // 新しく追加: レイの時間
     return ray;
 }
 
