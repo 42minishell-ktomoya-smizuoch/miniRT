@@ -1,7 +1,8 @@
-#include "hittable.h"
 #include "minirt.h"
-#include "math_utils.h"
 #include "camera.h"
+#include "hittable.h"
+#include "aabb.h"
+#include "math_utils.h"
 
 // t_color型に変換する関数
 t_color vec3_to_color(t_vec3 v) {
@@ -125,29 +126,29 @@ int main(void) {
     add_hittable(world, new_sphere(vec_new(-4, 1, 0), vec_new(-4, 1, 0), 0.0, 1.0, 1.0, (t_color){0.4, 0.2, 0.1}, LAMBERTIAN, 0.0, 0.0)); // 拡散球
     add_hittable(world, new_sphere(vec_new(4, 1, 0), vec_new(4, 1, 0), 0.0, 1.0, 1.0, (t_color){0.7, 0.6, 0.5}, METAL, 0.0, 0.0)); // 金属球
 
-    // 小さな動く球のクラスター
-    for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
-            double choose_mat = random_double();
-            t_vec3 center = vec_new(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
-            if (vec_length(vec_sub(center, vec_new(4, 0.2, 0))) > 0.9) {
-                t_vec3 center1 = vec_add(center, vec_new(0, 0.5 * random_double(), 0));
-                if (choose_mat < 0.8) {
-                    // 拡散
-                    t_color albedo = vec3_to_color(vec_mul(color_to_vec3((t_color){random_double(), random_double(), random_double()}), color_to_vec3((t_color){random_double(), random_double(), random_double()})));
-                    add_hittable(world, new_sphere(center, center1, 0.0, 1.0, 0.2, albedo, LAMBERTIAN, 0.0, 0.0));
-                } else if (choose_mat < 0.95) {
-                    // 金属
-                    t_color albedo = (t_color){0.5 * (1 + random_double()), 0.5 * (1 + random_double()), 0.5 * (1 + random_double())};
-                    double fuzz = 0.5 * random_double();
-                    add_hittable(world, new_sphere(center, center1, 0.0, 1.0, 0.2, albedo, METAL, fuzz, 0.0));
-                } else {
-                    // ガラス
-                    add_hittable(world, new_sphere(center, center1, 0.0, 1.0, 0.2, (t_color){1.0, 1.0, 1.0}, DIELECTRIC, 0.0, 1.5));
-                }
-            }
-        }
-    }
+    // // 小さな動く球のクラスター
+    // for (int a = -11; a < 11; a++) {
+    //     for (int b = -11; b < 11; b++) {
+    //         double choose_mat = random_double();
+    //         t_vec3 center = vec_new(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
+    //         if (vec_length(vec_sub(center, vec_new(4, 0.2, 0))) > 0.9) {
+    //             t_vec3 center1 = vec_add(center, vec_new(0, 0.5 * random_double(), 0));
+    //             if (choose_mat < 0.8) {
+    //                 // 拡散
+    //                 t_color albedo = vec3_to_color(vec_mul(color_to_vec3((t_color){random_double(), random_double(), random_double()}), color_to_vec3((t_color){random_double(), random_double(), random_double()})));
+    //                 add_hittable(world, new_sphere(center, center1, 0.0, 1.0, 0.2, albedo, LAMBERTIAN, 0.0, 0.0));
+    //             } else if (choose_mat < 0.95) {
+    //                 // 金属
+    //                 t_color albedo = (t_color){0.5 * (1 + random_double()), 0.5 * (1 + random_double()), 0.5 * (1 + random_double())};
+    //                 double fuzz = 0.5 * random_double();
+    //                 add_hittable(world, new_sphere(center, center1, 0.0, 1.0, 0.2, albedo, METAL, fuzz, 0.0));
+    //             } else {
+    //                 // ガラス
+    //                 add_hittable(world, new_sphere(center, center1, 0.0, 1.0, 0.2, (t_color){1.0, 1.0, 1.0}, DIELECTRIC, 0.0, 1.5));
+    //             }
+    //         }
+    //     }
+    // }
 
     render(&data, &camera, world, samples_per_pixel, max_depth);
     wait_input(&data);

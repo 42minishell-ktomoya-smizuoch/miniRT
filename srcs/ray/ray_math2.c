@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:13:35 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 13:40:17 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:09:07 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_vec3	vec_normalize(t_vec3 a)
 }
 
 // calculate the point at parameter t on a ray
-t_vec3	ray_at(t_ray ray, double t)
+t_vec3 ray_at(const t_ray *ray, double t)
 {
-	return (vec_add(ray.origin, vec_scalar(ray.direction, t)));
+    return vec_add(ray->origin, vec_scalar(ray->direction, t));
 }
 
 // calculate the unit vector of a vector

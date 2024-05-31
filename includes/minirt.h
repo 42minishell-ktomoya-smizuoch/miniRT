@@ -140,7 +140,7 @@ t_vec3	vec_scalar(t_vec3 a, double t);
 double	vec_dot(t_vec3 a, t_vec3 b);
 double	vec_length(t_vec3 a);
 t_vec3	vec_normalize(t_vec3 a);
-t_vec3	ray_at(t_ray ray, double t);
+t_vec3 ray_at(const t_ray *ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
 t_vec3 vec_mul(t_vec3 a, t_vec3 b);
