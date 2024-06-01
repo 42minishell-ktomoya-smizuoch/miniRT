@@ -10,7 +10,12 @@
 
 // t_color型に変換する関数
 t_color vec3_to_color(t_vec3 v) {
-    return (t_color){v.x, v.y, v.z};
+    // 色の成分を0から1の間にクランプする
+    double r = fmax(0.0, fmin(1.0, v.x));
+    double g = fmax(0.0, fmin(1.0, v.y));
+    double b = fmax(0.0, fmin(1.0, v.z));
+
+    return (t_color){r, g, b};
 }
 
 // t_vec3型に変換する関数
@@ -70,7 +75,7 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, int 
     // double t = 0.5 * (unit_direction.y + 1.0);
     // return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
 
-	return (t_color){0.1, 0.1, 0.1};
+	return (t_color){0, 0, 0};
 }
 
 
@@ -78,24 +83,36 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, int 
 // ピクセルカラーをスケールし、サンプルの平均を計算
 t_color scale_color(t_color color, int samples_per_pixel) {
     double scale = 1.0 / samples_per_pixel;
-    color.r = sqrt(scale * color.r);
-    color.g = sqrt(scale * color.g);
-    color.b = sqrt(scale * color.b);
+    color.r = sqrt(fmax(0.0, color.r * scale));
+    color.g = sqrt(fmax(0.0, color.g * scale));
+    color.b = sqrt(fmax(0.0, color.b * scale));
     return color;
 }
+
 
 void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list *lights, int samples_per_pixel, int max_depth) {
     int x, y, s;
     for (y = 0; y < WINDOW_HEIGHT; y++) {
         for (x = 0; x < WINDOW_WIDTH; x++) {
-            t_color pixel_color = {0, 0, 0};
+            t_vec3 accumulated_color = {0, 0, 0};
             for (s = 0; s < samples_per_pixel; s++) {
                 double u = (x + random_double()) / (WINDOW_WIDTH - 1);
                 double v = ((WINDOW_HEIGHT - 1 - y) + random_double()) / (WINDOW_HEIGHT - 1);
                 t_ray ray = get_ray(camera, u, v);
-                pixel_color = vec3_to_color(vec_add(color_to_vec3(pixel_color), color_to_vec3(ray_color(&ray, world, lights, max_depth))));
+                t_color sample_color = ray_color(&ray, world, lights, max_depth);
+                accumulated_color = vec_add(accumulated_color, color_to_vec3(sample_color));
             }
-            pixel_color = scale_color(pixel_color, samples_per_pixel);
+            // ここで平均化
+            accumulated_color.x /= samples_per_pixel;
+            accumulated_color.y /= samples_per_pixel;
+            accumulated_color.z /= samples_per_pixel;
+
+            // ガンマ補正を適用
+            t_color pixel_color = {
+                sqrt(accumulated_color.x),
+                sqrt(accumulated_color.y),
+                sqrt(accumulated_color.z)
+            };
             int color = vec_to_color(pixel_color);
             my_mlx_pixel_put(data, x, y, color);
         }
@@ -104,6 +121,7 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list
     printf("\n");
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
+
 
 int main(void) {
     t_data data;
@@ -154,10 +172,10 @@ int main(void) {
     ));
 
     // // 複数のライトを追加
-    lights = new_light_list(2);
-    // add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.2));
-    add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.1));
-    add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.1));
+    lights = new_light_list(3);
+    add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
+    add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
+    add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     render(&data, &camera, world, &lights, samples_per_pixel, max_depth);
     wait_input(&data);
