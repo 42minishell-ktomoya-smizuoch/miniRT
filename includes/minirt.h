@@ -69,12 +69,17 @@ typedef struct s_camera {
     double time0, time1; // 新しく追加: シャッターの開閉時間
 } t_camera;
 
-typedef struct s_light
-{
-	t_vec3	origin;
-	double	ratio;
-	t_color	color;
-}	t_light;
+typedef struct s_light {
+    t_vec3 position;
+    t_color color;
+    double intensity;
+} t_light;
+
+typedef struct s_light_list {
+    t_light *lights;
+    int count;
+} t_light_list;
+
 
 typedef struct s_sphere
 {
