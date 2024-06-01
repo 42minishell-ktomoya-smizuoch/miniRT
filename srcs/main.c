@@ -154,10 +154,10 @@ int main(void) {
     ));
 
     // // 複数のライトを追加
-    lights = new_light_list(1);
+    lights = new_light_list(2);
     // add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.2));
-    // add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.2));
-    add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.05));
+    add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.1));
+    add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.1));
 
     render(&data, &camera, world, &lights, samples_per_pixel, max_depth);
     wait_input(&data);
