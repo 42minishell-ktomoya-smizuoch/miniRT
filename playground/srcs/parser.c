@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:06:40 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/23 13:16:18 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/05/31 19:37:14 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ int	check_file_extension(const char *file_path, const char *extension)
 bool	in_range(double num, double lower, double upper)
 {
 	return (lower <= num && num <= upper);
+}
+
+bool	out_of_range(double num, double lower, double upper)
+{
+	return (num < lower || upper < num);
+}
+
+bool out_of_rgb_range(t_color color)
+{
+    return (out_of_range(color.r, 0, 255) || out_of_range(color.g, 0, 255) || out_of_range(color.b, 0, 255));
+}
+
+bool	out_of_vec3_range(t_vec3 vec3, double lower, double upper)
+{
+	return (out_of_range(vec3.x, lower, upper) || out_of_range(vec3.y, lower, upper)
+			|| out_of_range(vec3.z, lower, upper));
 }
 
 bool	is_rgb_in_range(double r, double g, double b)
@@ -152,7 +168,8 @@ int	main(int argc, char *argv[])
 					printf("Error1\n");
 					exit(1);
 				}
-				if (in_range(data.amb.ratio, 0, 1) == false && !is_rgb_in_range(data.amb.color.r, data.amb.color.g, data.amb.color.b))
+				// 0.0 <= ratio <= 1.0 && 0.0 <= color <= 255
+				if (out_of_range(data.amb.ratio, 0, 1) || out_of_rgb_range(data.amb.color))
 				{
 					print_struct(data);
 					printf("Error1-B\n");
@@ -168,6 +185,14 @@ int	main(int argc, char *argv[])
 					printf("Error2\n");
 					exit(1);
 				}
+				// -1.0 <= normal <= 1.0 && 0.0 <= fov <= 180.0
+				if (out_of_vec3_range(data.camera.normal, -1.0, 1.0)
+					|| out_of_range(data.camera.fov, 0.0, 180.0))
+				{
+					print_struct(data);
+					printf("Error2-B\n");
+					exit(1);
+				}
 			}
 			else if (ft_strncmp(&text[i], "L", 1) == 0 && ft_isspace(text[i + 1]) != 0)
 			{
@@ -176,6 +201,13 @@ int	main(int argc, char *argv[])
 				{
 					print_struct(data);
 					printf("Error3\n");
+					exit(1);
+				}
+				// 0.0 <= ratio <= 1.0 || 0.0 <= color <= 255.0
+				if (out_of_range(data.light.ratio, 0.0, 1.0) || out_of_rgb_range(data.light.color))
+				{
+					print_struct(data);
+					printf("Error3-B\n");
 					exit(1);
 				}
 			}
@@ -189,6 +221,13 @@ int	main(int argc, char *argv[])
 					printf("Error4\n");
 					exit(1);
 				}
+				// 0.0 <= color <= 255.0
+				if (out_of_rgb_range(data.sphere.color))
+				{
+					print_struct(data);
+					printf("Error4-B\n");
+					exit(1);
+				}
 			}
 			else if (ft_strncmp(&text[i], "pl", 2) == 0 && ft_isspace(text[i + 2]) != 0)
 			{
@@ -199,13 +238,27 @@ int	main(int argc, char *argv[])
 					printf("Error5\n");
 					exit(1);
 				}
+				// -1.0 <= norm <= 1.0 || 0.0 <= color <= 255.0
+				if (out_of_vec3_range(data.plane.normal, -1.0, 1.0) || out_of_rgb_range(data.plane.color))
+				{
+					print_struct(data);
+					printf("Error5-B\n");
+					exit(1);
+				}
 			}
 			else if (ft_strncmp(&text[i], "cy", 2) == 0 && ft_isspace(text[i + 2]) != 0)
 			{
 				if (sscanf(text, "%s %lf,%lf,%lf %lf,%lf,%lf %lf %lf %lf,%lf,%lf", type, &data.cylinder.center.x, &data.cylinder.center.y, &data.cylinder.center.z, &data.cylinder.axisnorm.x, &data.cylinder.axisnorm.y, &data.cylinder.axisnorm.z, &data.cylinder.diameter, &data.cylinder.height, &data.cylinder.color.r, &data.cylinder.color.g, &data.cylinder.color.b) != 12)
 				{
 					print_struct(data);
-					printf("Error5\n");
+					printf("Error6\n");
+					exit(1);
+				}
+				// -1.0 <= axisnorm <= 1.0 && 0.0 <= color <= 255.0
+				if (out_of_vec3_range(data.cylinder.axisnorm, -1.0, 1.0) || out_of_rgb_range(data.cylinder.color))
+				{
+					print_struct(data);
+					printf("Error6-B\n");
 					exit(1);
 				}
 			}
