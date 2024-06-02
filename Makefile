@@ -35,6 +35,7 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/moving_sphere.c \
 	   srcs/ray/rectangle.c \
 	   srcs/ray/light.c \
+	   srcs/ray/cylinder.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 

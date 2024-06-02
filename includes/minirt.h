@@ -105,6 +105,7 @@ typedef struct s_cylinder
 	double	diameter;
 	double	height;
 	t_color	color;
+	t_material_type material;
 }	t_cylinder;
 
 typedef struct s_data

@@ -7,10 +7,10 @@
 #include "camera.h"
 #include "rectangle.h"
 #include "light.h"
+#include "cylinder.h"
 
 // t_color型に変換する関数
 t_color vec3_to_color(t_vec3 v) {
-    // 色の成分を0から1の間にクランプする
     double r = fmax(0.0, fmin(1.0, v.x));
     double g = fmax(0.0, fmin(1.0, v.y));
     double b = fmax(0.0, fmin(1.0, v.z));
@@ -71,14 +71,11 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, int 
         return vec3_to_color(result_color);
     }
 
-    // t_vec3 unit_direction = vec_normalize(ray->direction);
-    // double t = 0.5 * (unit_direction.y + 1.0);
-    // return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
-
-	return (t_color){0, 0, 0};
+	t_vec3 unit_direction = vec_normalize(ray->direction);
+    double t = 0.5 * (unit_direction.y + 1.0);
+    return (t_color){(1.0 - t) * 1.0 + t * 0.5, (1.0 - t) * 1.0 + t * 0.7, (1.0 - t) * 1.0 + t * 1.0};
+    // return (t_color){0, 0, 0}; // 背景を黒に設定
 }
-
-
 
 // ピクセルカラーをスケールし、サンプルの平均を計算
 t_color scale_color(t_color color, int samples_per_pixel) {
@@ -88,7 +85,6 @@ t_color scale_color(t_color color, int samples_per_pixel) {
     color.b = sqrt(fmax(0.0, color.b * scale));
     return color;
 }
-
 
 void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list *lights, int samples_per_pixel, int max_depth) {
     int x, y, s;
@@ -102,12 +98,10 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list
                 t_color sample_color = ray_color(&ray, world, lights, max_depth);
                 accumulated_color = vec_add(accumulated_color, color_to_vec3(sample_color));
             }
-            // ここで平均化
             accumulated_color.x /= samples_per_pixel;
             accumulated_color.y /= samples_per_pixel;
             accumulated_color.z /= samples_per_pixel;
 
-            // ガンマ補正を適用
             t_color pixel_color = {
                 sqrt(accumulated_color.x),
                 sqrt(accumulated_color.y),
@@ -122,7 +116,6 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
-
 int main(void) {
     t_data data;
     t_hittable_list *world;
@@ -131,17 +124,17 @@ int main(void) {
     int max_depth = 50;
     double aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
     double aperture = 0.1;
-    double focus_dist = 10.0;
+    double focus_dist = 20.0;
     t_camera camera = camera_new(
         vec_new(13, 2, 3), // カメラの位置
         vec_new(0, 0, 0), // カメラが向かう方向
         vec_new(0, 1, 0), // カメラのアップベクトル
-        20.0, // 視野角
+        40.0, // 視野角
         aspect_ratio, // アスペクト比
         aperture, // 絞り
         focus_dist, // 焦点距離
         0.0, // シャッターの開く時間
-        1.0 // シャッターの閉じる時間
+        0.0 // シャッターの閉じる時間
     );
 
     init_data(&data);
@@ -155,10 +148,7 @@ int main(void) {
     add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
     add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
 
-	add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
-
-	//水色の球
-	// add_hittable(world, new_lambertian(vec_new(0, 1, 0), 1.0, (t_color){0.1, 0.1, 0.9}));
+    add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
     // 長方形
     add_hittable(world, new_rectangle(
@@ -168,14 +158,24 @@ int main(void) {
         vec_new(2, 0, -2),  // p3
         vec_new(0, 1, 0),   // normal
         (t_color){0.9, 0.1, 0.1}, // color
-        LAMBERTIAN // material
+        METAL // material
     ));
 
-    // // 複数のライトを追加
-    lights = new_light_list(3);
-    add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
-    add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
-    add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
+    // 円柱
+    add_hittable(world, new_cylinder(
+        vec_new(0, 0, -5), // 中心
+        vec_new(5, 1, 4),  // 軸方向
+        1.0, // 直径
+        3.0, // 高さ
+        (t_color){1, 1, 1}, // 色
+		LAMBERTIAN // material
+    ));
+
+    // 複数のライトを追加
+    lights = new_light_list(1);
+    add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.1));
+    // add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
+    // add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     render(&data, &camera, world, &lights, samples_per_pixel, max_depth);
     wait_input(&data);
@@ -186,3 +186,5 @@ int main(void) {
 
     return 0;
 }
+
+
