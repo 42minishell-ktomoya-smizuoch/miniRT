@@ -53,11 +53,12 @@ typedef struct s_ray
 	double	time;
 }	t_ray;
 
-typedef struct s_amblight
+typedef struct s_ambient
 {
-	double	ratio;
-	t_color	color;
-}	t_amblight;
+    t_color color;
+    double ratio;
+} t_ambient;
+
 
 typedef struct s_camera {
     t_vec3 origin;
@@ -117,7 +118,7 @@ typedef struct s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	t_amblight	amb;
+	t_ambient	amb;
 	t_camera	camera;
 	t_light		light;
 	t_sphere	sphere;
