@@ -92,12 +92,12 @@ typedef struct s_sphere
 	t_color	color;
 }	t_sphere;
 
-typedef struct s_plane
-{
-	t_vec3	origin;
-	t_vec3	normal;
-	t_color	color;
-}	t_plane;
+typedef struct s_plane {
+    t_vec3 point;
+    t_vec3 normal;
+    t_color color;
+    t_material_type material;
+} t_plane;
 
 typedef struct s_cylinder
 {

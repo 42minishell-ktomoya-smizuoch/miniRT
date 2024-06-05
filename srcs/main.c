@@ -9,6 +9,7 @@
 #include "light.h"
 #include "cylinder.h"
 #include "ambient.h"
+#include "plane.h"
 
 // t_color型に変換する関数
 t_color vec3_to_color(t_vec3 v) {
@@ -141,12 +142,12 @@ int main(void) {
     // 地面
     add_hittable(world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
 
-    // 球
-    add_hittable(world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
-    add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
-    add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
+    // // 球
+    // add_hittable(world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
+    // add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
+    // add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
 
-    add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
+    // add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
     // 長方形
     add_hittable(world, new_rectangle(
@@ -157,6 +158,13 @@ int main(void) {
         vec_new(0, 1, 0),   // normal
         (t_color){0.9, 0.1, 0.1}, // color
         LAMBERTIAN // material
+    ));
+
+	add_hittable(world, new_plane(
+        vec_new(0.0, 0.0, 0.0), // 平面上の点
+        vec_new(0.0, 0.0, 1.0),   // 法線ベクトル
+        (t_color){0.0, 0.9, 0}, // 色
+        METAL // 材質
     ));
 
     // 円柱
