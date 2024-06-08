@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:54:44 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/22 09:55:11 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/08 19:57:52 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	check_file_extension(const char *file_path, const char *extension)
 		i++;
 	if (file_path[i] == '\0')
 		return (1);
-	if (ft_strncmp(&file_path[i], extension, ft_strlen(extension) + 1) != 0) {
+	if (ft_strncmp(&file_path[i], extension, ft_strlen(extension) + 1) != 0)
 		return (1);
-	}
 	return (0);
 }
