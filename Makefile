@@ -18,8 +18,9 @@ SRC += srcs/event/wait_input.c \
 	   srcs/event/esc_close.c \
 	   srcs/event/exit_on_close.c \
 
-SRC += srcs/parser/parse_file.c \
-	   srcs/parser/check_file_extension.c \
+SRC += srcs/parser/check_file_extension.c \
+	   srcs/parser/parse_file.c \
+	   srcs/parser/parse_text.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
