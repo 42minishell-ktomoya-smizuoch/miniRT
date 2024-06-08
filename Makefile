@@ -20,7 +20,7 @@ SRC += srcs/event/wait_input.c \
 	   srcs/event/esc_close.c \
 	   srcs/event/exit_on_close.c \
 
-SRC += srcs/parser/parser.c \
+SRC += srcs/parser/parse_file.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \

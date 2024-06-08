@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 13:48:46 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/08 18:19:48 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,35 +80,45 @@ int	parse_line(char *line)
 	return (0);
 }
 
-int	parser(const char *file)
-{
-	int		fd;
-	char	*line;
-	char	*data;
-	int		ret;
+//int	parser(const char *file)
+//{
+//	int		fd;
+//	char	*line;
+//	char	*data;
+//	int		ret;
+//
+//	if (!file)
+//		return (error_msg(ERR_ARG));
+//	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
+//		return (error_msg(ERR_FILE_FORMAT));
+//	//階層は../../rt_fileの中にあるのでその階層に移動
+//	data = ft_strjoin("../../rt_file/", file);
+//	if (!data)
+//		return (error_msg(ERR_MALLOC));
+//	fd = open(data, O_RDONLY);
+//	free(data);
+//	if (fd == -1)
+//		return (error_msg(ERR_OPEN_FILE));
+//	while (1)
+//	{
+//		line = get_next_line(fd);
+//		if (!line)
+//			break ;
+//		ret = parse_line(line);
+//		free(line);
+//		if (ret == -1)
+//			return (error_msg(ERR_PARSE_FILE));
+//	}
+//	close(fd);
+//	return (0);
+//}
 
-	if (!file)
-		return (error_msg(ERR_ARG));
-	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
-		return (error_msg(ERR_FILE_FORMAT));
-	//階層は../../rt_fileの中にあるのでその階層に移動
-	data = ft_strjoin("../../rt_file/", file);
-	if (!data)
-		return (error_msg(ERR_MALLOC));
-	fd = open(data, O_RDONLY);
-	free(data);
-	if (fd == -1)
-		return (error_msg(ERR_OPEN_FILE));
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		ret = parse_line(line);
-		free(line);
-		if (ret == -1)
-			return (error_msg(ERR_PARSE_FILE));
-	}
-	close(fd);
-	return (0);
+int	parse_file(char *file, t_data *data)
+{
+	// ファイル拡張子の確認
+	if (check_file_extension(file, ".rt") != 0)
+		exit_with_error(ERR_FILE_EXTENSION);
+	// ファイルを開く
+	// ファイル解析
+	// 文章を解析する
 }
