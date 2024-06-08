@@ -10,6 +10,7 @@
 # include "../lib/libft/libft.h"
 # include "../lib/libft/get_next_line/get_next_line.h"
 # include "../lib/libft/get_next_line/get_next_line_bonus.h"
+# include "error.h"
 
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
@@ -17,6 +18,7 @@
 # define KEY_ESC 53
 # define ON_DESTROY 17
 
+# define ERR_FILE_EXTENSION "Error: The filename is not appropriate."
 # define ERR_OPEN_FILE "Error: failed to open the file"
 # define ERR_READ_FILE "Error: failed to read the file"
 # define ERR_PARSE_FILE "Error: failed to parse the file"
@@ -159,5 +161,8 @@ double random_double_range(double min, double max); // 指定された範囲の�
 t_vec3 random_in_unit_sphere();
 t_vec3 random_unit_vector();
 t_vec3 random_in_hemisphere(const t_vec3 *normal);
+
+//error
+void	exit_with_error(const char *err_msg);
 
 #endif

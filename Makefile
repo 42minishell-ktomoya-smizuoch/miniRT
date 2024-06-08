@@ -14,13 +14,12 @@ MINILIBX_DIR = ./lib/minilibx_opengl
 SRC = srcs/main.c \
 	  srcs/init_data.c \
 
-SRC += srcs/checker/check_file_extension.c \
-
 SRC += srcs/event/wait_input.c \
 	   srcs/event/esc_close.c \
 	   srcs/event/exit_on_close.c \
 
 SRC += srcs/parser/parse_file.c \
+	   srcs/parser/check_file_extension.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
@@ -41,6 +40,8 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/plane.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
+
+SRC += srcs/error/exit_with_error.c \
 
 # Objects directory
 OBJDIR = ./objs

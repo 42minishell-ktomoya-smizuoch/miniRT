@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/08 18:19:48 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/08 18:41:01 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,9 @@ int	parse_line(char *line)
 //	return (0);
 //}
 
-int	parse_file(char *file, t_data *data)
+void	parse_file(char *file, t_data *data)
 {
+	(void)data;
 	// ファイル拡張子の確認
 	if (check_file_extension(file, ".rt") != 0)
 		exit_with_error(ERR_FILE_EXTENSION);
