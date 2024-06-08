@@ -53,11 +53,12 @@ typedef struct s_ray
 	double	time;
 }	t_ray;
 
-typedef struct s_amblight
+typedef struct s_ambient
 {
-	double	ratio;
-	t_color	color;
-}	t_amblight;
+    t_color color;
+    double ratio;
+} t_ambient;
+
 
 typedef struct s_camera {
     t_vec3 origin;
@@ -91,12 +92,12 @@ typedef struct s_sphere
 	t_color	color;
 }	t_sphere;
 
-typedef struct s_plane
-{
-	t_vec3	origin;
-	t_vec3	normal;
-	t_color	color;
-}	t_plane;
+typedef struct s_plane {
+    t_vec3 point;
+    t_vec3 normal;
+    t_color color;
+    t_material_type material;
+} t_plane;
 
 typedef struct s_cylinder
 {
@@ -105,6 +106,7 @@ typedef struct s_cylinder
 	double	diameter;
 	double	height;
 	t_color	color;
+	t_material_type material;
 }	t_cylinder;
 
 typedef struct s_data
@@ -116,7 +118,7 @@ typedef struct s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	t_amblight	amb;
+	t_ambient	amb;
 	t_camera	camera;
 	t_light		light;
 	t_sphere	sphere;

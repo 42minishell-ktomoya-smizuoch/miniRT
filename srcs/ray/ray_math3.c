@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math_utils.h                                       :+:      :+:    :+:   */
+/*   ray_math3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 11:47:00 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/04 11:47:29 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/06/04 11:39:09 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/04 11:41:00 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATH_UTILS_H
-# define MATH_UTILS_H
+#include "minirt.h"
 
-//Mathematical constants
-# define PI 3.1415926535897932385
+t_vec3	vec_mul(t_vec3 a, t_vec3 b)
+{
+	return ((t_vec3){a.x * b.x, a.y * b.y, a.z * b.z});
+}
 
-//Convert degrees to radians
-double	degrees_to_radians(double degrees);
-
-#endif
+t_vec3	vec_cross(t_vec3 a, t_vec3 b)
+{
+	return ((t_vec3){a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x});
+}

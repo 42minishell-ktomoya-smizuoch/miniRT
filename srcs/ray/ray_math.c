@@ -6,11 +6,11 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:22:57 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/14 15:16:21 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:39:36 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minirt.h"
+#include "minirt.h"
 
 // create a new vector
 t_vec3	vec_new(double x, double y, double z)

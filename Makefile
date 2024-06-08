@@ -24,6 +24,7 @@ SRC += srcs/parser/parser.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
+	   srcs/ray/ray_math3.c \
 	   srcs/ray/hittable_list.c \
 	   srcs/ray/sphere.c \
 	   srcs/ray/random.c \
@@ -35,6 +36,9 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/moving_sphere.c \
 	   srcs/ray/rectangle.c \
 	   srcs/ray/light.c \
+	   srcs/ray/cylinder.c \
+	   srcs/ray/ambient.c \
+	   srcs/ray/plane.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 
