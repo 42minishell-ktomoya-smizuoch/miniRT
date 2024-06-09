@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 10:02:30 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/08 20:10:05 by ktomoya          ###   ########.fr       */
+/*   Created: 2024/06/08 19:04:00 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/06/08 19:08:50 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#ifndef ERROR_H
+# define ERROR_H
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (s == NULL)
-		return ;
-	write (fd, s, ft_strlen(s));
-}
+#include "minirt.h"
 
-/* int main(void)
-{
-  ft_putstr_fd("hello world", 1);
-  return 0;
-} */
+void	exit_with_error(const char *err_msg);
+
+#endif

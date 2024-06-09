@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:06:40 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/31 19:37:14 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/08 11:42:08 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	print_struct(t_data data)
        "color.r   : %lf\n"
        "color.g   : %lf\n"
        "color.b   : %lf\n",
-       data.light.origin.x, data.light.origin.y, data.light.origin.z, 
-       data.light.ratio, data.light.color.r, data.light.color.g, data.light.color.b);
+       data.light.position.x, data.light.position.y, data.light.position.z, 
+       data.light.intensity, data.light.color.r, data.light.color.g, data.light.color.b);
 
 	printf("----------------------------sphere---------------------------------\n"
        "center.x  : %lf\n"
@@ -197,14 +197,14 @@ int	main(int argc, char *argv[])
 			else if (ft_strncmp(&text[i], "L", 1) == 0 && ft_isspace(text[i + 1]) != 0)
 			{
 				// "L -40.0,50.0,0.0 0.6 10,0,255"
-				if (sscanf(text, "%s %lf,%lf,%lf %lf %lf,%lf,%lf", type, &data.light.origin.x, &data.light.origin.y, &data.light.origin.z, &data.light.ratio, &data.light.color.r, &data.light.color.g, &data.light.color.b) != 8)
+				if (sscanf(text, "%s %lf,%lf,%lf %lf %lf,%lf,%lf", type, &data.light.position.x, &data.light.position.y, &data.light.position.z, &data.light.intensity, &data.light.color.r, &data.light.color.g, &data.light.color.b) != 8)
 				{
 					print_struct(data);
 					printf("Error3\n");
 					exit(1);
 				}
-				// 0.0 <= ratio <= 1.0 || 0.0 <= color <= 255.0
-				if (out_of_range(data.light.ratio, 0.0, 1.0) || out_of_rgb_range(data.light.color))
+				// 0.0 <= intensity <= 1.0 || 0.0 <= color <= 255.0
+				if (out_of_range(data.light.intensity, 0.0, 1.0) || out_of_rgb_range(data.light.color))
 				{
 					print_struct(data);
 					printf("Error3-B\n");

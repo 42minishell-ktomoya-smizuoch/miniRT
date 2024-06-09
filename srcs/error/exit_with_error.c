@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_file_extension.c                             :+:      :+:    :+:   */
+/*   exit_with_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 09:54:44 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/22 09:55:11 by ktomoya          ###   ########.fr       */
+/*   Created: 2024/06/08 18:31:32 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/06/08 20:12:18 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "error.h"
 
-int	check_file_extension(const char *file_path, const char *extension)
+void	exit_with_error(const char *err_msg)
 {
-	int	i;
-
-	i = 0;
-	if (*file_path == '.')
-		return (1);
-	while (file_path[i] != '.' && file_path[i] != '\0')
-		i++;
-	if (file_path[i] == '\0')
-		return (1);
-	if (ft_strncmp(&file_path[i], extension, ft_strlen(extension) + 1) != 0) {
-		return (1);
-	}
-	return (0);
+	ft_putstr_fd((char*)err_msg, 1);
+	exit(1);
 }

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   parse_text.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 10:02:30 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/08 20:10:05 by ktomoya          ###   ########.fr       */
+/*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/06/08 19:55:42 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "minirt.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	parse_text(const char *text, t_data *data)
 {
-	if (s == NULL)
-		return ;
-	write (fd, s, ft_strlen(s));
+	(void)text;
+	(void)data;
+	return ;
 }
-
-/* int main(void)
-{
-  ft_putstr_fd("hello world", 1);
-  return 0;
-} */

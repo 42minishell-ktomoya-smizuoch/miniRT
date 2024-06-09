@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 13:48:46 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/08 19:52:07 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,35 +80,57 @@ int	parse_line(char *line)
 	return (0);
 }
 
-int	parser(const char *file)
+//int	parser(const char *file)
+//{
+//	int		fd;
+//	char	*line;
+//	char	*data;
+//	int		ret;
+//
+//	if (!file)
+//		return (error_msg(ERR_ARG));
+//	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
+//		return (error_msg(ERR_FILE_FORMAT));
+//	//階層は../../rt_fileの中にあるのでその階層に移動
+//	data = ft_strjoin("../../rt_file/", file);
+//	if (!data)
+//		return (error_msg(ERR_MALLOC));
+//	fd = open(data, O_RDONLY);
+//	free(data);
+//	if (fd == -1)
+//		return (error_msg(ERR_OPEN_FILE));
+//	while (1)
+//	{
+//		line = get_next_line(fd);
+//		if (!line)
+//			break ;
+//		ret = parse_line(line);
+//		free(line);
+//		if (ret == -1)
+//			return (error_msg(ERR_PARSE_FILE));
+//	}
+//	close(fd);
+//	return (0);
+//}
+
+void	parse_file(const char *file, t_data *data)
 {
 	int		fd;
-	char	*line;
-	char	*data;
-	int		ret;
+	char	*text;
 
-	if (!file)
-		return (error_msg(ERR_ARG));
-	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
-		return (error_msg(ERR_FILE_FORMAT));
-	//階層は../../rt_fileの中にあるのでその階層に移動
-	data = ft_strjoin("../../rt_file/", file);
-	if (!data)
-		return (error_msg(ERR_MALLOC));
-	fd = open(data, O_RDONLY);
-	free(data);
+	(void)data;
+	if (check_file_extension(file, ".rt") != 0)
+		exit_with_error(ERR_FILE_EXTENSION);
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (error_msg(ERR_OPEN_FILE));
+		exit_with_error(ERR_OPEN_FILE);
 	while (1)
 	{
-		line = get_next_line(fd);
-		if (!line)
+		text = get_next_line(fd);
+		if (text == NULL)
 			break ;
-		ret = parse_line(line);
-		free(line);
-		if (ret == -1)
-			return (error_msg(ERR_PARSE_FILE));
+		else
+			parse_text(text, data);
+		free(text);
 	}
-	close(fd);
-	return (0);
 }
