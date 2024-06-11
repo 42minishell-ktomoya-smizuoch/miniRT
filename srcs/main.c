@@ -11,19 +11,6 @@
 #include "ambient.h"
 #include "plane.h"
 
-// t_color型に変換する関数
-t_color vec3_to_color(t_vec3 v) {
-    double r = fmax(0.0, fmin(1.0, v.x));
-    double g = fmax(0.0, fmin(1.0, v.y));
-    double b = fmax(0.0, fmin(1.0, v.z));
-    return (t_color){r, g, b};
-}
-
-// t_vec3型に変換する関数
-t_vec3 color_to_vec3(t_color c) {
-    return (t_vec3){c.r, c.g, c.b};
-}
-
 t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int depth) {
     t_hit_record rec;
     if (depth <= 0)
@@ -75,15 +62,6 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_am
     return vec3_to_color(vec_scalar(color_to_vec3(ambient->color), ambient->ratio)); // 環境光を背景色として使用
 }
 
-// ピクセルカラーをスケールし、サンプルの平均を計算
-t_color scale_color(t_color color, int samples_per_pixel) {
-    double scale = 1.0 / samples_per_pixel;
-    color.r = sqrt(fmax(0.0, color.r * scale));
-    color.g = sqrt(fmax(0.0, color.g * scale));
-    color.b = sqrt(fmax(0.0, color.b * scale));
-    return color;
-}
-
 void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int samples_per_pixel, int max_depth) {
     int x, y, s;
     for (y = 0; y < WINDOW_HEIGHT; y++) {
@@ -119,7 +97,7 @@ int main(void) {
     t_hittable_list *world;
     t_light_list lights;
     t_ambient ambient;
-    int samples_per_pixel = 10;
+    int samples_per_pixel = 1;
     int max_depth = 50;
     double aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
     double aperture = 0.1;
