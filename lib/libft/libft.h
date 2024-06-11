@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/08 20:10:23 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/11 17:19:07 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ double	ft_atof(const char *str);
 size_t	ft_strlens(const char *s);
 
 void	*ft_realloc(void *ptr, size_t new_size);
+void	*xmalloc(size_t size);
 
 #endif

@@ -20,7 +20,7 @@ int hit_plane(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_re
 }
 
 t_hittable new_plane(t_vec3 point, t_vec3 normal, t_color color, t_material_type material) {
-    t_plane *pl_data = malloc(sizeof(t_plane));
+    t_plane *pl_data = xmalloc(sizeof(t_plane));
     pl_data->point = point;
     pl_data->normal = vec_normalize(normal);
     pl_data->color = color;

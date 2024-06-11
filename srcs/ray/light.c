@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:28:41 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/09 16:28:42 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:15:28 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_light_list	new_light_list(int count)
 {
 	t_light_list	list;
 
-	list.lights = (t_light *)malloc(count * sizeof(t_light));
+	list.lights = (t_light *)xmalloc(count * sizeof(t_light));
 	list.count = 0;
 	return (list);
 }

@@ -38,7 +38,7 @@ int hit_moving_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, 
 }
 
 t_hittable new_moving_sphere(t_vec3 center0, t_vec3 center1, double time0, double time1, double radius, t_color color, t_material_type material, double fuzz, double ref_idx) {
-    t_moving_sphere *sphere_data = malloc(sizeof(t_moving_sphere));
+    t_moving_sphere *sphere_data = xmalloc(sizeof(t_moving_sphere));
     sphere_data->center0 = center0;
     sphere_data->center1 = center1;
     sphere_data->time0 = time0;

@@ -36,7 +36,7 @@ int hit_rectangle(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hi
 }
 
 t_hittable new_rectangle(t_vec3 p0, t_vec3 p1, t_vec3 p2, t_vec3 p3, t_vec3 normal, t_color color, t_material_type material) {
-    t_rectangle *rect_data = malloc(sizeof(t_rectangle));
+    t_rectangle *rect_data = xmalloc(sizeof(t_rectangle));
     rect_data->p0 = p0;
     rect_data->p1 = p1;
     rect_data->p2 = p2;
