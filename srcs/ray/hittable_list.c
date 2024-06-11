@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/11 17:20:11 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:36:21 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ void	add_hittable(t_hittable_list *list, t_hittable object)
 	if (list->size == list->capacity)
 	{
 		list->capacity *= 2;
-		list->objects = realloc(list->objects, sizeof(t_hittable) * list->capacity); //ft_reallocを使う
+		list->objects = ft_realloc(list->objects, sizeof(t_hittable) * list->capacity);
 		if (!list->objects)
-			return ; // error handling
+		{
+			perror("malloc");
+			exit(EXIT_FAILURE);
+		}
 	}
 	list->objects[list->size++] = object;
 }
