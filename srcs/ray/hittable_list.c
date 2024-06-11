@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/09 16:25:33 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:20:11 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_hittable_list	*new_hittable_list(int initial_capacity)
 {
 	t_hittable_list	*list;
 
-	list = malloc(sizeof(t_hittable_list));
+	list = xmalloc(sizeof(t_hittable_list));
 	if (!list)
 		return (NULL);
-	list->objects = malloc(sizeof(t_hittable) * initial_capacity);
+	list->objects = xmalloc(sizeof(t_hittable) * initial_capacity);
 	if (!list->objects)
 	{
 		free(list);

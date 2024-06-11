@@ -45,7 +45,7 @@ int hit_metal(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_re
 }
 
 t_hittable new_metal(t_vec3 center, double radius, t_color color, double fuzz) {
-    t_metal *metal_data = malloc(sizeof(t_metal));
+    t_metal *metal_data = xmalloc(sizeof(t_metal));
     metal_data->center = center;
     metal_data->radius = radius;
     metal_data->color = color;

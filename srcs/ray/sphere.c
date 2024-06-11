@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:29:33 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/15 12:30:13 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:17:21 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_r
 // 球の初期化関数
 t_hittable new_sphere(t_vec3 center, double radius, t_color color)
 {
-    t_sphere *sphere_data = malloc(sizeof(t_sphere));
+    t_sphere *sphere_data = xmalloc(sizeof(t_sphere));
     sphere_data->center = center;
     sphere_data->radius = radius;
     sphere_data->color = color;

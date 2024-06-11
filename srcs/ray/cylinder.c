@@ -91,7 +91,7 @@ int hit_cylinder(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit
 }
 
 t_hittable new_cylinder(t_vec3 center, t_vec3 axisnorm, double diameter, double height, t_color color, t_material_type material) {
-    t_cylinder *cyl_data = malloc(sizeof(t_cylinder));
+    t_cylinder *cyl_data = xmalloc(sizeof(t_cylinder));
     cyl_data->center = center;
     cyl_data->axisnorm = vec_normalize(axisnorm);
     cyl_data->diameter = diameter;

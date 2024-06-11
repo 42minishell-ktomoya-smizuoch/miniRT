@@ -53,7 +53,7 @@ t_hittable	new_lambertian(t_vec3 center, double radius, t_color color)
 	t_lambertian	*lambertian_data;
 	t_hittable		hittable_lambertian;
 
-	lambertian_data = malloc(sizeof(t_lambertian));
+	lambertian_data = xmalloc(sizeof(t_lambertian));
 	lambertian_data->center = center;
 	lambertian_data->radius = radius;
 	lambertian_data->color = color;
