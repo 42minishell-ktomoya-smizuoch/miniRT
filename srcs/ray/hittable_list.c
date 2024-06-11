@@ -5,23 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 12:23:19 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/22 09:58:47 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/09 16:25:33 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable.h"
 
-void set_face_normal(t_hit_record *rec, t_ray *r, t_vec3 outward_normal) {
-    rec->front_face = vec_dot(r->direction, outward_normal) < 0;
-    rec->normal = rec->front_face ? outward_normal : vec_scalar(outward_normal, -1);
+void	set_face_normal(t_hit_record *rec, t_ray *r, t_vec3 outward_normal)
+{
+	rec->front_face = vec_dot(r->direction, outward_normal) < 0;
+	if (rec->front_face)
+		rec->normal = outward_normal;
+	else
+		rec->normal = vec_scalar(outward_normal, -1);
 }
 
-void set_face_normal_with_radius(t_hit_record *rec, t_ray *r, t_vec3 outward_normal, double radius) {
-    if (radius < 0) {
-        outward_normal = vec_scalar(outward_normal, -1);
-    }
-    set_face_normal(rec, r, outward_normal);
+void	set_face_normal_with_radius(t_hit_record *rec, t_ray *r,
+						t_vec3 outward_normal, double radius)
+{
+	if (radius < 0)
+		outward_normal = vec_scalar(outward_normal, -1);
+	set_face_normal(rec, r, outward_normal);
 }
 
 t_hittable_list	*new_hittable_list(int initial_capacity)
@@ -47,16 +52,14 @@ void	add_hittable(t_hittable_list *list, t_hittable object)
 	if (list->size == list->capacity)
 	{
 		list->capacity *= 2;
-		list->objects = realloc(list->objects,
-				sizeof(t_hittable) * list->capacity);
+		list->objects = realloc(list->objects, sizeof(t_hittable) * list->capacity); //ft_reallocを使う
 		if (!list->objects)
-			return ;// error handling
+			return ; // error handling
 	}
 	list->objects[list->size++] = object;
 }
 
-int	hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max,
-			t_hit_record *rec)
+int	hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
 {
 	t_hit_record	temp_rec;
 	int				hit_anything;
@@ -68,8 +71,7 @@ int	hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max,
 	closest_so_far = t_max;
 	while (i < list->size)
 	{
-		if (list->objects[i].hit(&list->objects[i], ray, t_min, closest_so_far,
-				&temp_rec))
+		if (list->objects[i].hit(&list->objects[i], ray, t_min, closest_so_far, &temp_rec))
 		{
 			hit_anything = 1;
 			closest_so_far = temp_rec.t;
