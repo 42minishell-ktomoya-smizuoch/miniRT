@@ -156,6 +156,7 @@ t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
 t_vec3 vec_mul(t_vec3 a, t_vec3 b);
 t_vec3 vec_cross(t_vec3 a, t_vec3 b);
+t_color vec3_to_color(t_vec3 v);
 
 //random
 double random_double(); // 0から1の間のランダムな浮動小数点数を生成
@@ -163,6 +164,8 @@ double random_double_range(double min, double max); // 指定された範囲の�
 t_vec3 random_in_unit_sphere();
 t_vec3 random_unit_vector();
 t_vec3 random_in_hemisphere(const t_vec3 *normal);
+t_vec3 color_to_vec3(t_color c);
+t_color scale_color(t_color color, int samples_per_pixel);
 
 //error
 void	exit_with_error(const char *err_msg);
