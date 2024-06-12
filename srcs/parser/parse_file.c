@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/08 19:52:07 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:57:25 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,50 +35,50 @@ int	error_msg(char *msg)
 	return (1);
 }
 
-int	parse_line(char *line)
-{
-	char	type;
-	int		ret;
-
-	ret = ft_sscanf(line, "%c", &type);
-	if (ret != 1)
-		return (-1);
-	if (type == 'A')
-	{
-		//ambient light
-	}
-	else if (type == 'C')
-	{
-		//camera
-	}
-	else if (type == 'L')
-	{
-		//light
-	}
-	else if (type == 'l')
-	{
-		//light
-	}
-	else if (type == 'p')
-	{
-		//plane
-	}
-	else if (type == 's')
-	{
-		//sphere
-	}
-	else if (type == 'c')
-	{
-		//cylinder
-	}
-	else if (type == 't')
-	{
-		//triangle
-	}
-	else
-		return (-1);
-	return (0);
-}
+//int	parse_line(char *line)
+//{
+//	char	type;
+//	int		ret;
+//
+//	ret = ft_sscanf(line, "%c", &type);
+//	if (ret != 1)
+//		return (-1);
+//	if (type == 'A')
+//	{
+//		//ambient light
+//	}
+//	else if (type == 'C')
+//	{
+//		//camera
+//	}
+//	else if (type == 'L')
+//	{
+//		//light
+//	}
+//	else if (type == 'l')
+//	{
+//		//light
+//	}
+//	else if (type == 'p')
+//	{
+//		//plane
+//	}
+//	else if (type == 's')
+//	{
+//		//sphere
+//	}
+//	else if (type == 'c')
+//	{
+//		//cylinder
+//	}
+//	else if (type == 't')
+//	{
+//		//triangle
+//	}
+//	else
+//		return (-1);
+//	return (0);
+//}
 
 //int	parser(const char *file)
 //{
@@ -116,7 +116,7 @@ int	parse_line(char *line)
 void	parse_file(const char *file, t_data *data)
 {
 	int		fd;
-	char	*text;
+	char	*line;
 
 	(void)data;
 	if (check_file_extension(file, ".rt") != 0)
@@ -126,11 +126,11 @@ void	parse_file(const char *file, t_data *data)
 		exit_with_error(ERR_OPEN_FILE);
 	while (1)
 	{
-		text = get_next_line(fd);
-		if (text == NULL)
+		line = get_next_line(fd);
+		if (line == NULL)
 			break ;
 		else
-			parse_text(text, data);
-		free(text);
+			parse_line(line, data);
+		free(line);
 	}
 }

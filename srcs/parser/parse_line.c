@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_text.c                                       :+:      :+:    :+:   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/08 19:55:42 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:30:09 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	parse_text(const char *text, t_data *data)
+void	parse_line(const char *line, t_data *data)
 {
-	(void)text;
 	(void)data;
+	while (ft_isspace(*line))
+		line++;
+	if (ft_strncmp(line, "A", 1) == 0)
+		printf("A\n");
+	else if (ft_strncmp(line, "C", 1) == 0)
+		printf("C\n");
+	else if (ft_strncmp(line, "L", 1) == 0)
+		printf("L\n");
+	else if (ft_strncmp(line, "sp", 2) == 0)
+		printf("sp\n");
+	else if (ft_strncmp(line, "pl", 2) == 0)
+		printf("pl\n");
+	else if (ft_strncmp(line, "cy", 2) == 0)
+		printf("cy\n");
+	else if (*line == '\n')
+		;
+	else
+		exit(1);
 	return ;
 }
