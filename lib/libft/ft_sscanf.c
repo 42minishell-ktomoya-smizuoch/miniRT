@@ -1,162 +1,107 @@
 #include "libft.h"
-#include <string.h>
 #include <stdarg.h>
-#include <limits.h>
-#include <stdint.h>
-#include <ctype.h>
 
-void handle_integer(const char **str, va_list args, t_int_list i, int *num)
+static int	read_int(const char **str, int s)
 {
-    char *next = NULL;
+	int	num;
+	int	sign;
 
-    if (i.qualifier == 'H')
+	(void)s;
+	num = 0;
+	sign = 1;
+	while (ft_isspace(**str))
+		(*str)++;
+	if (**str == '+' || **str == '-')
 	{
-        if (i.is_sign) {
-            process_signed_char(str, args, i.base, &next);
-        } else {
-            process_unsigned_char(str, args, i.base, &next);
-        }
-    } else if (i.qualifier == 'h') {
-        process_short(str, args, i, &next);
-    } else if (i.qualifier == 'l') {
-        process_long(str, args, i, &next);
-    } else if (i.qualifier == 'L') {
-        process_long_long(str, args, i, &next);
-    } else if (i.qualifier == 'Z' || i.qualifier == 'z'){
-        process_size_t(str, args, i.base, &next);
-    } else {
-        if (i.is_sign) {
-            int *j = (int *)va_arg(args, int *);
-            *j = (int)simple_strtol(*str, &next, i.base);
-        } else {
-            unsigned int *j = (unsigned int *)va_arg(args, unsigned int *);
-            *j = (unsigned int)simple_strtoul(*str, &next, i.base);
-        }
-    }
-    if (next)
+		if (**str == '-')
+			sign = -1;
+		else
+			sign = 1;
+		(*str)++;
+	}
+	while (ft_isdigit(**str))
 	{
-        *str = next;
-        (*num)++;
-    }
+		num = num * 10 + (**str - '0');
+		(*str)++;
+	}
+	return (num * sign);
 }
 
-
-int	vsscanf(const char *buf, const char *fmt, va_list args)
+static void	read_str(const char **str, char *buf, int s)
 {
-	const char	*str = buf;
-	t_int_list	i;
-
-	i.num = 0;
-	i.is_sign = 0;
-    while (*fmt && *str)
-	{
-        if (ft_isspace(*fmt))
-		{
-            while (ft_isspace(*fmt))
-                ++fmt;
-            while (ft_isspace(*str))
-                ++str;
-        }
-
-        if (*fmt != '%' && *fmt)
-		{
-            if (*fmt++ != *str++)
-                break ;
-            continue ;
-        }
-
-        if (!*fmt)
-            break;
-        ++fmt;
-
-        if (*fmt == '*') {
-            while (!ft_isspace(*fmt) && *fmt)
-                fmt++;
-            while (!ft_isspace(*str) && *str)
-                str++;
-            continue;
-        }
-
-        i.field_width = -1;
-        if (ft_isdigit(*fmt))
-            i.field_width = skip_atoi(&fmt);
-
-        i.qualifier = -1;
-        if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L' || *fmt == 'Z' || *fmt == 'z') {
-            i.qualifier = *fmt++;
-            if (i.qualifier == *fmt) {
-                if (i.qualifier == 'h') {
-                    i.qualifier = 'H';
-                    fmt++;
-                } else if (i.qualifier == 'l') {
-                    i.qualifier = 'L';
-                    fmt++;
-                }
-            }
-        }
-        i.base = 10;
-        i.is_sign = 0;
-
-        if (!*fmt || !*str)
-            break;
-
-        va_list args_copy;
-        va_copy(args_copy, args);
-
-        if (*fmt == 'c') {
-            handle_char(&str, args_copy, i.field_width, &i.num);
-            fmt++;
-        } else if (*fmt == 's') {
-            handle_string(&str, args_copy, i.field_width, &i.num);
-            fmt++;
-        } else if (*fmt == 'n') {
-            handle_n(buf, &str, args_copy);
-            fmt++;
-        } else if (*fmt == 'o') {
-            i.base = 8;
-            fmt++;
-        } else if (*fmt == 'x' || *fmt == 'X') {
-            i.base = 16;
-            fmt++;
-        } else if (*fmt == 'i') {
-            i.base = 0;
-            fmt++;
-        } else if (*fmt == 'd') {
-            i.is_sign = 1;
-            fmt++;
-        } else if (*fmt == 'u') {
-            fmt++;
-        } else if (*fmt == '%') {
-            handle_percent(&str, &i.num);
-            fmt++;
-        } else {
-            va_end(args_copy);
-            return i.num;
-        }
-
-        while (ft_isspace(*str))
-            str++;
-
-        char digit = *str;
-        if (i.is_sign && digit == '-')
-            digit = *(str + 1);
-
-        if (!digit || (i.base == 16 && !ft_isxdigit(digit)) || (i.base == 10 && !ft_isdigit(digit)) || (i.base == 8 && (!ft_isdigit(digit) || digit > '7')) || (i.base == 0 && !ft_isdigit(digit)))
-            break;
-
-        handle_integer(&str, args_copy, i, &i.num);
-        va_end(args_copy);
-    }
-    return (i.num);
+	(void)s;
+	while (ft_isspace(**str))
+		(*str)++;
+	while (**str && !ft_isspace(**str))
+		*buf++ = *(*str)++;
+	*buf = '\0';
 }
 
-int	ft_sscanf(const char *buf, const char *fmt, ...)
+static void	read_char(const char **str, char *c, int s)
 {
-	int		i;
-	va_list	args;
+	(void)s;
+	while (ft_isspace(**str))
+		(*str)++;
+	*c = **str;
+	if (**str)
+		(*str)++;
+}
 
-	va_start(args, fmt);
-	i = vsscanf(buf, fmt, args);
+int	parse_format(const char **str, const char **p, va_list args)
+{
+	t_sscanf	ss;
+
+	ss.count = 0;
+	(*p)++;
+	if (**p == 'd')
+	{
+		ss.ip = va_arg(args, int *);
+		*ss.ip = read_int(str, ss.count++);
+	}
+	else if (**p == 's')
+	{
+		ss.s = va_arg(args, char *);
+		read_str(str, ss.s, ss.count++);
+	}
+	else if (**p == 'c')
+	{
+		ss.c = va_arg(args, char *);
+		read_char(str, ss.c, ss.count++);
+	}
+	else if (**p == 'l' && *(*p + 1) == 'f' && (*p)++)
+	{
+		ss.dp = va_arg(args, double *);
+		*ss.dp = read_double(str, ss.count++);
+	}
+	return ((*p)++, ss.count);
+}
+
+int	ft_sscanf(const char *str, const char *format, ...)
+{
+	int			count;
+	va_list		args;
+	const char	*p;
+
+	va_start(args, format);
+	count = 0;
+	p = format;
+	while (*p)
+	{
+		if (*p == '%')
+			count += parse_format(&str, &p, args);
+		else
+		{
+			if (ft_isspace(*p))
+				while (ft_isspace(*str))
+					str++;
+			else if (*str != *p)
+				break ;
+			else
+				str++;
+			p++;
+		}
+	}
 	va_end(args);
-	return (i);
+	return (count);
 }
+//Do not enter NULL or you will crash.
