@@ -173,3 +173,12 @@ int main(void) {
 
     return 0;
 }
+
+//int	main(int argc, char *argv[])
+//{
+//	t_data	data;
+//
+//	if (argc != 2)
+//		exit(1);
+//	parse_file(argv[1], &data);
+//}
