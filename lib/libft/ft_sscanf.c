@@ -13,6 +13,14 @@
 #define SPECIAL 32              /* 0x */
 #define LARGE   64              /* use 'ABCDEF' instead of 'abcdef' */
 
+typedef struct 	s_int_list
+{
+	int	num;
+	int	qualifier;
+	int	base;
+	int	field_width;
+	int	is_sign;
+}	t_int_list;
 
 void handle_integer(const char **str, va_list args, int base, int is_sign, int qualifier, int *num) {
     char *next;
@@ -68,12 +76,10 @@ void handle_integer(const char **str, va_list args, int base, int is_sign, int q
 
 int vsscanf(const char *buf, const char *fmt, va_list args) {
     const char *str = buf;
-    int num = 0;
-    int qualifier;
-    int base;
-    int field_width;
-    int is_sign = 0;
+	t_int_list i;
 
+	i.num = 0;
+	i.is_sign = 0;
     while (*fmt && *str) {
         if (isspace(*fmt)) {
             while (isspace(*fmt))
@@ -100,25 +106,25 @@ int vsscanf(const char *buf, const char *fmt, va_list args) {
             continue;
         }
 
-        field_width = -1;
+        i.field_width = -1;
         if (isdigit(*fmt))
-            field_width = skip_atoi(&fmt);
+            i.field_width = skip_atoi(&fmt);
 
-        qualifier = -1;
+        i.qualifier = -1;
         if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L' || *fmt == 'Z' || *fmt == 'z') {
-            qualifier = *fmt++;
-            if (qualifier == *fmt) {
-                if (qualifier == 'h') {
-                    qualifier = 'H';
+            i.qualifier = *fmt++;
+            if (i.qualifier == *fmt) {
+                if (i.qualifier == 'h') {
+                    i.qualifier = 'H';
                     fmt++;
-                } else if (qualifier == 'l') {
-                    qualifier = 'L';
+                } else if (i.qualifier == 'l') {
+                    i.qualifier = 'L';
                     fmt++;
                 }
             }
         }
-        base = 10;
-        is_sign = 0;
+        i.base = 10;
+        i.is_sign = 0;
 
         if (!*fmt || !*str)
             break;
@@ -127,50 +133,50 @@ int vsscanf(const char *buf, const char *fmt, va_list args) {
         va_copy(args_copy, args);
 
         if (*fmt == 'c') {
-            handle_char(&str, args_copy, field_width, &num);
+            handle_char(&str, args_copy, i.field_width, &i.num);
             fmt++;
         } else if (*fmt == 's') {
-            handle_string(&str, args_copy, field_width, &num);
+            handle_string(&str, args_copy, i.field_width, &i.num);
             fmt++;
         } else if (*fmt == 'n') {
             handle_n(buf, &str, args_copy);
             fmt++;
         } else if (*fmt == 'o') {
-            base = 8;
+            i.base = 8;
             fmt++;
         } else if (*fmt == 'x' || *fmt == 'X') {
-            base = 16;
+            i.base = 16;
             fmt++;
         } else if (*fmt == 'i') {
-            base = 0;
+            i.base = 0;
             fmt++;
         } else if (*fmt == 'd') {
-            is_sign = 1;
+            i.is_sign = 1;
             fmt++;
         } else if (*fmt == 'u') {
             fmt++;
         } else if (*fmt == '%') {
-            handle_percent(&str, &num);
+            handle_percent(&str, &i.num);
             fmt++;
         } else {
             va_end(args_copy);
-            return num;
+            return i.num;
         }
 
         while (isspace(*str))
             str++;
 
         char digit = *str;
-        if (is_sign && digit == '-')
+        if (i.is_sign && digit == '-')
             digit = *(str + 1);
 
-        if (!digit || (base == 16 && !isxdigit(digit)) || (base == 10 && !isdigit(digit)) || (base == 8 && (!isdigit(digit) || digit > '7')) || (base == 0 && !isdigit(digit)))
+        if (!digit || (i.base == 16 && !isxdigit(digit)) || (i.base == 10 && !isdigit(digit)) || (i.base == 8 && (!isdigit(digit) || digit > '7')) || (i.base == 0 && !isdigit(digit)))
             break;
 
-        handle_integer(&str, args_copy, base, is_sign, qualifier, &num);
+        handle_integer(&str, args_copy, i.base, i.is_sign, i.qualifier, &i.num);
         va_end(args_copy);
     }
-    return num;
+    return (i.num);
 }
 
 int ft_sscanf(const char * buf, const char * fmt, ...)
