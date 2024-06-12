@@ -13,7 +13,7 @@
 #define SPECIAL 32              /* 0x */
 #define LARGE   64              /* use 'ABCDEF' instead of 'abcdef' */
 
-typedef struct 	s_int_list
+typedef struct s_int_list
 {
 	int	num;
 	int	qualifier;
@@ -22,7 +22,8 @@ typedef struct 	s_int_list
 	int	is_sign;
 }	t_int_list;
 
-void handle_integer(const char **str, va_list args, int base, int is_sign, int qualifier, int *num) {
+void	handle_integer(const char **str, va_list args, int base, int is_sign, int qualifier, int *num)
+{
     char *next;
     if (qualifier == 'H') {
         if (is_sign) {
@@ -74,24 +75,28 @@ void handle_integer(const char **str, va_list args, int base, int is_sign, int q
     (*num)++;
 }
 
-int vsscanf(const char *buf, const char *fmt, va_list args) {
-    const char *str = buf;
-	t_int_list i;
+int	vsscanf(const char *buf, const char *fmt, va_list args)
+{
+	const char	*str = buf;
+	t_int_list	i;
 
 	i.num = 0;
 	i.is_sign = 0;
-    while (*fmt && *str) {
-        if (isspace(*fmt)) {
+    while (*fmt && *str)
+	{
+        if (isspace(*fmt))
+		{
             while (isspace(*fmt))
                 ++fmt;
             while (isspace(*str))
                 ++str;
         }
 
-        if (*fmt != '%' && *fmt) {
+        if (*fmt != '%' && *fmt)
+		{
             if (*fmt++ != *str++)
-                break;
-            continue;
+                break ;
+            continue ;
         }
 
         if (!*fmt)
@@ -179,13 +184,13 @@ int vsscanf(const char *buf, const char *fmt, va_list args) {
     return (i.num);
 }
 
-int ft_sscanf(const char * buf, const char * fmt, ...)
+int	ft_sscanf(const char *buf, const char *fmt, ...)
 {
-	va_list args;
 	int		i;
+	va_list	args;
 
-	va_start(args,fmt);
-	i = vsscanf(buf,fmt,args);
+	va_start(args, fmt);
+	i = vsscanf(buf, fmt, args);
 	va_end(args);
 	return (i);
 }
