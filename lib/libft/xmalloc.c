@@ -6,15 +6,15 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:00:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/05/24 14:01:34 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:47:12 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *xmalloc(size_t size)
+void	*xmalloc(size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	errno = 0;
 	ptr = malloc(size);
