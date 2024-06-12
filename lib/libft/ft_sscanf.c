@@ -84,11 +84,11 @@ int	vsscanf(const char *buf, const char *fmt, va_list args)
 	i.is_sign = 0;
     while (*fmt && *str)
 	{
-        if (isspace(*fmt))
+        if (ft_isspace(*fmt))
 		{
-            while (isspace(*fmt))
+            while (ft_isspace(*fmt))
                 ++fmt;
-            while (isspace(*str))
+            while (ft_isspace(*str))
                 ++str;
         }
 
@@ -104,15 +104,15 @@ int	vsscanf(const char *buf, const char *fmt, va_list args)
         ++fmt;
 
         if (*fmt == '*') {
-            while (!isspace(*fmt) && *fmt)
+            while (!ft_isspace(*fmt) && *fmt)
                 fmt++;
-            while (!isspace(*str) && *str)
+            while (!ft_isspace(*str) && *str)
                 str++;
             continue;
         }
 
         i.field_width = -1;
-        if (isdigit(*fmt))
+        if (ft_isdigit(*fmt))
             i.field_width = skip_atoi(&fmt);
 
         i.qualifier = -1;
@@ -168,14 +168,14 @@ int	vsscanf(const char *buf, const char *fmt, va_list args)
             return i.num;
         }
 
-        while (isspace(*str))
+        while (ft_isspace(*str))
             str++;
 
         char digit = *str;
         if (i.is_sign && digit == '-')
             digit = *(str + 1);
 
-        if (!digit || (i.base == 16 && !isxdigit(digit)) || (i.base == 10 && !isdigit(digit)) || (i.base == 8 && (!isdigit(digit) || digit > '7')) || (i.base == 0 && !isdigit(digit)))
+        if (!digit || (i.base == 16 && !ft_isxdigit(digit)) || (i.base == 10 && !ft_isdigit(digit)) || (i.base == 8 && (!ft_isdigit(digit) || digit > '7')) || (i.base == 0 && !ft_isdigit(digit)))
             break;
 
         handle_integer(&str, args_copy, i.base, i.is_sign, i.qualifier, &i.num);

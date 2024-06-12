@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:08:20 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/12 16:12:41 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:59:25 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	handle_string(const char **str, va_list args, int field_width, int *num)
 	s = (char *)va_arg(args, char *);
 	if (field_width == -1)
 		field_width = INT_MAX;
-	while (isspace(**str))
+	while (ft_isspace(**str))
 		(*str)++;
-	while (**str && !isspace(**str) && field_width--)
+	while (**str && !ft_isspace(**str) && field_width--)
 	{
 		*s++ = **str;
 		(*str)++;
