@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/12 16:11:48 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:30:50 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@
 # include <limits.h>
 # include "./get_next_line/get_next_line.h"
 # include "./get_next_line/get_next_line_bonus.h"
+
+#define ZEROPAD 1               /* pad with zero */
+#define SIGN    2               /* unsigned/signed long */
+#define PLUS    4               /* show plus */
+#define SPACE   8               /* space if plus */
+#define LEFT    16              /* left justified */
+#define SPECIAL 32              /* 0x */
+#define LARGE   64              /* use 'ABCDEF' instead of 'abcdef' */
+
+typedef struct s_int_list
+{
+	int	num;
+	int	qualifier;
+	int	base;
+	int	field_width;
+	int	is_sign;
+}	t_int_list;
 
 typedef struct s_list
 {
@@ -107,5 +124,10 @@ void	handle_char(const char **str, va_list args, int field_width, int *num);
 void	handle_string(const char **str, va_list args, int field_width, int *num);
 void	handle_percent(const char **str, int *num);
 void	handle_n(const char *buf, const char **str, va_list args);
+void process_signed_char(const char **str, va_list args, int base, char **next);
+void process_unsigned_char(const char **str, va_list args, int base, char **next);
+void process_short(const char **str, va_list args, t_int_list i, char **next);
+void process_long(const char **str, va_list args, t_int_list i, char **next);
+void process_long_long(const char **str, va_list args, t_int_list i, char **next);
 
 #endif

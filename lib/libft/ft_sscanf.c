@@ -5,96 +5,45 @@
 #include <stdint.h>
 #include <ctype.h>
 
-#define ZEROPAD 1               /* pad with zero */
-#define SIGN    2               /* unsigned/signed long */
-#define PLUS    4               /* show plus */
-#define SPACE   8               /* space if plus */
-#define LEFT    16              /* left justified */
-#define SPECIAL 32              /* 0x */
-#define LARGE   64              /* use 'ABCDEF' instead of 'abcdef' */
-
-typedef struct s_int_list
+void	process_size_t(const char **str,
+		va_list args, int base, char **next)
 {
-	int	num;
-	int	qualifier;
-	int	base;
-	int	field_width;
-	int	is_sign;
-}	t_int_list;
+	size_t	*s;
 
-void process_signed_char(const char **str, va_list args, int base, char **next) {
-    signed char *s = (signed char *)va_arg(args, signed char *);
-    *s = (signed char)simple_strtol(*str, next, base);
+	s = (size_t *)va_arg(args, size_t *);
+	*s = (size_t)simple_strtoul(*str, next, base);
 }
 
-void process_unsigned_char(const char **str, va_list args, int base, char **next) {
-    unsigned char *s = (unsigned char *)va_arg(args, unsigned char *);
-    *s = (unsigned char)simple_strtoul(*str, next, base);
-}
-
-void process_short(const char **str, va_list args, int base, int is_sign, char **next) {
-    if (is_sign) {
-        short *s = (short *)va_arg(args, short *);
-        *s = (short)simple_strtol(*str, next, base);
-    } else {
-        unsigned short *s = (unsigned short *)va_arg(args, unsigned short *);
-        *s = (unsigned short)simple_strtoul(*str, next, base);
-    }
-}
-
-void process_long(const char **str, va_list args, int base, int is_sign, char **next) {
-    if (is_sign) {
-        long *l = (long *)va_arg(args, long *);
-        *l = simple_strtol(*str, next, base);
-    } else {
-        unsigned long *l = (unsigned long *)va_arg(args, unsigned long *);
-        *l = simple_strtoul(*str, next, base);
-    }
-}
-
-void process_long_long(const char **str, va_list args, int base, int is_sign, char **next) {
-    if (is_sign) {
-        long long *l = (long long *)va_arg(args, long long *);
-        *l = simple_strtoll(*str, next, base);
-    } else {
-        unsigned long long *l = (unsigned long long *)va_arg(args, unsigned long long *);
-        *l = simple_strtoull(*str, next, base);
-    }
-}
-
-void process_size_t(const char **str, va_list args, int base, char **next) {
-    size_t *s = (size_t *)va_arg(args, size_t *);
-    *s = (size_t)simple_strtoul(*str, next, base);
-}
-
-void handle_integer(const char **str, va_list args, int base, int is_sign, int qualifier, int *num) {
+void handle_integer(const char **str, va_list args, t_int_list i, int *num)
+{
     char *next = NULL;
 
-    if (qualifier == 'H') {
-        if (is_sign) {
-            process_signed_char(str, args, base, &next);
+    if (i.qualifier == 'H')
+	{
+        if (i.is_sign) {
+            process_signed_char(str, args, i.base, &next);
         } else {
-            process_unsigned_char(str, args, base, &next);
+            process_unsigned_char(str, args, i.base, &next);
         }
-    } else if (qualifier == 'h') {
-        process_short(str, args, base, is_sign, &next);
-    } else if (qualifier == 'l') {
-        process_long(str, args, base, is_sign, &next);
-    } else if (qualifier == 'L') {
-        process_long_long(str, args, base, is_sign, &next);
-    } else if (qualifier == 'Z' || qualifier == 'z') {
-        process_size_t(str, args, base, &next);
+    } else if (i.qualifier == 'h') {
+        process_short(str, args, i, &next);
+    } else if (i.qualifier == 'l') {
+        process_long(str, args, i, &next);
+    } else if (i.qualifier == 'L') {
+        process_long_long(str, args, i, &next);
+    } else if (i.qualifier == 'Z' || i.qualifier == 'z'){
+        process_size_t(str, args, i.base, &next);
     } else {
-        if (is_sign) {
-            int *i = (int *)va_arg(args, int *);
-            *i = (int)simple_strtol(*str, &next, base);
+        if (i.is_sign) {
+            int *j = (int *)va_arg(args, int *);
+            *j = (int)simple_strtol(*str, &next, i.base);
         } else {
-            unsigned int *i = (unsigned int *)va_arg(args, unsigned int *);
-            *i = (unsigned int)simple_strtoul(*str, &next, base);
+            unsigned int *j = (unsigned int *)va_arg(args, unsigned int *);
+            *j = (unsigned int)simple_strtoul(*str, &next, i.base);
         }
     }
-    
-    if (next) {
+    if (next)
+	{
         *str = next;
         (*num)++;
     }
@@ -204,7 +153,7 @@ int	vsscanf(const char *buf, const char *fmt, va_list args)
         if (!digit || (i.base == 16 && !ft_isxdigit(digit)) || (i.base == 10 && !ft_isdigit(digit)) || (i.base == 8 && (!ft_isdigit(digit) || digit > '7')) || (i.base == 0 && !ft_isdigit(digit)))
             break;
 
-        handle_integer(&str, args_copy, i.base, i.is_sign, i.qualifier, &i.num);
+        handle_integer(&str, args_copy, i, &i.num);
         va_end(args_copy);
     }
     return (i.num);
