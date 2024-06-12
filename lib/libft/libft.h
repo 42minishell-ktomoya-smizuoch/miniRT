@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/11 17:19:07 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:53:11 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,13 @@ size_t	ft_strlens(const char *s);
 
 void	*ft_realloc(void *ptr, size_t new_size);
 void	*xmalloc(size_t size);
+int		ft_isxdigit(int c);
+int		ft_islower(int c);
+
+unsigned long	simple_strtoul(const char *cp,char **endp, unsigned int base);
+long			simple_strtol(const char *cp,char **endp,unsigned int base);
+
+unsigned long long	simple_strtoull(const char *cp, char **endp, unsigned int base);
+long long			simple_strtoll(const char *cp, char **endp, unsigned int base);
 
 #endif

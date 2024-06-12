@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 16:43:25 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/12 14:56:33 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/06/12 15:43:19 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/12 15:44:11 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
-
-int	ft_isdigit(int c)
+int	ft_islower(int c)
 {
-	return ('0' <= c && c <= '9');
+	return (c >= 'a' && c <= 'z');
 }
-
-int	ft_isxdigit(int c)
-{
-	return (('0' <= c && c <= '9')
-		|| ('A' <= c && c <= 'F') || ('a' <= c && c <= 'f'));
-}
-
-/*int	main(void)
-{
-	printf("%d\n",ft_isdigit(9));
-	printf("%d\n",isdigit(9));
-}*/
