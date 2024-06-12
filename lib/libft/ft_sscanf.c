@@ -5,11 +5,6 @@
 #include <stdint.h>
 #include <ctype.h> // Include for isxdigit, isdigit, toupper, islower, isspace
 
-// Define 'unlikely' if it's not defined elsewhere in your environment
-#ifndef unlikely
-#define unlikely(x)     __builtin_expect(!!(x), 0)
-#endif
-
 static int skip_atoi(const char **s)
 {
     int i=0;
@@ -27,12 +22,6 @@ static int skip_atoi(const char **s)
 #define SPECIAL 32              /* 0x */
 #define LARGE   64              /* use 'ABCDEF' instead of 'abcdef' */
 
-/**
- * vsscanf - Unformat a buffer into a list of arguments
- * @buf:	input buffer
- * @fmt:	format of buffer
- * @args:	arguments
- */
 int vsscanf(const char * buf, const char * fmt, va_list args)
 {
 	const char *str = buf;
@@ -85,10 +74,9 @@ int vsscanf(const char * buf, const char * fmt, va_list args)
 
 		/* get conversion qualifier */
 		qualifier = -1;
-		if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L' ||
-		    *fmt == 'Z' || *fmt == 'z') {
+		if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L' || *fmt == 'Z' || *fmt == 'z') {
 			qualifier = *fmt++;
-			if (unlikely(qualifier == *fmt)) {
+			if (qualifier == *fmt) {
 				if (qualifier == 'h') {
 					qualifier = 'H';
 					fmt++;
