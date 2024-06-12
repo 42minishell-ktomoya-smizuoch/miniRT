@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/12 15:53:11 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:11:48 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,11 @@ long			simple_strtol(const char *cp,char **endp,unsigned int base);
 
 unsigned long long	simple_strtoull(const char *cp, char **endp, unsigned int base);
 long long			simple_strtoll(const char *cp, char **endp, unsigned int base);
+
+int		skip_atoi(const char **s);
+void	handle_char(const char **str, va_list args, int field_width, int *num);
+void	handle_string(const char **str, va_list args, int field_width, int *num);
+void	handle_percent(const char **str, int *num);
+void	handle_n(const char *buf, const char **str, va_list args);
 
 #endif
