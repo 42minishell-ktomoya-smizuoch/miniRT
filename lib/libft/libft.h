@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/12 17:30:50 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:40:23 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,6 @@ void process_unsigned_char(const char **str, va_list args, int base, char **next
 void process_short(const char **str, va_list args, t_int_list i, char **next);
 void process_long(const char **str, va_list args, t_int_list i, char **next);
 void process_long_long(const char **str, va_list args, t_int_list i, char **next);
+void	process_size_t(const char **str,va_list args, int base, char **next);
 
 #endif

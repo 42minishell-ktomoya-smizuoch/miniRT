@@ -5,15 +5,6 @@
 #include <stdint.h>
 #include <ctype.h>
 
-void	process_size_t(const char **str,
-		va_list args, int base, char **next)
-{
-	size_t	*s;
-
-	s = (size_t *)va_arg(args, size_t *);
-	*s = (size_t)simple_strtoul(*str, next, base);
-}
-
 void handle_integer(const char **str, va_list args, t_int_list i, int *num)
 {
     char *next = NULL;
