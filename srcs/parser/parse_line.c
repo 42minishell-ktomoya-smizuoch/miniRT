@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/13 17:45:12 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/13 17:52:07 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_line(const char *line, t_data *data)
 	else if (ft_strncmp(line, "sp", 2) == 0)
 		parse_sphere(line + 2, &data->sphere);
 	else if (ft_strncmp(line, "pl", 2) == 0)
-		printf("pl\n");
+		parse_plane(line + 2, &data->plane);
 	else if (ft_strncmp(line, "cy", 2) == 0)
 		printf("cy\n");
 	else if (*line == '\n')
