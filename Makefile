@@ -21,6 +21,7 @@ SRC += srcs/event/wait_input.c \
 SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_file.c \
 	   srcs/parser/parse_line.c \
+	   srcs/parser/parse_ambient_light.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \

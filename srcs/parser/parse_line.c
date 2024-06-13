@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/12 15:30:09 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/12 17:04:41 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	parse_line(const char *line, t_data *data)
 	while (ft_isspace(*line))
 		line++;
 	if (ft_strncmp(line, "A", 1) == 0)
-		printf("A\n");
+		parse_ambient_light(line, &data->amb);
 	else if (ft_strncmp(line, "C", 1) == 0)
 		printf("C\n");
 	else if (ft_strncmp(line, "L", 1) == 0)
