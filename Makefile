@@ -25,6 +25,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_ambient_light.c \
 	   srcs/parser/parse_camera.c \
 	   srcs/parser/parse_light.c \
+	   srcs/parser/parse_sphere.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
