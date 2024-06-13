@@ -136,6 +136,7 @@ int		check_file_extension(const char *file_path, const char *extension);
 void	parse_file(const char *file, t_data *data);
 void	parse_line(const char *line, t_data *data);
 void	parse_ambient_light(const char *line, t_ambient *amb);
+void	parse_camera(const char *line, t_camera *camera);
 
 // mlx
 void	init_data(t_data *data);
