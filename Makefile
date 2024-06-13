@@ -27,6 +27,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_light.c \
 	   srcs/parser/parse_sphere.c \
 	   srcs/parser/parse_plane.c \
+	   srcs/parser/parse_cylinder.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \

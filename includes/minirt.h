@@ -141,6 +141,7 @@ void	parse_camera(const char *line, t_camera *camera);
 void	parse_light(const char *line, t_light *light);
 void	parse_sphere(const char *line, t_sphere *sphere);
 void	parse_plane(const char *line, t_plane *plane);
+void	parse_cylinder(const char *line, t_cylinder *cylinder);
 
 // mlx
 void	init_data(t_data *data);
