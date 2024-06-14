@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_with_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:31:32 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/08 20:12:18 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:24:49 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	exit_with_error(const char *err_msg)
 {
-	ft_putstr_fd((char*)err_msg, 1);
+	ft_putstr_fd((char *)err_msg, 1);
 	exit(1);
 }

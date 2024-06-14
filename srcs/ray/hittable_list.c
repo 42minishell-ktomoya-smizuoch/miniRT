@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/11 17:36:21 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:00:55 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,20 @@ int	hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hi
 {
 	t_hit_record	temp_rec;
 	int				hit_anything;
-	double			closest_so_far;
 	int				i;
-
+	t_limits		l;//closest_so_far
+	
+	
 	hit_anything = 0;
 	i = 0;
-	closest_so_far = t_max;
+	l.max = t_max;
+	l.min = t_min;
 	while (i < list->size)
 	{
-		if (list->objects[i].hit(&list->objects[i], ray, t_min, closest_so_far, &temp_rec))
+		if (list->objects[i].hit(&list->objects[i], ray, l.min, l.max, &temp_rec))
 		{
 			hit_anything = 1;
-			closest_so_far = temp_rec.t;
+			l.max = temp_rec.t;//closest_so_far
 			*rec = temp_rec;
 		}
 		i++;
