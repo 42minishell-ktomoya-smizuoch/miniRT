@@ -13,10 +13,13 @@
 
 t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int depth) {
     t_hit_record rec;
+	t_limits l;
+	l.min = 0.001;
+	l.max = INFINITY;
     if (depth <= 0)
         return (t_color){0, 0, 0};
 
-    if (hit_list(world, ray, 0.001, INFINITY, &rec)) {
+    if (hit_list(world, ray, l, &rec)) {
         t_color total_light_color = vec3_to_color(vec_scalar(color_to_vec3(ambient->color), ambient->ratio));
         for (int i = 0; i < lights->count; i++) {
             t_light *light = &lights->lights[i];
