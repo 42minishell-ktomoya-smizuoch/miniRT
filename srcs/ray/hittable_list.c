@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/14 17:09:15 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:16:36 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	add_hittable(t_hittable_list *list, t_hittable object)
 	if (list->size == list->capacity)
 	{
 		list->capacity *= 2;
-		list->objects = ft_realloc(list->objects, sizeof(t_hittable) * list->capacity);
+		list->objects = ft_realloc(list->objects,
+				sizeof(t_hittable) * list->capacity);
 		if (!list->objects)
 		{
 			perror("malloc");
@@ -62,41 +63,28 @@ void	add_hittable(t_hittable_list *list, t_hittable object)
 	list->objects[list->size++] = object;
 }
 
-int	hit_list(t_hittable_list *list, t_ray *ray, t_limits limit, t_hit_record *rec)
+int	hit_list(t_hittable_list *list,
+	t_ray *ray, t_limits limit, t_hit_record *rec)
 {
 	t_hit_record	temp_rec;
 	int				hit_anything;
 	int				i;
-	t_limits		l;//closest_so_far
-	
-	
+	t_limits		l;
+
 	hit_anything = 0;
 	i = 0;
 	l.max = limit.max;
 	l.min = limit.min;
 	while (i < list->size)
 	{
-		if (list->objects[i].hit(&list->objects[i], ray, l.min, l.max, &temp_rec))
+		if (list->objects[i].hit(&list->objects[i],
+				ray, l.min, l.max, &temp_rec))
 		{
 			hit_anything = 1;
-			l.max = temp_rec.t;//closest_so_far
+			l.max = temp_rec.t;
 			*rec = temp_rec;
 		}
 		i++;
 	}
 	return (hit_anything);
-}
-
-void	free_hittable_list(t_hittable_list *list)
-{
-	int	i;
-
-	i = 0;
-	while (i < list->size)
-	{
-		list->objects[i].free_data(list->objects[i].data);
-		i++;
-	}
-	free(list->objects);
-	free(list);
 }
