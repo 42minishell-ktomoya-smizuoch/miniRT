@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/14 17:00:55 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:09:15 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	add_hittable(t_hittable_list *list, t_hittable object)
 	list->objects[list->size++] = object;
 }
 
-int	hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
+int	hit_list(t_hittable_list *list, t_ray *ray, t_limits limit, t_hit_record *rec)
 {
 	t_hit_record	temp_rec;
 	int				hit_anything;
@@ -72,8 +72,8 @@ int	hit_list(t_hittable_list *list, t_ray *ray, double t_min, double t_max, t_hi
 	
 	hit_anything = 0;
 	i = 0;
-	l.max = t_max;
-	l.min = t_min;
+	l.max = limit.max;
+	l.min = limit.min;
 	while (i < list->size)
 	{
 		if (list->objects[i].hit(&list->objects[i], ray, l.min, l.max, &temp_rec))
