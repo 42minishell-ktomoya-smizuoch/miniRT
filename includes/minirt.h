@@ -128,6 +128,12 @@ typedef struct s_data
 	t_cylinder	cylinder;
 }	t_data;
 
+typedef struct s_limits
+{
+	double	max;
+	double	min;
+}	t_limits;
+
 //utils
 void print_progress(int current, int total);
 
