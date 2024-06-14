@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/12 16:24:47 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/13 17:09:48 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	parse_file(const char *file_name, t_data *data)
 	char	*file_path;
 	char	*line;
 
-	(void)data;
 	if (check_file_extension(file_name, ".rt") != 0)
 		exit_with_error(ERR_FILE_EXTENSION);
 	file_path = ft_strjoin("rt_file/", file_name);
