@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:19:59 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/09 16:20:00 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:30:01 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ double	schlick(double cosine, double ref_idx)
 	return (r0 + (1 - r0) * pow((1 - cosine), 5));
 }
 
-int	hit_dielectric(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
+int	hit_dielectric(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
 	t_dielectric	*dielectric;
 	t_vec3			oc;
@@ -64,10 +64,10 @@ int	hit_dielectric(t_hittable *self, t_ray *ray, double t_min, double t_max, t_h
 		return (0);
 	sqrt_d = sqrt(discriminant);
 	root = (-half_b - sqrt_d) / a;
-	if (root < t_min || root > t_max)
+	if (root < l.min || root > l.max)
 	{
 		root = (-half_b + sqrt_d) / a;
-		if (root < t_min || root > t_max)
+		if (root < l.min || root > l.max)
 			return (0);
 	}
 	rec->t = root;

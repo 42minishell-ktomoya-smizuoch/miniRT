@@ -1,12 +1,12 @@
 #include "plane.h"
 #include <stdlib.h>
 
-int hit_plane(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec) {
+int hit_plane(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec) {
     t_plane *pl = (t_plane *)self->data;
     double denom = vec_dot(pl->normal, ray->direction);
     if (fabs(denom) > 1e-6) {
         double t = vec_dot(vec_sub(pl->point, ray->origin), pl->normal) / denom;
-        if (t < t_min || t > t_max)
+        if (t < l.min || t > l.max)
             return 0;
         rec->t = t;
         rec->point = ray_at(*ray, t);
