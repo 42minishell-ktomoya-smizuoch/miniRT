@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:22:55 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/13 18:07:33 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/15 16:37:11 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	parse_light(const char *line, t_light *light)
 {
-	if (sscanf(line, "%lf,%lf,%lf %lf %lf,%lf,%lf",
+	if (ft_sscanf(line, "%lf,%lf,%lf %lf %lf,%lf,%lf",
 			&light->position.x, &light->position.y, &light->position.z,
 			&light->intensity,
 			&light->color.r, &light->color.g, &light->color.b) != 7)
