@@ -151,6 +151,7 @@ void	parse_plane(const char *line, t_plane *plane);
 void	parse_cylinder(const char *line, t_cylinder *cylinder);
 bool	is_out_of_range(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
+bool	is_vec3_out_of_range(t_vec3 vec3, double lower, double upper);
 
 // mlx
 void	init_data(t_data *data);
