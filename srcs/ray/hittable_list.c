@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:21:12 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/14 17:16:36 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:28:27 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	hit_list(t_hittable_list *list,
 	while (i < list->size)
 	{
 		if (list->objects[i].hit(&list->objects[i],
-				ray, l.min, l.max, &temp_rec))
+				ray, l, &temp_rec))
 		{
 			hit_anything = 1;
 			l.max = temp_rec.t;

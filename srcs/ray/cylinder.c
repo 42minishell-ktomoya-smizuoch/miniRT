@@ -65,23 +65,23 @@ int hit_cylinder_cap(t_cylinder *cyl, t_ray *ray, double t_min, double t_max, t_
     return 1;
 }
 
-int hit_cylinder(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec) {
+int hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec) {
     t_cylinder *cyl = (t_cylinder *)self->data;
     t_hit_record temp_rec;
     int hit_anything = 0;
-    double closest_so_far = t_max;
+    double closest_so_far = l.min;
 
-    if (hit_cylinder_side(cyl, ray, t_min, closest_so_far, &temp_rec)) {
+    if (hit_cylinder_side(cyl, ray, l.min, closest_so_far, &temp_rec)) {
         hit_anything = 1;
         closest_so_far = temp_rec.t;
         *rec = temp_rec;
     }
-    if (hit_cylinder_cap(cyl, ray, t_min, closest_so_far, &temp_rec, vec_add(cyl->center, vec_scalar(cyl->axisnorm, 0)))) {
+    if (hit_cylinder_cap(cyl, ray, l.min, closest_so_far, &temp_rec, vec_add(cyl->center, vec_scalar(cyl->axisnorm, 0)))) {
         hit_anything = 1;
         closest_so_far = temp_rec.t;
         *rec = temp_rec;
     }
-    if (hit_cylinder_cap(cyl, ray, t_min, closest_so_far, &temp_rec, vec_add(cyl->center, vec_scalar(cyl->axisnorm, cyl->height)))) {
+    if (hit_cylinder_cap(cyl, ray, l.min, closest_so_far, &temp_rec, vec_add(cyl->center, vec_scalar(cyl->axisnorm, cyl->height)))) {
         hit_anything = 1;
         closest_so_far = temp_rec.t;
         *rec = temp_rec;

@@ -1,11 +1,11 @@
 #include "rectangle.h"
 #include <stdlib.h>
 
-int hit_rectangle(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec) {
+int hit_rectangle(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec) {
     t_rectangle *rect = (t_rectangle *)self->data;
     double t = vec_dot(vec_sub(rect->p0, ray->origin), rect->normal) / vec_dot(ray->direction, rect->normal);
 
-    if (t < t_min || t > t_max)
+    if (t < l.min || t > l.max)
         return 0;
 
     t_vec3 p = ray_at(*ray, t);
