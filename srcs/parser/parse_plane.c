@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_ambient_light.c                              :+:      :+:    :+:   */
+/*   parse_plane.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 16:50:34 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/15 16:34:27 by ktomoya          ###   ########.fr       */
+/*   Created: 2024/06/15 16:18:57 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/06/15 16:38:35 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	parse_ambient_light(const char *line, t_ambient *amb)
+void	parse_plane(const char *line, t_plane *plane)
 {
-	if (ft_sscanf(line, "%lf %lf,%lf,%lf", &amb->ratio,
-			&amb->color.r, &amb->color.g, &amb->color.b) != 4)
-		exit_with_error("ErrorA\n");
+		if (ft_sscanf(line, "%lf,%lf,%lf %lf,%lf,%lf %lf,%lf,%lf", &plane->point.x, &plane->point.y, &plane->point.z, &plane->normal.x, &plane->normal.y, &plane->normal.z, &plane->color.r, &plane->color.g, &plane->color.b) != 9)
+			exit_with_error("Errorpl\n");
 }
