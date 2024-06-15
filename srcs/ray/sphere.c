@@ -6,14 +6,14 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:29:33 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/11 17:17:21 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:33:23 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable.h"
 
 // 球のヒット関数
-int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
+int hit_sphere(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
     t_sphere *sphere = (t_sphere *)self->data;
     t_vec3 oc = vec_sub(ray->origin, sphere->center);
@@ -28,9 +28,9 @@ int hit_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_r
     double sqrt_d = sqrt(discriminant);
     double root = (-half_b - sqrt_d) / a;
 
-    if (root < t_min || root > t_max) {
+    if (root < l.min || root > l.max) {
         root = (-half_b + sqrt_d) / a;
-        if (root < t_min || root > t_max)
+        if (root < l.min || root > l.max)
             return 0;
     }
 

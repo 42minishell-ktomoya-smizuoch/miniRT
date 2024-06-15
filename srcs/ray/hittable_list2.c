@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_error.c                                  :+:      :+:    :+:   */
+/*   hittable_list2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 18:31:32 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/14 15:24:49 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/06/14 17:16:01 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/14 17:16:29 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
+#include "hittable.h"
 
-void	exit_with_error(const char *err_msg)
+void	free_hittable_list(t_hittable_list *list)
 {
-	ft_putstr_fd((char *)err_msg, 1);
-	exit(1);
+	int	i;
+
+	i = 0;
+	while (i < list->size)
+	{
+		list->objects[i].free_data(list->objects[i].data);
+		i++;
+	}
+	free(list->objects);
+	free(list);
 }

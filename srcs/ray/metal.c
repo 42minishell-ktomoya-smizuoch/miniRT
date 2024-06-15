@@ -12,7 +12,7 @@ t_vec3 reflect(t_vec3 v, t_vec3 n) {
     return vec_sub(v, vec_scalar(n, 2 * vec_dot(v, n)));
 }
 
-int hit_metal(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec) {
+int hit_metal(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec) {
     t_metal *metal = (t_metal *)self->data;
     t_vec3 oc = vec_sub(ray->origin, metal->center);
     double a = vec_dot(ray->direction, ray->direction);
@@ -26,9 +26,9 @@ int hit_metal(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_re
     double sqrt_d = sqrt(discriminant);
     double root = (-half_b - sqrt_d) / a;
 
-    if (root < t_min || root > t_max) {
+    if (root < l.min || root > l.max) {
         root = (-half_b + sqrt_d) / a;
-        if (root < t_min || root > t_max)
+        if (root < l.min || root > l.max)
             return 0;
     }
 

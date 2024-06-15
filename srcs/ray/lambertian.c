@@ -9,7 +9,7 @@ typedef struct s_lambertian
 }	t_lambertian;
 
 
-int	hit_lambertian(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec)
+int	hit_lambertian(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
 	t_lambertian	*lambertian;
 	t_vec3			oc;
@@ -31,10 +31,10 @@ int	hit_lambertian(t_hittable *self, t_ray *ray, double t_min, double t_max, t_h
 		return (0);
 	sqrt_d = sqrt(discriminant);
 	root = (-half_b - sqrt_d) / a;
-	if (root < t_min || root > t_max)
+	if (root < l.min || root > l.max)
 	{
 		root = (-half_b + sqrt_d) / a;
-		if (root < t_min || root > t_max)
+		if (root < l.min || root > l.max)
 			return (0);
 	}
 	rec->t = root;

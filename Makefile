@@ -33,6 +33,7 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
 	   srcs/ray/ray_math3.c \
 	   srcs/ray/hittable_list.c \
+	   srcs/ray/hittable_list2.c \
 	   srcs/ray/sphere.c \
 	   srcs/ray/random.c \
 	   srcs/ray/progress.c \

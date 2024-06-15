@@ -5,7 +5,7 @@ t_vec3 moving_sphere_center(t_moving_sphere *sphere, double time) {
     return vec_add(sphere->center0, vec_scalar(vec_sub(sphere->center1, sphere->center0), (time - sphere->time0) / (sphere->time1 - sphere->time0)));
 }
 
-int hit_moving_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, t_hit_record *rec) {
+int hit_moving_sphere(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec) {
     t_moving_sphere *sphere = (t_moving_sphere *)self->data;
     t_vec3 oc = vec_sub(ray->origin, moving_sphere_center(sphere, ray->time));
     double a = vec_dot(ray->direction, ray->direction);
@@ -19,9 +19,9 @@ int hit_moving_sphere(t_hittable *self, t_ray *ray, double t_min, double t_max, 
     double sqrt_d = sqrt(discriminant);
     double root = (-half_b - sqrt_d) / a;
 
-    if (root < t_min || root > t_max) {
+    if (root < l.min || root > l.max) {
         root = (-half_b + sqrt_d) / a;
-        if (root < t_min || root > t_max)
+        if (root < l.min || root > l.max)
             return 0;
     }
 
