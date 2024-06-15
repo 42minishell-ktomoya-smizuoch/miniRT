@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:07:47 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/13 17:13:02 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/16 07:45:17 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,15 @@ void	print_struct(t_data data)
        "normal.x  : %lf\n"
        "normal.y  : %lf\n"
        "normal.z  : %lf\n"
-       "fov       : %lf\n",
+       "fov       : %lf\n"
+       "lower.x   : %lf\n"
+       "lower.y   : %lf\n"
+       "lower.z   : %lf\n",
        data.camera.origin.x, data.camera.origin.y, data.camera.origin.z, 
        data.camera.normal.x, data.camera.normal.y, data.camera.normal.z, 
-       data.camera.fov);
+       data.camera.fov,
+	   data.camera.lower_left_corner.x, data.camera.lower_left_corner.y,
+	   data.camera.lower_left_corner.z);
 
 	printf("----------------------------light----------------------------------\n"
        "origin.x  : %lf\n"
