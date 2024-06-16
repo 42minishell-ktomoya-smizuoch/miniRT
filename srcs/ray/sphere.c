@@ -6,15 +6,14 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:29:33 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/16 16:11:33 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:57:44 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hittable.h"
 
-int	hit_sphere(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
+typedef struct s_hit_sphere
 {
-	t_sphere	*sphere;
 	t_vec3		oc;
 	double		a;
 	double		half_b;
@@ -23,27 +22,33 @@ int	hit_sphere(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	double		sqrt_d;
 	double		root;
 	t_vec3		outward_normal;
+}	t_hit_sphere;
+
+int	hit_sphere(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
+{
+	t_sphere		*sphere;
+	t_hit_sphere	s;
 
 	sphere = (t_sphere *)self->data;
-	oc = vec_sub(ray->origin, sphere->center);
-	a = vec_dot(ray->direction, ray->direction);
-	half_b = vec_dot(oc, ray->direction);
-	c = vec_dot(oc, oc) - sphere->radius * sphere->radius;
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
+	s.oc = vec_sub(ray->origin, sphere->center);
+	s.a = vec_dot(ray->direction, ray->direction);
+	s.half_b = vec_dot(s.oc, ray->direction);
+	s.c = vec_dot(s.oc, s.oc) - sphere->radius * sphere->radius;
+	s.discriminant = s.half_b * s.half_b - s.a * s.c;
+	if (s.discriminant < 0)
 		return (0);
-	sqrt_d = sqrt(discriminant);
-	root = (-half_b - sqrt_d) / a;
-	if (root < l.min || root > l.max)
+	s.sqrt_d = sqrt(s.discriminant);
+	s.root = (-s.half_b - s.sqrt_d) / s.a;
+	if (s.root < l.min || s.root > l.max)
 	{
-		root = (-half_b + sqrt_d) / a;
-		if (root < l.min || root > l.max)
+		s.root = (-s.half_b + s.sqrt_d) / s.a;
+		if (s.root < l.min || s.root > l.max)
 			return (0);
 	}
-	rec->t = root;
+	rec->t = s.root;
 	rec->point = ray_at(*ray, rec->t);
-	outward_normal = vec_normalize(vec_sub(rec->point, sphere->center));
-	set_face_normal(rec, ray, outward_normal);
+	s.outward_normal = vec_normalize(vec_sub(rec->point, sphere->center));
+	set_face_normal(rec, ray, s.outward_normal);
 	rec->color = sphere->color;
 	return (1);
 }
