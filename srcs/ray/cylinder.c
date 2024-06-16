@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/16 21:25:56 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/16 21:30:02 by smizuoch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cylinder.h"
 #include <math.h>
 #include <stdlib.h>
 
-int	hit_cylinder_side(t_cylinder *cyl, t_ray *ray, double t_min, double t_max,
+int	hit_cylinder_side(t_cylinder *cyl, t_ray *ray, t_limits l,
 			t_hit_record *rec)
 {
 	t_vec3	oc;
@@ -27,10 +39,10 @@ int	hit_cylinder_side(t_cylinder *cyl, t_ray *ray, double t_min, double t_max,
 		return (0);
 	sqrt_d = sqrt(discriminant);
 	root = (-half_b - sqrt_d) / a;
-	if (root < t_min || root > t_max)
+	if (root < l.min || root > l.max)
 	{
 		root = (-half_b + sqrt_d) / a;
-		if (root < t_min || root > t_max)
+		if (root < l.min || root > l.max)
 			return (0);
 	}
 	point = ray_at(*ray, root);
@@ -79,32 +91,33 @@ int	hit_cylinder_cap(t_cylinder *cyl, t_ray *ray, double t_min, double t_max,
 
 int	hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
-	t_cylinder	*cyl;
+	t_cylinder		*cyl;
 	t_hit_record	temp_rec;
-	int		hit_anything;
-	double		closest_so_far;
+	int				hit_anything;
+	t_limits		c;
 
 	cyl = (t_cylinder *)self->data;
 	hit_anything = 0;
-	closest_so_far = l.max;
-	if (hit_cylinder_side(cyl, ray, l.min, closest_so_far, &temp_rec))
+	c.max = l.max;
+	c.min = c.min;
+	if (hit_cylinder_side(cyl, ray, c, &temp_rec))
 	{
 		hit_anything = 1;
-		closest_so_far = temp_rec.t;
+		l.max = temp_rec.t;
 		*rec = temp_rec;
 	}
-	if (hit_cylinder_cap(cyl, ray, l.min, closest_so_far, &temp_rec,
+	if (hit_cylinder_cap(cyl, ray, l.min, c.max, &temp_rec,
 			vec_add(cyl->center, vec_scalar(cyl->axisnorm, 0))))
 	{
 		hit_anything = 1;
-		closest_so_far = temp_rec.t;
+		c.max = temp_rec.t;
 		*rec = temp_rec;
 	}
-	if (hit_cylinder_cap(cyl, ray, l.min, closest_so_far, &temp_rec,
+	if (hit_cylinder_cap(cyl, ray, l.min, c.max, &temp_rec,
 			vec_add(cyl->center, vec_scalar(cyl->axisnorm, cyl->height))))
 	{
 		hit_anything = 1;
-		closest_so_far = temp_rec.t;
+		c.max = temp_rec.t;
 		*rec = temp_rec;
 	}
 	return (hit_anything);
