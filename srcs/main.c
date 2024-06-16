@@ -154,7 +154,7 @@ int main(void) {
         vec_new(0, 1, 0),  // 軸方向
         1.0, // 直径
         3.0, // 高さ
-        (t_color){0.1, 0.1, 0.1}, // 色
+        (t_color){0.1, 0.4, 0.1}, // 色
         METAL // 材質
     ));
 	add_hittable(world, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
