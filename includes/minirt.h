@@ -62,18 +62,19 @@ typedef struct s_ambient
     double ratio;
 } t_ambient;
 
-
-typedef struct s_camera {
-    t_vec3 origin;
+typedef struct s_camera
+{
+	t_vec3	origin;
 	t_vec3	normal;
-    t_vec3 lower_left_corner;
-    t_vec3 horizontal;
-    t_vec3 vertical;
-    t_vec3 u, v, w;
+	t_vec3	lower_left_corner;
+	t_vec3	horizontal;
+	t_vec3	vertical;
+	t_vec3	u, v, w;
 	double	fov;
-    double lens_radius;
-    double time0, time1; // 新しく追加: シャッターの開閉時間
-} t_camera;
+	double	lens_radius;
+	double	focus_distance;
+	double	time0, time1; // 新しく追加: シャッターの開閉時間
+}	t_camera;
 
 typedef struct s_light {
     t_vec3 position;
