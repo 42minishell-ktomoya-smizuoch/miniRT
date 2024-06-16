@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/16 18:03:26 by ktomoya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -31,8 +43,7 @@
 # define METAL 2
 # define DIELECTRIC 3
 
-//int型のt_material_typeを定義
-typedef int t_material_type;
+typedef int	t_material_type;
 
 //structure
 typedef struct s_vec3
@@ -58,9 +69,9 @@ typedef struct s_ray
 
 typedef struct s_ambient
 {
-    t_color color;
-    double ratio;
-} t_ambient;
+	t_color	color;
+	double	ratio;
+}	t_ambient;
 
 typedef struct s_camera
 {
@@ -73,20 +84,21 @@ typedef struct s_camera
 	double	fov;
 	double	lens_radius;
 	double	focus_distance;
-	double	time0, time1; // 新しく追加: シャッターの開閉時間
+	double	time0, time1;
 }	t_camera;
 
-typedef struct s_light {
-    t_vec3 position;
-    t_color color;
-    double intensity;
-} t_light;
+typedef struct s_light
+{
+	t_vec3	position;
+	t_color	color;
+	double	intensity;
+}	t_light;
 
-typedef struct s_light_list {
-    t_light *lights;
-    int count;
-} t_light_list;
-
+typedef struct s_light_list
+{
+	t_light	*lights;
+	int		count;
+}	t_light_list;
 
 typedef struct s_sphere
 {
@@ -97,21 +109,22 @@ typedef struct s_sphere
 	t_material_type	material;
 }	t_sphere;
 
-typedef struct s_plane {
-    t_vec3 point;
-    t_vec3 normal;
-    t_color color;
-    t_material_type material;
-} t_plane;
+typedef struct s_plane
+{
+	t_vec3			point;
+	t_vec3			normal;
+	t_color			color;
+	t_material_type	material;
+}	t_plane;
 
 typedef struct s_cylinder
 {
-	t_vec3	center;
-	t_vec3	axisnorm;
-	double	diameter;
-	double	height;
-	t_color	color;
-	t_material_type material;
+	t_vec3			center;
+	t_vec3			axisnorm;
+	double			diameter;
+	double			height;
+	t_color			color;
+	t_material_type	material;
 }	t_cylinder;
 
 typedef struct s_data
@@ -138,7 +151,7 @@ typedef struct s_limits
 }	t_limits;
 
 //utils
-void print_progress(int current, int total);
+void	print_progress(int current, int total);
 void	print_struct(t_data data);
 
 // parser
@@ -174,18 +187,18 @@ t_vec3	vec_normalize(t_vec3 a);
 t_vec3	ray_at(t_ray ray, double t);
 t_vec3	vec_uint(t_vec3 v);
 int		vec_to_color(t_color col);
-t_vec3 vec_mul(t_vec3 a, t_vec3 b);
-t_vec3 vec_cross(t_vec3 a, t_vec3 b);
-t_color vec3_to_color(t_vec3 v);
+t_vec3	vec_mul(t_vec3 a, t_vec3 b);
+t_vec3	vec_cross(t_vec3 a, t_vec3 b);
+t_color	vec3_to_color(t_vec3 v);
 
 //random
-double random_double(); // 0から1の間のランダムな浮動小数点数を生成
-double random_double_range(double min, double max); // 指定された範囲のランダムな浮動小数点数を生成
-t_vec3 random_in_unit_sphere();
-t_vec3 random_unit_vector();
-t_vec3 random_in_hemisphere(const t_vec3 *normal);
-t_vec3 color_to_vec3(t_color c);
-t_color scale_color(t_color color, int samples_per_pixel);
+double	random_double(void);
+double	random_double_range(double min, double max);
+t_vec3	random_in_unit_sphere(void);
+t_vec3	random_unit_vector(void);
+t_vec3	random_in_hemisphere(const t_vec3 *normal);
+t_vec3	color_to_vec3(t_color c);
+t_color	scale_color(t_color color, int samples_per_pixel);
 
 //error
 void	exit_with_error(const char *err_msg);
