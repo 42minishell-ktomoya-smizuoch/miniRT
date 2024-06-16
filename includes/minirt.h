@@ -90,10 +90,11 @@ typedef struct s_light_list {
 
 typedef struct s_sphere
 {
-	t_vec3	center;
-	double	diameter;
-	double	radius;
-	t_color	color;
+	t_vec3			center;
+	double			diameter;
+	double			radius;
+	t_color			color;
+	t_material_type	material;
 }	t_sphere;
 
 typedef struct s_plane {
