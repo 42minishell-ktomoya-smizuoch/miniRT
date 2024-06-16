@@ -91,7 +91,7 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list
         }
         print_progress(y + 1, WINDOW_HEIGHT);
     }
-    printf("\n");
+    printf("Rendering complete!\n");
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
@@ -121,12 +121,12 @@ int main(void) {
 
     world = new_hittable_list(10); // 初期容量を5に設定
     // 地面
-    // add_hittable(world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
+    add_hittable(world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
 
-    // // // 球
-    // add_hittable(world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
-    // add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
-    // add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
+    // // 球
+    add_hittable(world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
+    add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
+    add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
 
     // add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
@@ -138,7 +138,7 @@ int main(void) {
         vec_new(2, 0, -2),  // p3
         vec_new(0, 1, 0),   // normal
         (t_color){0.9, 0.1, 0.1}, // color
-        LAMBERTIAN // material
+        METAL // material
     ));
 
 	// add_hittable(world, new_plane(
@@ -150,22 +150,23 @@ int main(void) {
 
     // 円柱
     add_hittable(world, new_cylinder(
-        vec_new(0, 0, 0), // 中心
+        vec_new(0, 0, 5), // 中心
         vec_new(0, 1, 0),  // 軸方向
         1.0, // 直径
         3.0, // 高さ
-        (t_color){0.1, 0.1, 0.9}, // 色
-        LAMBERTIAN // 材質
+        (t_color){0.1, 0.1, 0.1}, // 色
+        METAL // 材質
     ));
+	add_hittable(world, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
 
     // 複数のライトを追加
-    // lights = new_light_list(3);
-    // add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
+    lights = new_light_list(3);
+    add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
     // add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
     // add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     // 環境光を設定
-    ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 1); // RGBと比率は必要に応じて調整
+    ambient = new_ambient((t_color){0.2, 0.2, 0.8}, 0); // RGBと比率は必要に応じて調整
 
     render(&data, &camera, world, &lights, &ambient, samples_per_pixel, max_depth);
     wait_input(&data);
