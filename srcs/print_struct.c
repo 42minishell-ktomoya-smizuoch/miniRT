@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:07:47 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/16 13:46:52 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/16 17:46:00 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,11 @@ void	print_struct(t_data data)
        "diameter  : %lf\n"
        "color.r   : %lf\n"
        "color.g   : %lf\n"
-       "color.b   : %lf\n",
+       "color.b   : %lf\n"
+       "material  : %d\n",
        data.sphere.center.x, data.sphere.center.y, data.sphere.center.z, 
-       data.sphere.diameter, data.sphere.color.r, data.sphere.color.g, data.sphere.color.b);
+       data.sphere.diameter, data.sphere.color.r, data.sphere.color.g, data.sphere.color.b,
+	   data.sphere.material);
 
 	printf("----------------------------plane----------------------------------\n"
        "point.x  : %lf\n"
@@ -72,10 +74,12 @@ void	print_struct(t_data data)
        "normal.z  : %lf\n"
        "color.r   : %lf\n"
        "color.g   : %lf\n"
-       "color.b   : %lf\n",
+       "color.b   : %lf\n"
+       "material  : %d\n",
        data.plane.point.x, data.plane.point.y, data.plane.point.z, 
        data.plane.normal.x, data.plane.normal.y, data.plane.normal.z, 
-       data.plane.color.r, data.plane.color.g, data.plane.color.b);
+       data.plane.color.r, data.plane.color.g, data.plane.color.b,
+	   data.plane.material);
 
 	printf("----------------------------cylinder-------------------------------\n"
        "center.x   : %lf\n"
@@ -88,9 +92,11 @@ void	print_struct(t_data data)
        "height     : %lf\n"
        "color.r    : %lf\n"
        "color.g    : %lf\n"
-       "color.b    : %lf\n",
+       "color.b    : %lf\n"
+       "material   : %d\n",
        data.cylinder.center.x, data.cylinder.center.y, data.cylinder.center.z, 
        data.cylinder.axisnorm.x, data.cylinder.axisnorm.y, data.cylinder.axisnorm.z, 
        data.cylinder.diameter, data.cylinder.height, 
-       data.cylinder.color.r, data.cylinder.color.g, data.cylinder.color.b);
+       data.cylinder.color.r, data.cylinder.color.g, data.cylinder.color.b,
+	   data.cylinder.material);
 }
