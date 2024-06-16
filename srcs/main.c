@@ -185,4 +185,5 @@ int main(void) {
 //	if (argc != 2)
 //		exit(1);
 //	parse_file(argv[1], &data);
+//	print_struct(data);
 //}
