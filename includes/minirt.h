@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/15 16:51:35 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:20:49 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_camera
 	t_vec3	u, v, w;
 	double	fov;
 	double	lens_radius;
+	double	focus_distance;
 	double	time0, time1;
 }	t_camera;
 
@@ -101,10 +102,11 @@ typedef struct s_light_list
 
 typedef struct s_sphere
 {
-	t_vec3	center;
-	double	diameter;
-	double	radius;
-	t_color	color;
+	t_vec3			center;
+	double			diameter;
+	double			radius;
+	t_color			color;
+	t_material_type	material;
 }	t_sphere;
 
 typedef struct s_plane
@@ -124,6 +126,17 @@ typedef struct s_cylinder
 	t_color			color;
 	t_material_type	material;
 }	t_cylinder;
+
+typdef struct s_rectangle
+{
+	t_vec3			vertex1;
+	t_vec3			vertex2;
+	t_vec3			vertex3;
+	t_vec3			vertex4;
+	t_vec3			normal;
+	t_color			color;
+	t_material_type	matrial;
+}
 
 typedef struct s_data
 {
@@ -162,7 +175,8 @@ void	parse_light(const char *line, t_light *light);
 void	parse_sphere(const char *line, t_sphere *sphere);
 void	parse_plane(const char *line, t_plane *plane);
 void	parse_cylinder(const char *line, t_cylinder *cylinder);
-bool	is_out_of_range(double num, double lower, double upper);
+bool	is_out_of_range_int(int num, int lower, int upper);
+bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
 bool	is_vec3_out_of_range(t_vec3 vec3, double lower, double upper);
 
