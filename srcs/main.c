@@ -128,7 +128,7 @@ int main(void) {
     add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
     add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
 
-    // add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
+    add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
     // 長方形
     add_hittable(world, new_rectangle(
@@ -159,14 +159,14 @@ int main(void) {
     ));
 	add_hittable(world, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
 
-    // 複数のライトを追加
-    lights = new_light_list(3);
-    add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
+    // // 複数のライトを追加
+    // lights = new_light_list(3);
+    // add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
     // add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
     // add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     // 環境光を設定
-    ambient = new_ambient((t_color){0.2, 0.2, 0.8}, 0); // RGBと比率は必要に応じて調整
+    ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.1); // RGBと比率は必要に応じて調整
 
     render(&data, &camera, world, &lights, &ambient, samples_per_pixel, max_depth);
     wait_input(&data);

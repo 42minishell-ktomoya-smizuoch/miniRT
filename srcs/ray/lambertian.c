@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lambertian.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/16 16:16:12 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/16 16:16:33 by smizuoch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lambertian.h"
 #include <stdlib.h>
 
 typedef struct s_lambertian
 {
-    t_vec3	center;
-    double	radius;
-    t_color	color;
+	t_vec3	center;
+	double	radius;
+	t_color	color;
 }	t_lambertian;
 
 typedef struct s_hit_lambertian
@@ -17,8 +29,6 @@ typedef struct s_hit_lambertian
 	double	sqrt_d;
 	double	root;
 }	t_hit_lambertian;
-
-
 
 int	hit_lambertian(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
