@@ -109,7 +109,7 @@ int main(void) {
         vec_new(13, 2, 3), // カメラの位置
         vec_new(0, 0, 0), // カメラが向かう方向
         vec_new(0, 1, 0), // カメラのアップベクトル
-        20.0, // 視野角
+        50.0, // 視野角
         aspect_ratio, // アスペクト比
         aperture, // 絞り
         focus_dist, // 焦点距離
@@ -119,11 +119,11 @@ int main(void) {
 
     init_data(&data);
 
-    world = new_hittable_list(5); // 初期容量を5に設定
+    world = new_hittable_list(10); // 初期容量を5に設定
     // 地面
-    add_hittable(world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
+    // add_hittable(world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
 
-    // // 球
+    // // // 球
     // add_hittable(world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
     // add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
     // add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
@@ -141,16 +141,16 @@ int main(void) {
         LAMBERTIAN // material
     ));
 
-	add_hittable(world, new_plane(
-        vec_new(0.0, 0.0, 0.0), // 平面上の点
-        vec_new(0.0, 0.0, 1.0),   // 法線ベクトル
-        (t_color){0.0, 0.9, 0}, // 色
-        METAL // 材質
-    ));
+	// add_hittable(world, new_plane(
+    //     vec_new(0.0, 0.0, 0.0), // 平面上の点
+    //     vec_new(0.0, 0.0, 1.0),   // 法線ベクトル
+    //     (t_color){0.0, 0.9, 0}, // 色
+    //     METAL // 材質
+    // ));
 
     // 円柱
     add_hittable(world, new_cylinder(
-        vec_new(0, 0, -5), // 中心
+        vec_new(0, 0, 0), // 中心
         vec_new(0, 1, 0),  // 軸方向
         1.0, // 直径
         3.0, // 高さ

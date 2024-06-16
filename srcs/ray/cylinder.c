@@ -69,7 +69,7 @@ int hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec) {
     t_cylinder *cyl = (t_cylinder *)self->data;
     t_hit_record temp_rec;
     int hit_anything = 0;
-    double closest_so_far = l.min;
+    double closest_so_far = l.max;
 
     if (hit_cylinder_side(cyl, ray, l.min, closest_so_far, &temp_rec)) {
         hit_anything = 1;
