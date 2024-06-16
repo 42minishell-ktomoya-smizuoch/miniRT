@@ -28,6 +28,9 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_sphere.c \
 	   srcs/parser/parse_plane.c \
 	   srcs/parser/parse_cylinder.c \
+	   srcs/parser/is_out_of_range.c \
+	   srcs/parser/is_rgb_out_of_range.c \
+	   srcs/parser/is_vec3_out_of_range.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
