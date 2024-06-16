@@ -95,7 +95,7 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
     t_data data;
     t_hittable_list *world;
     t_light_list lights;
@@ -117,7 +117,11 @@ int main(void) {
         1.0 // シャッターの閉じる時間
     );
 
+	if (argc != 2)
+		exit_with_error(ERR_ARG);
     init_data(&data);
+	parse_file(argv[1], &data);
+	print_struct(data);
 
     world = new_hittable_list(10); // 初期容量を5に設定
     // 地面
