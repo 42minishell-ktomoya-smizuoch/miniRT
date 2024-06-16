@@ -6,7 +6,7 @@
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:26:22 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/16 17:42:58 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/16 18:10:48 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,6 @@ void	parse_cylinder(const char *line, t_cylinder *cylinder)
 		exit_with_error("Error:cy:vec3:out of range\n");
 	if (is_rgb_out_of_range(cylinder->color) == true)
 		exit_with_error("Error:cy:rgb:out of range\n");
+	if (is_out_of_range_int(cylinder->material, 0, 3) == true)
+		exit_with_error("Error:cy:material:out of range\n");
 }
