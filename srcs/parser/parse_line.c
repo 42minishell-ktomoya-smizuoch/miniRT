@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/13 17:58:41 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/17 09:44:23 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	parse_line(const char *line, t_data *data)
 		parse_plane(line + 2, &data->plane);
 	else if (ft_strncmp(line, "cy", 2) == 0)
 		parse_cylinder(line + 2, &data->cylinder);
+	else if (ft_strncmp(line, "rc", 2) == 0)
+		parse_rectangle(line + 2, &data->rectangle);
 	else if (*line == '\n')
 		;
 	else
