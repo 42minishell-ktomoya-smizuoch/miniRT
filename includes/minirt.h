@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 14:32:42 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/18 15:25:32 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,28 @@ typedef struct s_camera
 	t_vec3	lower_left_corner;
 	t_vec3	horizontal;
 	t_vec3	vertical;
-	t_vec3	u, v, w;
+	t_vec3	u;
+	t_vec3	v;
+	t_vec3	w;
 	double	fov;
 	double	lens_radius;
 	double	focus_distance;
 	double	time0, time1;
 }	t_camera;
+
+typedef struct s_init_cam
+{
+	t_vec3 lookfrom;
+	t_vec3 lookat;
+	t_vec3 vup;
+	double vfov;
+	double aspect_ratio;
+	double aperture;
+	double focus_dist;
+	double time0;
+	double time1;
+}	t_init_cam;
+
 
 typedef struct s_light
 {

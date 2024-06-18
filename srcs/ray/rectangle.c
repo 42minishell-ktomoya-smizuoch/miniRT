@@ -6,16 +6,15 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 15:45:24 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/16 15:45:25 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:19:13 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rectangle.h"
 #include <stdlib.h>
 
-int	hit_rectangle(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
+typedef struct s_hit_rectangle
 {
-	t_rectangle	*rect;
 	double		t;
 	t_vec3		p;
 	t_vec3		c0;
@@ -29,28 +28,34 @@ int	hit_rectangle(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	double		inv_denom;
 	double		u;
 	double		v;
+}	t_hit_rectangle;
+
+int	hit_rectangle(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
+{
+	t_rectangle		*rect;
+	t_hit_rectangle	r;
 
 	rect = (t_rectangle *)self->data;
-	t = vec_dot(vec_sub(rect->p0, ray->origin), rect->normal)
+	r.t = vec_dot(vec_sub(rect->p0, ray->origin), rect->normal)
 		/ vec_dot(ray->direction, rect->normal);
-	if (t < l.min || t > l.max)
+	if (r.t < l.min || r.t > l.max)
 		return (0);
-	p = ray_at(*ray, t);
-	c0 = vec_sub(rect->p1, rect->p0);
-	c1 = vec_sub(rect->p3, rect->p0);
-	c = vec_sub(p, rect->p0);
-	dot00 = vec_dot(c0, c0);
-	dot01 = vec_dot(c0, c1);
-	dot02 = vec_dot(c0, c);
-	dot11 = vec_dot(c1, c1);
-	dot12 = vec_dot(c1, c);
-	inv_denom = 1.0 / (dot00 * dot11 - dot01 * dot01);
-	u = (dot11 * dot02 - dot01 * dot12) * inv_denom;
-	v = (dot00 * dot12 - dot01 * dot02) * inv_denom;
-	if (u < 0 || u > 1 || v < 0 || v > 1)
+	r.p = ray_at(*ray, r.t);
+	r.c0 = vec_sub(rect->p1, rect->p0);
+	r.c1 = vec_sub(rect->p3, rect->p0);
+	r.c = vec_sub(r.p, rect->p0);
+	r.dot00 = vec_dot(r.c0, r.c0);
+	r.dot01 = vec_dot(r.c0, r.c1);
+	r.dot02 = vec_dot(r.c0, r.c);
+	r.dot11 = vec_dot(r.c1, r.c1);
+	r.dot12 = vec_dot(r.c1, r.c);
+	r.inv_denom = 1.0 / (r.dot00 * r.dot11 - r.dot01 * r.dot01);
+	r.u = (r.dot11 * r.dot02 - r.dot01 * r.dot12) * r.inv_denom;
+	r.v = (r.dot00 * r.dot12 - r.dot01 * r.dot02) * r.inv_denom;
+	if (r.u < 0 || r.u > 1 || r.v < 0 || r.v > 1)
 		return (0);
-	rec->t = t;
-	rec->point = p;
+	rec->t = r.t;
+	rec->point = r.p;
 	rec->normal = rect->normal;
 	rec->front_face = vec_dot(ray->direction, rect->normal) < 0;
 	rec->color = rect->color;
@@ -58,20 +63,19 @@ int	hit_rectangle(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	return (1);
 }
 
-t_hittable	new_rectangle(t_vec3 p0, t_vec3 p1, t_vec3 p2, t_vec3 p3,
-			t_vec3 normal, t_color color, t_material_type material)
+t_hittable	new_rectangle(t_rectangle r)
 {
 	t_rectangle	*rect_data;
 	t_hittable	hittable_rect;
 
 	rect_data = xmalloc(sizeof(t_rectangle));
-	rect_data->p0 = p0;
-	rect_data->p1 = p1;
-	rect_data->p2 = p2;
-	rect_data->p3 = p3;
-	rect_data->normal = normal;
-	rect_data->color = color;
-	rect_data->material = material;
+	rect_data->p0 = r.p0;
+	rect_data->p1 = r.p1;
+	rect_data->p2 = r.p2;
+	rect_data->p3 = r.p3;
+	rect_data->normal = r.normal;
+	rect_data->color = r.color;
+	rect_data->material = r.material;
 	hittable_rect.data = rect_data;
 	hittable_rect.hit = hit_rectangle;
 	return (hittable_rect);

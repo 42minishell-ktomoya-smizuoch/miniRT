@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:19:59 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/15 17:48:06 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/16 21:24:47 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ t_vec3	refract(t_vec3 uv, t_vec3 n, double etai_over_etat)
 	t_vec3	r_out_parallel;
 
 	cos_theta = fmin(vec_dot(vec_scalar(uv, -1), n), 1.0);
-	r_out_perp = vec_scalar(vec_add(uv, vec_scalar(n, cos_theta)), etai_over_etat);
-	r_out_parallel = vec_scalar(n, -sqrt(fabs(1.0 - vec_dot(r_out_perp, r_out_perp))));
+	r_out_perp = vec_scalar(vec_add(uv,
+				vec_scalar(n, cos_theta)), etai_over_etat);
+	r_out_parallel = vec_scalar(n,
+			-sqrt(fabs(1.0 - vec_dot(r_out_perp, r_out_perp))));
 	return (vec_add(r_out_perp, r_out_parallel));
 }
 
@@ -54,10 +56,10 @@ double	schlick(double cosine, double ref_idx)
 
 int	hit_dielectric(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
-	t_dielectric	*dielectric;
-	t_vec3			oc;
+	t_dielectric		*dielectric;
+	t_vec3				oc;
 	t_hit_dielectric	d;
-	t_vec3			outward_normal;
+	t_vec3				outward_normal;
 
 	dielectric = (t_dielectric *)self->data;
 	oc = vec_sub(ray->origin, dielectric->center);
