@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         0.0, // シャッターの開く時間
         1.0 // シャッターの閉じる時間
 	};
-    t_camera camera = camera_new(ca);
+    data.camera = camera_new(ca);
 
 	if (argc != 2)
 		exit(1);
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     // 環境光を設定
     data.ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.1); // RGBと比率は必要に応じて調整
 
-    render(&data, &camera, data.world, &data.lights, &data.ambient, data.samples_per_pixel, data.max_depth);
+    render(&data);
     wait_input(&data);
 
     // メモリの解放
