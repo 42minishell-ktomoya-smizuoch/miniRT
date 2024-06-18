@@ -11,18 +11,18 @@
 #include "ambient.h"
 #include "plane.h"
 
-t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int depth) {
+t_color ray_color(t_ray *ray, t_ray_color r) {
     t_hit_record rec;
 	t_limits l;
 	l.min = 0.001;
 	l.max = INFINITY;
-    if (depth <= 0)
+    if (r.depth <= 0)
         return (t_color){0, 0, 0};
 
-    if (hit_list(world, ray, l, &rec)) {
-        t_color total_light_color = vec3_to_color(vec_scalar(color_to_vec3(ambient->color), ambient->ratio));
-        for (int i = 0; i < lights->count; i++) {
-            t_light *light = &lights->lights[i];
+    if (hit_list(r.world, ray, l, &rec)) {
+        t_color total_light_color = vec3_to_color(vec_scalar(color_to_vec3(r.ambient->color), r.ambient->ratio));
+        for (int i = 0; i < r.lights->count; i++) {
+            t_light *light = &r.lights->lights[i];
             t_vec3 light_dir = vec_normalize(vec_sub(light->position, rec.point));
             double light_intensity = light->intensity * fmax(0.0, vec_dot(rec.normal, light_dir));
             t_vec3 light_color_vec = vec_scalar(color_to_vec3(light->color), light_intensity);
@@ -56,11 +56,11 @@ t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_am
         } else {
             return (t_color){0, 0, 0};
         }
-
-        t_color scattered_color = ray_color(&scattered, world, lights, ambient, depth - 1);
+		r.depth -= 1;
+        t_color scattered_color = ray_color(&scattered, r);
         t_vec3 result_color = vec_add(color_to_vec3(total_light_color), vec_mul(color_to_vec3(attenuation), color_to_vec3(scattered_color)));
         return vec3_to_color(result_color);
     }
 
-    return vec3_to_color(vec_scalar(color_to_vec3(ambient->color), ambient->ratio)); // 環境光を背景色として使用
+    return vec3_to_color(vec_scalar(color_to_vec3(r.ambient->color), r.ambient->ratio)); // 環境光を背景色として使用
 }

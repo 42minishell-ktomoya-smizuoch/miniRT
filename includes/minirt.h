@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 17:02:40 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:38:33 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,14 @@ typedef struct s_hittable_list
 	int			capacity;
 }	t_hittable_list;
 
+typedef struct s_ray_color
+{
+	t_hittable_list *world;
+	t_light_list *lights;
+	t_ambient *ambient;
+	int depth;
+}	t_ray_color;
+
 typedef struct s_data
 {
 	void			*mlx;
@@ -243,7 +251,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 //ray
 void	render(t_data *data);
-t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int depth);
+t_color ray_color(t_ray *ray, t_ray_color r);
 t_vec3	vec_new(double x, double y, double z);
 t_vec3	vec_add(t_vec3 a, t_vec3 b);
 t_vec3	vec_sub(t_vec3 a, t_vec3 b);

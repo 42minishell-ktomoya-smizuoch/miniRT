@@ -11,6 +11,17 @@
 #include "ambient.h"
 #include "plane.h"
 
+t_ray_color init_ray_color(t_data *data)
+{
+	t_ray_color	r;
+
+	r.world = data->world;
+	r.lights = &data->lights;
+	r.ambient = &data->ambient;
+	r.depth = data->max_depth;
+	return (r);
+}
+
 void render(t_data *data)
 {
     int x, y, s;
@@ -21,7 +32,7 @@ void render(t_data *data)
                 double u = (x + random_double()) / (WINDOW_WIDTH - 1);
                 double v = ((WINDOW_HEIGHT - 1 - y) + random_double()) / (WINDOW_HEIGHT - 1);
                 t_ray ray = get_ray(&data->camera, u, v);
-                t_color sample_color = ray_color(&ray, data->world, &data->lights, &data->ambient, data->max_depth);
+                t_color sample_color = ray_color(&ray, init_ray_color(data));
                 accumulated_color = vec_add(accumulated_color, color_to_vec3(sample_color));
             }
             accumulated_color.x /= data->samples_per_pixel;
