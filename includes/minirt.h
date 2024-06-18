@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 15:25:32 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:23:26 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ typedef struct s_data
 	t_sphere		sphere;
 	t_plane			plane;
 	t_cylinder		cylinder;
+	t_rectangle		rectangle;
 	t_hittable_list	*world;
 }	t_data;
 
