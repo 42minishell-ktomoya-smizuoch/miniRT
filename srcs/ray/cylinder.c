@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 21:25:56 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 14:12:57 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:20:05 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-int	hit_cylinder_side(t_cylinder *cyl, t_ray *ray, t_limits l,
-			t_hit_record *rec)
+typedef struct s_side
 {
 	t_vec3	oc;
 	t_vec3	axis;
@@ -28,40 +27,56 @@ int	hit_cylinder_side(t_cylinder *cyl, t_ray *ray, t_limits l,
 	t_vec3	point;
 	t_vec3	relative_point;
 	double	height_along_axis;
+}	t_side;
 
-	oc = vec_sub(ray->origin, cyl->center);
-	axis = vec_normalize(cyl->axisnorm);
-	a = vec_dot(ray->direction, ray->direction) - pow(vec_dot(ray->direction, axis), 2);
-	half_b = vec_dot(oc, ray->direction) - vec_dot(oc, axis) * vec_dot(ray->direction, axis);
-	c = vec_dot(oc, oc) - pow(vec_dot(oc, axis), 2) - pow(cyl->diameter / 2, 2);
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
+typedef struct s_cup
+{
+	double	min;
+	double	max;
+	t_vec3	cap_center;
+}	t_cup;
+
+int	hit_cylinder_side(t_cylinder *cyl,
+	t_ray *ray, t_limits l, t_hit_record *rec)
+{
+	t_side	s;
+
+	s.oc = vec_sub(ray->origin, cyl->center);
+	s.axis = vec_normalize(cyl->axisnorm);
+	s.a = vec_dot(ray->direction, ray->direction)
+		- pow(vec_dot(ray->direction, s.axis), 2);
+	s.half_b = vec_dot(s.oc, ray->direction)
+		- vec_dot(s.oc, s.axis) * vec_dot(ray->direction, s.axis);
+	s.c = vec_dot(s.oc, s.oc)
+		- pow(vec_dot(s.oc, s.axis), 2) - pow(cyl->diameter / 2, 2);
+	s.discriminant = s.half_b * s.half_b - s.a * s.c;
+	if (s.discriminant < 0)
 		return (0);
-	sqrt_d = sqrt(discriminant);
-	root = (-half_b - sqrt_d) / a;
-	if (root < l.min || root > l.max)
+	s.sqrt_d = sqrt(s.discriminant);
+	s.root = (-s.half_b - s.sqrt_d) / s.a;
+	if (s.root < l.min || s.root > l.max)
 	{
-		root = (-half_b + sqrt_d) / a;
-		if (root < l.min || root > l.max)
+		s.root = (-s.half_b + s.sqrt_d) / s.a;
+		if (s.root < l.min || s.root > l.max)
 			return (0);
 	}
-	point = ray_at(*ray, root);
-	relative_point = vec_sub(point, cyl->center);
-	height_along_axis = vec_dot(relative_point, axis);
-	if (height_along_axis < 0 || height_along_axis > cyl->height)
+	s.point = ray_at(*ray, s.root);
+	s.relative_point = vec_sub(s.point, cyl->center);
+	s.height_along_axis = vec_dot(s.relative_point, s.axis);
+	if (s.height_along_axis < 0 || s.height_along_axis > cyl->height)
 		return (0);
-	rec->t = root;
-	rec->point = point;
-	rec->normal = vec_normalize(vec_sub(vec_sub(point, cyl->center),
-				vec_scalar(axis, vec_dot(vec_sub(point, cyl->center), axis))));
+	rec->t = s.root;
+	rec->point = s.point;
+	rec->normal = vec_normalize(vec_sub(vec_sub(s.point, cyl->center),
+				vec_scalar(s.axis, vec_dot(vec_sub(s.point,
+							cyl->center), s.axis))));
 	rec->front_face = vec_dot(ray->direction, rec->normal) < 0;
 	rec->color = cyl->color;
 	rec->material = cyl->material;
 	return (1);
 }
 
-int	hit_cylinder_cap(t_cylinder *cyl, t_ray *ray, double t_min, double t_max,
-			t_hit_record *rec, t_vec3 cap_center)
+int	hit_cylinder_cap(t_cylinder *cyl, t_ray *ray, t_hit_record *rec, t_cup c)
 {
 	t_vec3	axis;
 	double	denom;
@@ -73,11 +88,11 @@ int	hit_cylinder_cap(t_cylinder *cyl, t_ray *ray, double t_min, double t_max,
 	denom = vec_dot(ray->direction, axis);
 	if (fabs(denom) < 1e-6)
 		return (0);
-	t = vec_dot(vec_sub(cap_center, ray->origin), axis) / denom;
-	if (t < t_min || t > t_max)
+	t = vec_dot(vec_sub(c.cap_center, ray->origin), axis) / denom;
+	if (t < c.min || t > c.max)
 		return (0);
 	point = ray_at(*ray, t);
-	d = vec_sub(point, cap_center);
+	d = vec_sub(point, c.cap_center);
 	if (vec_dot(d, d) > (cyl->diameter / 2) * (cyl->diameter / 2))
 		return (0);
 	rec->t = t;
@@ -87,6 +102,16 @@ int	hit_cylinder_cap(t_cylinder *cyl, t_ray *ray, double t_min, double t_max,
 	rec->color = cyl->color;
 	rec->material = cyl->material;
 	return (1);
+}
+
+t_cup	init_cup(double min, double max, t_vec3 cap_center)
+{
+	t_cup	cup;
+
+	cup.min = min;
+	cup.max = max;
+	cup.cap_center = cap_center;
+	return (cup);
 }
 
 int	hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
@@ -99,22 +124,22 @@ int	hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	cyl = (t_cylinder *)self->data;
 	hit_anything = 0;
 	c.max = l.max;
-	c.min = c.min;
+	c.min = l.min;
 	if (hit_cylinder_side(cyl, ray, c, &temp_rec))
 	{
 		hit_anything = 1;
 		l.max = temp_rec.t;
 		*rec = temp_rec;
 	}
-	if (hit_cylinder_cap(cyl, ray, l.min, c.max, &temp_rec,
-			vec_add(cyl->center, vec_scalar(cyl->axisnorm, 0))))
+	if (hit_cylinder_cap(cyl, ray, &temp_rec, init_cup(c.min, c.max,
+				vec_add(cyl->center, vec_scalar(cyl->axisnorm, 0)))))
 	{
 		hit_anything = 1;
 		c.max = temp_rec.t;
 		*rec = temp_rec;
 	}
-	if (hit_cylinder_cap(cyl, ray, l.min, c.max, &temp_rec,
-			vec_add(cyl->center, vec_scalar(cyl->axisnorm, cyl->height))))
+	if (hit_cylinder_cap(cyl, ray, &temp_rec, init_cup(c.min, c.max,
+				vec_add(cyl->center, vec_scalar(cyl->axisnorm, cyl->height)))))
 	{
 		hit_anything = 1;
 		c.max = temp_rec.t;
