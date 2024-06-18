@@ -52,6 +52,8 @@ SRC += srcs/ray/ray_math.c \
 	   srcs/ray/cylinder.c \
 	   srcs/ray/ambient.c \
 	   srcs/ray/plane.c \
+	   srcs/ray/render.c \
+	   srcs/ray/ray_color.c \
 
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 
