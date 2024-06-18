@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 13:56:47 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:32:42 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DIELECTRIC 3
 
 typedef int	t_material_type;
+struct		s_hittable;
 
 //structure
 typedef struct s_vec3
@@ -138,29 +139,63 @@ typedef struct s_rectangle
 	t_color			color;
 }	t_rectangle;
 
-typedef struct s_data
-{
-	void		*mlx;
-	void		*win;
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-	t_ambient	amb;
-	t_camera	camera;
-	t_light		light;
-	t_sphere	sphere;
-	t_plane		plane;
-	t_cylinder	cylinder;
-	t_rectangle	rectangle;
-}	t_data;
-
 typedef struct s_limits
 {
 	double	max;
 	double	min;
 }	t_limits;
+
+// Structure to store hit information
+typedef struct s_hit_record
+{
+	t_vec3			point;
+	t_vec3			normal;
+	double			t;
+	int				front_face;
+	t_color			color;
+	double			fuzz;
+	double			ref_idx;
+	t_material_type	material;
+}	t_hit_record;
+
+typedef int	(*t_hit_fn)(struct s_hittable *,
+						t_ray *, t_limits, t_hit_record *);
+
+// Hittable structure
+typedef struct s_hittable
+{
+	void		*data;
+	t_hit_fn	hit;
+	void		(*free_data)(void *);
+}	t_hittable;
+
+typedef struct s_hittable_list
+{
+	t_hittable	*objects;
+	int			size;
+	int			capacity;
+}	t_hittable_list;
+
+typedef struct s_data
+{
+	void			*mlx;
+	void			*win;
+	void			*img;
+	char			*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+	int				samples_per_pixel;
+	int				max_depth;
+	t_ambient		ambient;
+	t_camera		camera;
+	t_light			light;
+	t_light_list	lights;
+	t_sphere		sphere;
+	t_plane			plane;
+	t_cylinder		cylinder;
+	t_hittable_list	*world;
+}	t_data;
 
 //utils
 void	print_progress(int current, int total);
