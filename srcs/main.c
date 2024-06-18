@@ -97,11 +97,11 @@ void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list
 
 int main(int argc, char *argv[]) {
     t_data data;
-    t_hittable_list *world;
-    t_light_list lights;
-    t_ambient ambient;
-    int samples_per_pixel = 1;
-    int max_depth = 50;
+//    t_hittable_list *world;
+//    t_light_list lights;
+//    t_ambient ambient;
+//    int samples_per_pixel = 1;
+//    int max_depth = 50;
     double aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
     double aperture = 0.1;
     double focus_dist = 10.0;
@@ -126,20 +126,20 @@ int main(int argc, char *argv[]) {
 	(void)argv;
     init_data(&data);
 
-    world = new_hittable_list(10); // 初期容量を5に設定
+    data.world = new_hittable_list(10); // 初期容量を5に設定
     // 地面
-    add_hittable(world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
+    add_hittable(data.world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
 
     // // 球
-    add_hittable(world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
-    add_hittable(world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
-    add_hittable(world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
+    add_hittable(data.world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
+    add_hittable(data.world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
+    add_hittable(data.world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
 
-    add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
+    add_hittable(data.world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
     // 長方形
 	t_rectangle r = {
-		vec_new(-2, 0, -2), // p0
+        vec_new(-2, 0, -2), // p0
         vec_new(-2, 0, 2),  // p1
         vec_new(2, 0, 2),   // p2
         vec_new(2, 0, -2),  // p3
@@ -147,9 +147,9 @@ int main(int argc, char *argv[]) {
         METAL, // material
         (t_color){0.9, 0.1, 0.1}// color
 	};
-    add_hittable(world, new_rectangle(r));
+    add_hittable(data.world, new_rectangle(r));
 
-	// add_hittable(world, new_plane(
+	// add_hittable(data.world, new_plane(
     //     vec_new(0.0, 0.0, 0.0), // 平面上の点
     //     vec_new(0.0, 0.0, 1.0),   // 法線ベクトル
     //     (t_color){0.0, 0.9, 0}, // 色
@@ -165,24 +165,24 @@ int main(int argc, char *argv[]) {
         METAL // 材質
 	};
     // 円柱
-    add_hittable(world, new_cylinder(c));
-	add_hittable(world, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
+    add_hittable(data.world, new_cylinder(c));
+	add_hittable(data.world, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
 
     // // 複数のライトを追加
-    // lights = new_light_list(3);
-    // add_light(&lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
-    // add_light(&lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
-    // add_light(&lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
+    data.lights = new_light_list(3);
+    add_light(&data.lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
+    add_light(&data.lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
+    add_light(&data.lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     // 環境光を設定
-    ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.1); // RGBと比率は必要に応じて調整
+    data.ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.1); // RGBと比率は必要に応じて調整
 
-    render(&data, &camera, world, &lights, &ambient, samples_per_pixel, max_depth);
+    render(&data, &camera, data.world, &data.lights, &data.ambient, data.samples_per_pixel, data.max_depth);
     wait_input(&data);
 
     // メモリの解放
-    free(lights.lights);
-    free_hittable_list(world);
+    free(data.lights.lights);
+    free_hittable_list(data.world);
 
     return 0;
 }
