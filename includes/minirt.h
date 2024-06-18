@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/17 09:12:04 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/18 13:51:33 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,17 @@ typedef struct s_cylinder
 	t_color			color;
 	t_material_type	material;
 }	t_cylinder;
+
+typedef struct s_rectangle
+{
+	t_vec3			p0;
+	t_vec3			p1;
+	t_vec3			p2;
+	t_vec3			p3;
+	t_vec3			normal;
+	t_material_type	material;
+	t_color			color;
+}	t_rectangle;
 
 typedef struct s_data
 {
