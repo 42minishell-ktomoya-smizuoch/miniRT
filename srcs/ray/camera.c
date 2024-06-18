@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:37:15 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 14:25:00 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:34:58 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_camera	camera_new(t_init_cam c)
 	cam.horizontal = vec_scalar(cam.u, viewport_width * c.focus_dist);
 	cam.vertical = vec_scalar(cam.v, viewport_height * c.focus_dist);
 	cam.lower_left_corner = vec_sub(vec_sub(vec_sub(cam.origin,
-				vec_scalar(cam.horizontal, 0.5)), vec_scalar(cam.vertical, 0.5)),
+					vec_scalar(cam.horizontal, 0.5)),
+				vec_scalar(cam.vertical, 0.5)),
 			vec_scalar(cam.w, c.focus_dist));
 	cam.lens_radius = c.aperture / 2;
 	cam.time0 = c.time0;
@@ -54,7 +55,8 @@ t_ray	get_ray(t_camera *cam, double s, double t)
 	time = cam->time0 + random_double() * (cam->time1 - cam->time0);
 	ray.origin = vec_add(cam->origin, offset);
 	ray.direction = vec_sub(vec_add(vec_add(cam->lower_left_corner,
-				vec_scalar(cam->horizontal, s)), vec_scalar(cam->vertical, t)),
+					vec_scalar(cam->horizontal, s)),
+				vec_scalar(cam->vertical, t)),
 			cam->origin);
 	ray.direction = vec_sub(ray.direction, offset);
 	ray.time = time;
@@ -64,11 +66,15 @@ t_ray	get_ray(t_camera *cam, double s, double t)
 t_vec3	random_in_unit_disk(void)
 {
 	t_vec3	p;
+	double	length_squared;
 
-	do {
+	length_squared = 1.0;
+	while (length_squared >= 1.0)
+	{
 		p = vec_new(random_double(), random_double(), 0);
 		p = vec_scalar(p, 2.0);
 		p = vec_sub(p, vec_new(1, 1, 0));
-	} while (vec_dot(p, p) >= 1.0);
+		length_squared = vec_dot(p, p);
+	}
 	return (p);
 }
