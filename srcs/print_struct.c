@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:07:47 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/16 17:46:00 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:36:40 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	print_struct(t_data data)
 {
-	printf("-----------------------------amb-----------------------------------\n"
+	printf("-----------------------------ambient-----------------------------------\n"
        "ratio     : %lf\n"
        "color.r   : %lf\n"
        "color.g   : %lf\n"
        "color.b   : %lf\n",
-       data.amb.ratio, data.amb.color.r, data.amb.color.g, data.amb.color.b);
+       data.ambient.ratio, data.ambient.color.r, data.ambient.color.g, data.ambient.color.b);
 
 	printf("----------------------------camera---------------------------------\n"
        "origin.x  : %lf\n"

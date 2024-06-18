@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:01:43 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/05/15 08:50:55 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:37:03 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,6 @@ void	init_data(t_data *data)
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel,
 			&data->line_length, &data->endian);
+	data->samples_per_pixel = 1;
+	data->max_depth = 50;
 }
