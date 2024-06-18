@@ -29,6 +29,8 @@ void	parse_line(const char *line, t_data *data)
 		parse_plane(line + 2, &data->plane);
 	else if (ft_strncmp(line, "cy", 2) == 0)
 		parse_cylinder(line + 2, &data->cylinder);
+	else if (ft_strncmp(line, "rc", 2) == 0)
+		parse_rectangle(line + 2, &data->rectangle);
 	else if (*line == '\n')
 		;
 	else

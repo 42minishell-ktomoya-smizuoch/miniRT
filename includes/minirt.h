@@ -215,6 +215,7 @@ bool	is_out_of_range_int(int num, int lower, int upper);
 bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
 bool	is_vec3_out_of_range(t_vec3 vec3, double lower, double upper);
+void	parse_rectangle(const char *line, t_rectangle *rectangle);
 
 // mlx
 void	init_data(t_data *data);

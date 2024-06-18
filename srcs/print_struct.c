@@ -99,4 +99,24 @@ void	print_struct(t_data data)
        data.cylinder.diameter, data.cylinder.height, 
        data.cylinder.color.r, data.cylinder.color.g, data.cylinder.color.b,
 	   data.cylinder.material);
+	printf("----------------------------rectangle------------------------------\n");
+    printf("p0.x       : %f\n", data.rectangle.p0.x);
+    printf("p0.y       : %f\n", data.rectangle.p0.y);
+    printf("p0.z       : %f\n", data.rectangle.p0.z);
+    printf("p1.x       : %f\n", data.rectangle.p1.x);
+    printf("p1.y       : %f\n", data.rectangle.p1.y);
+    printf("p1.z       : %f\n", data.rectangle.p1.z);
+    printf("p2.x       : %f\n", data.rectangle.p2.x);
+    printf("p2.y       : %f\n", data.rectangle.p2.y);
+    printf("p2.z       : %f\n", data.rectangle.p2.z);
+    printf("p3.x       : %f\n", data.rectangle.p3.x);
+    printf("p3.y       : %f\n", data.rectangle.p3.y);
+    printf("p3.z       : %f\n", data.rectangle.p3.z);
+    printf("normal.x   : %f\n", data.rectangle.normal.x);
+    printf("normal.y   : %f\n", data.rectangle.normal.y);
+    printf("normal.z   : %f\n", data.rectangle.normal.z);
+    printf("color.r    : %f\n", data.rectangle.color.r);
+    printf("color.g    : %f\n", data.rectangle.color.g);
+    printf("color.b    : %f\n", data.rectangle.color.b);
+    printf("material   : %d\n", data.rectangle.material);
 }
