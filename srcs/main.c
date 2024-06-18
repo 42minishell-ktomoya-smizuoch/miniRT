@@ -105,8 +105,8 @@ int main(int argc, char *argv[]) {
     double aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
     double aperture = 0.1;
     double focus_dist = 10.0;
-    t_camera camera = camera_new(
-        vec_new(13, 2, 3), // カメラの位置
+	t_init_cam ca = {
+		vec_new(13, 2, 3), // カメラの位置
         vec_new(0, 0, 0), // カメラが向かう方向
         vec_new(0, 1, 0), // カメラのアップベクトル
         50.0, // 視野角
@@ -115,12 +115,15 @@ int main(int argc, char *argv[]) {
         focus_dist, // 焦点距離
         0.0, // シャッターの開く時間
         1.0 // シャッターの閉じる時間
-    );
+	};
+    t_camera camera = camera_new(ca);
 
 	if (argc != 2)
 		exit(1);
 	parse_file(argv[1], &data);
 	print_struct(data);
+	(void)argc;
+	(void)argv;
     init_data(&data);
 
     world = new_hittable_list(10); // 初期容量を5に設定
@@ -135,15 +138,16 @@ int main(int argc, char *argv[]) {
     add_hittable(world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
     // 長方形
-    add_hittable(world, new_rectangle(
-        vec_new(-2, 0, -2), // p0
+	t_rectangle r = {
+		vec_new(-2, 0, -2), // p0
         vec_new(-2, 0, 2),  // p1
         vec_new(2, 0, 2),   // p2
         vec_new(2, 0, -2),  // p3
         vec_new(0, 1, 0),   // normal
-        (t_color){0.9, 0.1, 0.1}, // color
-        METAL // material
-    ));
+        METAL, // material
+        (t_color){0.9, 0.1, 0.1}// color
+	};
+    add_hittable(world, new_rectangle(r));
 
 	// add_hittable(world, new_plane(
     //     vec_new(0.0, 0.0, 0.0), // 平面上の点
@@ -152,15 +156,16 @@ int main(int argc, char *argv[]) {
     //     METAL // 材質
     // ));
 
-    // 円柱
-    add_hittable(world, new_cylinder(
-        vec_new(0, 0, 5), // 中心
+	t_cylinder c = {
+		vec_new(0, 0, 5), // 中心
         vec_new(0, 1, 0),  // 軸方向
         1.0, // 直径
         3.0, // 高さ
         (t_color){0.1, 0.4, 0.1}, // 色
         METAL // 材質
-    ));
+	};
+    // 円柱
+    add_hittable(world, new_cylinder(c));
 	add_hittable(world, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
 
     // // 複数のライトを追加

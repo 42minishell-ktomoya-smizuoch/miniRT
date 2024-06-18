@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:37:15 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/04 11:37:16 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:25:00 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 t_vec3	random_in_unit_disk(void);
 
-t_camera	camera_new(t_vec3 lookfrom, t_vec3 lookat, t_vec3 vup, double vfov,
-		double aspect_ratio, double aperture, double focus_dist, double time0,
-		double time1)
+t_camera	camera_new(t_init_cam c)
 {
 	t_camera	cam;
 	double		theta;
@@ -25,22 +23,22 @@ t_camera	camera_new(t_vec3 lookfrom, t_vec3 lookat, t_vec3 vup, double vfov,
 	double		viewport_height;
 	double		viewport_width;
 
-	theta = vfov * M_PI / 180.0;
+	theta = c.vfov * M_PI / 180.0;
 	h = tan(theta / 2);
 	viewport_height = 2.0 * h;
-	viewport_width = aspect_ratio * viewport_height;
-	cam.w = vec_normalize(vec_sub(lookfrom, lookat));
-	cam.u = vec_normalize(vec_cross(vup, cam.w));
+	viewport_width = c.aspect_ratio * viewport_height;
+	cam.w = vec_normalize(vec_sub(c.lookfrom, c.lookat));
+	cam.u = vec_normalize(vec_cross(c.vup, cam.w));
 	cam.v = vec_cross(cam.w, cam.u);
-	cam.origin = lookfrom;
-	cam.horizontal = vec_scalar(cam.u, viewport_width * focus_dist);
-	cam.vertical = vec_scalar(cam.v, viewport_height * focus_dist);
+	cam.origin = c.lookfrom;
+	cam.horizontal = vec_scalar(cam.u, viewport_width * c.focus_dist);
+	cam.vertical = vec_scalar(cam.v, viewport_height * c.focus_dist);
 	cam.lower_left_corner = vec_sub(vec_sub(vec_sub(cam.origin,
 				vec_scalar(cam.horizontal, 0.5)), vec_scalar(cam.vertical, 0.5)),
-			vec_scalar(cam.w, focus_dist));
-	cam.lens_radius = aperture / 2;
-	cam.time0 = time0;
-	cam.time1 = time1;
+			vec_scalar(cam.w, c.focus_dist));
+	cam.lens_radius = c.aperture / 2;
+	cam.time0 = c.time0;
+	cam.time1 = c.time1;
 	return (cam);
 }
 

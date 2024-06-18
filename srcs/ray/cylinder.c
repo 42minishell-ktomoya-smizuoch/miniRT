@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 21:25:56 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/16 21:30:02 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:12:57 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,19 +123,18 @@ int	hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	return (hit_anything);
 }
 
-t_hittable	new_cylinder(t_vec3 center, t_vec3 axisnorm, double diameter,
-			double height, t_color color, t_material_type material)
+t_hittable	new_cylinder(t_cylinder c)
 {
 	t_cylinder	*cyl_data;
 	t_hittable	hittable_cylinder;
 
 	cyl_data = xmalloc(sizeof(t_cylinder));
-	cyl_data->center = center;
-	cyl_data->axisnorm = vec_normalize(axisnorm);
-	cyl_data->diameter = diameter;
-	cyl_data->height = height;
-	cyl_data->color = color;
-	cyl_data->material = material;
+	cyl_data->center = c.center;
+	cyl_data->axisnorm = vec_normalize(c.axisnorm);
+	cyl_data->diameter = c.diameter;
+	cyl_data->height = c.height;
+	cyl_data->color = c.color;
+	cyl_data->material = c.material;
 	hittable_cylinder.data = cyl_data;
 	hittable_cylinder.hit = hit_cylinder;
 	return (hittable_cylinder);

@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 15:45:24 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/16 21:01:53 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:19:13 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,19 @@ int	hit_rectangle(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	return (1);
 }
 
-t_hittable	new_rectangle(t_vec3 p0, t_vec3 p1, t_vec3 p2, t_vec3 p3,
-			t_vec3 normal, t_color color, t_material_type material)
+t_hittable	new_rectangle(t_rectangle r)
 {
 	t_rectangle	*rect_data;
 	t_hittable	hittable_rect;
 
 	rect_data = xmalloc(sizeof(t_rectangle));
-	rect_data->p0 = p0;
-	rect_data->p1 = p1;
-	rect_data->p2 = p2;
-	rect_data->p3 = p3;
-	rect_data->normal = normal;
-	rect_data->color = color;
-	rect_data->material = material;
+	rect_data->p0 = r.p0;
+	rect_data->p1 = r.p1;
+	rect_data->p2 = r.p2;
+	rect_data->p3 = r.p3;
+	rect_data->normal = r.normal;
+	rect_data->color = r.color;
+	rect_data->material = r.material;
 	hittable_rect.data = rect_data;
 	hittable_rect.hit = hit_rectangle;
 	return (hittable_rect);
