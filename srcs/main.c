@@ -34,10 +34,10 @@ int main(int argc, char *argv[]) {
 	};
     data.camera = camera_new(ca);
 
-	if (argc != 2)
-		exit(1);
-	parse_file(argv[1], &data);
-	print_struct(data);
+	// if (argc != 2)
+	// 	exit(1);
+	// parse_file(argv[1], &data);
+	// print_struct(data);
 	(void)argc;
 	(void)argv;
     init_data(&data);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
         1.0, // 直径
         3.0, // 高さ
         (t_color){0.1, 0.4, 0.1}, // 色
-        METAL // 材質
+        1
 	};
     // 円柱
     add_hittable(data.world, new_cylinder(c));
@@ -86,12 +86,12 @@ int main(int argc, char *argv[]) {
 
     // // 複数のライトを追加
     data.lights = new_light_list(3);
-    add_light(&data.lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
-    add_light(&data.lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
-    add_light(&data.lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
+    // add_light(&data.lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
+    // add_light(&data.lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
+    // add_light(&data.lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     // 環境光を設定
-    data.ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.1); // RGBと比率は必要に応じて調整
+    data.ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.5); // RGBと比率は必要に応じて調整
 
     render(&data);
     wait_input(&data);

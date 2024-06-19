@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 21:25:56 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 15:20:05 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:03:14 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	hit_cylinder(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 	if (hit_cylinder_side(cyl, ray, c, &temp_rec))
 	{
 		hit_anything = 1;
-		l.max = temp_rec.t;
+		c.max = temp_rec.t;
 		*rec = temp_rec;
 	}
 	if (hit_cylinder_cap(cyl, ray, &temp_rec, init_cup(c.min, c.max,
