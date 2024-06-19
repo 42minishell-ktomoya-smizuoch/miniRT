@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:39 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/19 14:59:11 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:08:46 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ typedef struct s_scatter_dielectric
 	t_vec3	reflected;
 	t_vec3	refracted;
 }	t_scatter_dielectric;
+
+typedef struct s_ray_context
+{
+	t_hit_record	rec;
+	t_limits		l;
+	t_ray			scattered;
+	t_color			attenuation;
+	t_color			total_light_color;
+	t_color			scattered_color;
+	t_vec3			result_color;
+}	t_ray_context;
 
 static t_color	compute_lighting(t_ray_color r, t_hit_record *rec)
 {
@@ -120,30 +131,26 @@ static void	scatter_dielectric(t_hit_record *rec, t_ray *ray, t_ray *scattered,
 
 t_color	ray_color(t_ray *ray, t_ray_color r)
 {
-	t_hit_record	rec;
-	t_limits		l;
-	t_ray			scattered;
-	t_color			attenuation;
-	t_color			total_light_color;
-	t_color			scattered_color;
-	t_vec3			result_color;
+	t_ray_context	c;
 
-	l.min = 0.001;
-	l.max = INFINITY;
+	c.l.min = 0.001;
+	c.l.max = INFINITY;
 	if (r.depth <= 0)
 		return ((t_color){0, 0, 0});
-	if (hit_list(r.world, ray, l, &rec))
+	if (hit_list(r.world, ray, c.l, &c.rec))
 	{
-		total_light_color = compute_lighting(r, &rec);
-		if (rec.material == DIELECTRIC)
-			scatter_dielectric(&rec, ray, &scattered, &attenuation);
+		c.total_light_color = compute_lighting(r, &c.rec);
+		if (c.rec.material == DIELECTRIC)
+			scatter_dielectric(&c.rec, ray, &c.scattered, &c.attenuation);
 		else
-			scatter_ray(&rec, ray, &scattered, &attenuation);
+			scatter_ray(&c.rec, ray, &c.scattered, &c.attenuation);
 		r.depth -= 1;
-		scattered_color = ray_color(&scattered, r);
-		result_color = vec_add(color_to_vec3(total_light_color),
-			vec_mul(color_to_vec3(attenuation), color_to_vec3(scattered_color)));
-		return (vec3_to_color(result_color));
+		c.scattered_color = ray_color(&c.scattered, r);
+		c.result_color = vec_add(color_to_vec3(c.total_light_color),
+				vec_mul(color_to_vec3(c.attenuation),
+					color_to_vec3(c.scattered_color)));
+		return (vec3_to_color(c.result_color));
 	}
-	return (vec3_to_color(vec_scalar(color_to_vec3(r.ambient->color), r.ambient->ratio)));
+	return (vec3_to_color(vec_scalar
+			(color_to_vec3(r.ambient->color), r.ambient->ratio)));
 }
