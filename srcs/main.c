@@ -11,90 +11,6 @@
 #include "ambient.h"
 #include "plane.h"
 
-t_color ray_color(t_ray *ray, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int depth) {
-    t_hit_record rec;
-	t_limits l;
-	l.min = 0.001;
-	l.max = INFINITY;
-    if (depth <= 0)
-        return (t_color){0, 0, 0};
-
-    if (hit_list(world, ray, l, &rec)) {
-        t_color total_light_color = vec3_to_color(vec_scalar(color_to_vec3(ambient->color), ambient->ratio));
-        for (int i = 0; i < lights->count; i++) {
-            t_light *light = &lights->lights[i];
-            t_vec3 light_dir = vec_normalize(vec_sub(light->position, rec.point));
-            double light_intensity = light->intensity * fmax(0.0, vec_dot(rec.normal, light_dir));
-            t_vec3 light_color_vec = vec_scalar(color_to_vec3(light->color), light_intensity);
-            t_color light_color = vec3_to_color(light_color_vec);
-            total_light_color = vec3_to_color(vec_add(color_to_vec3(total_light_color), color_to_vec3(light_color)));
-        }
-
-        t_ray scattered;
-        t_color attenuation;
-        if (rec.material == LAMBERTIAN) {
-            t_vec3 target = vec_add(rec.point, vec_add(rec.normal, random_unit_vector()));
-            scattered = (t_ray){rec.point, vec_sub(target, rec.point), ray->time};
-            attenuation = rec.color;
-        } else if (rec.material == METAL) {
-            t_vec3 reflected = reflect(vec_normalize(ray->direction), rec.normal);
-            scattered = (t_ray){rec.point, vec_add(reflected, vec_scalar(random_in_unit_sphere(), rec.fuzz)), ray->time};
-            attenuation = rec.color;
-        } else if (rec.material == DIELECTRIC) {
-            double etai_over_etat = rec.front_face ? (1.0 / rec.ref_idx) : rec.ref_idx;
-            t_vec3 unit_direction = vec_normalize(ray->direction);
-            double cos_theta = fmin(vec_dot(vec_scalar(unit_direction, -1), rec.normal), 1.0);
-            double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
-            if (etai_over_etat * sin_theta > 1.0 || schlick(cos_theta, etai_over_etat) > random_double()) {
-                t_vec3 reflected = reflect(unit_direction, rec.normal);
-                scattered = (t_ray){rec.point, reflected, ray->time};
-            } else {
-                t_vec3 refracted = refract(unit_direction, rec.normal, etai_over_etat);
-                scattered = (t_ray){rec.point, refracted, ray->time};
-            }
-            attenuation = rec.color;
-        } else {
-            return (t_color){0, 0, 0};
-        }
-
-        t_color scattered_color = ray_color(&scattered, world, lights, ambient, depth - 1);
-        t_vec3 result_color = vec_add(color_to_vec3(total_light_color), vec_mul(color_to_vec3(attenuation), color_to_vec3(scattered_color)));
-        return vec3_to_color(result_color);
-    }
-
-    return vec3_to_color(vec_scalar(color_to_vec3(ambient->color), ambient->ratio)); // 環境光を背景色として使用
-}
-
-void render(t_data *data, t_camera *camera, t_hittable_list *world, t_light_list *lights, t_ambient *ambient, int samples_per_pixel, int max_depth) {
-    int x, y, s;
-    for (y = 0; y < WINDOW_HEIGHT; y++) {
-        for (x = 0; x < WINDOW_WIDTH; x++) {
-            t_vec3 accumulated_color = {0, 0, 0};
-            for (s = 0; s < samples_per_pixel; s++) {
-                double u = (x + random_double()) / (WINDOW_WIDTH - 1);
-                double v = ((WINDOW_HEIGHT - 1 - y) + random_double()) / (WINDOW_HEIGHT - 1);
-                t_ray ray = get_ray(camera, u, v);
-                t_color sample_color = ray_color(&ray, world, lights, ambient, max_depth);
-                accumulated_color = vec_add(accumulated_color, color_to_vec3(sample_color));
-            }
-            accumulated_color.x /= samples_per_pixel;
-            accumulated_color.y /= samples_per_pixel;
-            accumulated_color.z /= samples_per_pixel;
-
-            t_color pixel_color = {
-                sqrt(accumulated_color.x),
-                sqrt(accumulated_color.y),
-                sqrt(accumulated_color.z)
-            };
-            int color = vec_to_color(pixel_color);
-            my_mlx_pixel_put(data, x, y, color);
-        }
-        print_progress(y + 1, WINDOW_HEIGHT);
-    }
-    printf("Rendering complete!\n");
-    mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-}
-
 int main(int argc, char *argv[]) {
     t_data data;
 //    t_hittable_list *world;
@@ -116,12 +32,12 @@ int main(int argc, char *argv[]) {
         0.0, // シャッターの開く時間
         1.0 // シャッターの閉じる時間
 	};
-    t_camera camera = camera_new(ca);
+    data.camera = camera_new(ca);
 
-	if (argc != 2)
-		exit(1);
-	parse_file(argv[1], &data);
-	print_struct(data);
+	// if (argc != 2)
+	// 	exit(1);
+	// parse_file(argv[1], &data);
+	// print_struct(data);
 	(void)argc;
 	(void)argv;
     init_data(&data);
@@ -162,7 +78,7 @@ int main(int argc, char *argv[]) {
         1.0, // 直径
         3.0, // 高さ
         (t_color){0.1, 0.4, 0.1}, // 色
-        METAL // 材質
+        1
 	};
     // 円柱
     add_hittable(data.world, new_cylinder(c));
@@ -170,14 +86,14 @@ int main(int argc, char *argv[]) {
 
     // // 複数のライトを追加
     data.lights = new_light_list(3);
-    add_light(&data.lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
-    add_light(&data.lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
-    add_light(&data.lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
+    // add_light(&data.lights, new_light(vec_new(5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.5));
+    // add_light(&data.lights, new_light(vec_new(-5, 5, 5), (t_color){1.0, 1.0, 1.0}, 0.3));
+    // add_light(&data.lights, new_light(vec_new(0, 5, -5), (t_color){1, 0.1, 1}, 0.5));
 
     // 環境光を設定
-    data.ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.1); // RGBと比率は必要に応じて調整
+    data.ambient = new_ambient((t_color){0.2, 0.2, 0.2}, 0.5); // RGBと比率は必要に応じて調整
 
-    render(&data, &camera, data.world, &data.lights, &data.ambient, data.samples_per_pixel, data.max_depth);
+    render(&data);
     wait_input(&data);
 
     // メモリの解放

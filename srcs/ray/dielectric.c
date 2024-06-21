@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:19:59 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/16 21:24:47 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:20:25 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,38 @@ double	schlick(double cosine, double ref_idx)
 	return (r0 + (1 - r0) * pow((1 - cosine), 5));
 }
 
+static int	calculate_discriminant(t_dielectric *dielectric, t_ray *ray,
+								t_limits l, t_hit_dielectric *d)
+{
+	t_vec3	oc;
+
+	oc = vec_sub(ray->origin, dielectric->center);
+	d->a = vec_dot(ray->direction, ray->direction);
+	d->half_b = vec_dot(oc, ray->direction);
+	d->c = vec_dot(oc, oc) - dielectric->radius * dielectric->radius;
+	d->discriminant = d->half_b * d->half_b - d->a * d->c;
+	if (d->discriminant < 0)
+		return (0);
+	d->sqrt_d = sqrt(d->discriminant);
+	d->root = (-d->half_b - d->sqrt_d) / d->a;
+	if (d->root < l.min || d->root > l.max)
+	{
+		d->root = (-d->half_b + d->sqrt_d) / d->a;
+		if (d->root < l.min || d->root > l.max)
+			return (0);
+	}
+	return (1);
+}
+
 int	hit_dielectric(t_hittable *self, t_ray *ray, t_limits l, t_hit_record *rec)
 {
 	t_dielectric		*dielectric;
-	t_vec3				oc;
 	t_hit_dielectric	d;
 	t_vec3				outward_normal;
 
 	dielectric = (t_dielectric *)self->data;
-	oc = vec_sub(ray->origin, dielectric->center);
-	d.a = vec_dot(ray->direction, ray->direction);
-	d.half_b = vec_dot(oc, ray->direction);
-	d.c = vec_dot(oc, oc) - dielectric->radius * dielectric->radius;
-	d.discriminant = d.half_b * d.half_b - d.a * d.c;
-	if (d.discriminant < 0)
+	if (!calculate_discriminant(dielectric, ray, l, &d))
 		return (0);
-	d.sqrt_d = sqrt(d.discriminant);
-	d.root = (-d.half_b - d.sqrt_d) / d.a;
-	if (d.root < l.min || d.root > l.max)
-	{
-		d.root = (-d.half_b + d.sqrt_d) / d.a;
-		if (d.root < l.min || d.root > l.max)
-			return (0);
-	}
 	rec->t = d.root;
 	rec->point = ray_at(*ray, rec->t);
 	outward_normal = vec_normalize(vec_sub(rec->point, dielectric->center));
