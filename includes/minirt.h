@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/18 17:38:33 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/22 19:17:38 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,22 @@
 # define METAL 2
 # define DIELECTRIC 3
 
+# define OBJ_MAX_SIZE 100
+
 typedef int	t_material_type;
 struct		s_hittable;
+
+typedef enum
+{
+	TYPE_AMBIENT_LIGHT,
+	TYPE_CAMERA,
+	TYPE_LIGHT,
+	TYPE_SPHERE,
+	TYPE_PLANE,
+	TYPE_CYLINDER,
+	TYPE_RECTANGLE,
+	TYPE_UNKNOWN
+}	t_type;
 
 //structure
 typedef struct s_vec3
@@ -229,7 +243,7 @@ void	print_struct(t_data data);
 // parser
 int		check_file_extension(const char *file_path, const char *extension);
 void	parse_file(const char *file, t_data *data);
-void	parse_line(const char *line, t_data *data);
+void	parse_line(const char *line, t_data *data, int obj_cnt[8]);
 void	parse_ambient_light(const char *line, t_ambient *amb);
 void	parse_camera(const char *line, t_camera *camera);
 void	parse_light(const char *line, t_light *light);
@@ -241,6 +255,8 @@ bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
 bool	is_vec3_out_of_range(t_vec3 vec3, double lower, double upper);
 void	parse_rectangle(const char *line, t_rectangle *rectangle);
+t_type	get_object_type(const char *id);
+void	check_object_size(int obj_cnt[8]);
 
 // mlx
 void	init_data(t_data *data);
