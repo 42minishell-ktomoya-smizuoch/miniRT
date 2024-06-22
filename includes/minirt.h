@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/22 19:17:38 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/22 22:06:16 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct s_init_cam
 	double time0;
 	double time1;
 }	t_init_cam;
-
 
 typedef struct s_light
 {
@@ -239,6 +238,7 @@ typedef struct s_data
 //utils
 void	print_progress(int current, int total);
 void	print_struct(t_data data);
+void	print_camera(t_camera camera);
 
 // parser
 int		check_file_extension(const char *file_path, const char *extension);

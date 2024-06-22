@@ -6,11 +6,55 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:07:47 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/18 14:36:40 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/22 21:58:46 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	print_camera(t_camera camera)
+{
+	printf("----------------------------camera---------------------------------\n"
+	"origin.x : %lf\n"
+		"origin.y : %lf\n"
+		"origin.z : %lf\n"
+		"normal.x : %lf\n"
+		"normal.y : %lf\n"
+		"normal.z : %lf\n"
+		"lower.x  : %lf\n"
+		"lower.y  : %lf\n"
+		"lower.z  : %lf\n"
+		"horize.x : %lf\n"
+		"horize.y : %lf\n"
+		"horize.z : %lf\n"
+		"vert.x   : %lf\n"
+		"vert.y   : %lf\n"
+		"vert.z   : %lf\n"
+		"u.x      : %lf\n"
+		"u.y      : %lf\n"
+		"u.z      : %lf\n"
+		"v.x      : %lf\n"
+		"v.y      : %lf\n"
+		"v.z      : %lf\n"
+		"w.x      : %lf\n"
+		"w.y      : %lf\n"
+		"w.z      : %lf\n"
+		"fov      : %lf\n"
+		"radius   : %lf\n"
+		"distance : %lf\n"
+		"time0    : %lf\n"
+		"time1    : %lf\n",
+		camera.origin.x, camera.origin.y, camera.origin.z,
+		camera.normal.x, camera.normal.y, camera.normal.z,
+		camera.lower_left_corner.x, camera.lower_left_corner.y, camera.lower_left_corner.z,
+		camera.horizontal.x, camera.horizontal.y, camera.horizontal.z,
+		camera.vertical.x, camera.vertical.y, camera.vertical.z,
+		camera.u.x, camera.u.y, camera.u.z,
+		camera.v.x, camera.v.y, camera.v.z,
+		camera.w.x, camera.w.y, camera.w.z,
+		camera.fov, camera.lens_radius, camera.focus_distance,
+		camera.time0, camera.time1);
+}
 
 void	print_struct(t_data data)
 {
@@ -21,25 +65,7 @@ void	print_struct(t_data data)
        "color.b   : %lf\n",
        data.ambient.ratio, data.ambient.color.r, data.ambient.color.g, data.ambient.color.b);
 
-	printf("----------------------------camera---------------------------------\n"
-       "origin.x  : %lf\n"
-       "origin.y  : %lf\n"
-       "origin.z  : %lf\n"
-       "normal.x  : %lf\n"
-       "normal.y  : %lf\n"
-       "normal.z  : %lf\n"
-       "fov       : %lf\n"
-       "lower.x   : %lf\n"
-       "lower.y   : %lf\n"
-       "lower.z   : %lf\n"
-       "aperture  : %lf\n"
-       "distance  : %lf\n",
-       data.camera.origin.x, data.camera.origin.y, data.camera.origin.z, 
-       data.camera.normal.x, data.camera.normal.y, data.camera.normal.z, 
-       data.camera.fov,
-	   data.camera.lower_left_corner.x, data.camera.lower_left_corner.y,
-	   data.camera.lower_left_corner.z,
-	   data.camera.lens_radius, data.camera.focus_distance);
+	print_camera(data.camera);
 
 	printf("----------------------------light----------------------------------\n"
        "origin.x  : %lf\n"

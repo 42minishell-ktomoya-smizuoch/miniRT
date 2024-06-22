@@ -18,26 +18,26 @@ int main(int argc, char *argv[]) {
 //    t_ambient ambient;
 //    int samples_per_pixel = 1;
 //    int max_depth = 50;
-    double aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
-    double aperture = 0.1;
-    double focus_dist = 10.0;
-	t_init_cam ca = {
-		vec_new(13, 2, 3), // カメラの位置
-        vec_new(0, 0, 0), // カメラが向かう方向
-        vec_new(0, 1, 0), // カメラのアップベクトル
-        50.0, // 視野角
-        aspect_ratio, // アスペクト比
-        aperture, // 絞り
-        focus_dist, // 焦点距離
-        0.0, // シャッターの開く時間
-        1.0 // シャッターの閉じる時間
-	};
-    data.camera = camera_new(ca);
+    //double aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
+    //double aperture = 0.1;
+    //double focus_dist = 10.0;
+	//t_init_cam ca = {
+	//	vec_new(13, 2, 3), // カメラの位置
+    //    vec_new(0, 0, 0), // カメラが向かう方向
+    //    vec_new(0, 1, 0), // カメラのアップベクトル
+    //    50.0, // 視野角
+    //    aspect_ratio, // アスペクト比
+    //    aperture, // 絞り
+    //    focus_dist, // 焦点距離
+    //    0.0, // シャッターの開く時間
+    //    1.0 // シャッターの閉じる時間
+	//};
+    //data.camera = camera_new(ca);
 
 	// if (argc != 2)
 	// 	exit(1);
-	// parse_file(argv[1], &data);
-	// print_struct(data);
+	parse_file(argv[1], &data);
+	//print_struct(data);
 	(void)argc;
 	(void)argv;
     init_data(&data);
