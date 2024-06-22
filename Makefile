@@ -22,6 +22,7 @@ SRC += srcs/event/wait_input.c \
 SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_file.c \
 	   srcs/parser/parse_line.c \
+	   srcs/parser/get_object_type.c \
 	   srcs/parser/parse_ambient_light.c \
 	   srcs/parser/parse_camera.c \
 	   srcs/parser/parse_light.c \
