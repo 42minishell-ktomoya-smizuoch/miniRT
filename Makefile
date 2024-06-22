@@ -34,6 +34,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/is_rgb_out_of_range.c \
 	   srcs/parser/is_vec3_out_of_range.c \
 	   srcs/parser/parse_rectangle.c \
+	   srcs/parser/check_object_size.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \

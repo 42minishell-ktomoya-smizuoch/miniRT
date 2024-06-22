@@ -6,13 +6,13 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/22 00:28:39 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/22 19:00:18 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	parse_line(const char *line, t_data *data, int obj_cnt[10])
+void	parse_line(const char *line, t_data *data, int obj_cnt[8])
 {
 	t_type	type;
 
@@ -36,5 +36,5 @@ void	parse_line(const char *line, t_data *data, int obj_cnt[10])
 		parse_rectangle(line + 2, &data->rectangle);
 	else
 		exit_with_error("Error:The object could not be identified\n");
-	increment_object_count(obj_cnt, type);
+	obj_cnt[type] += 1;
 }

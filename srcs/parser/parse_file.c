@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/22 18:23:15 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/22 19:01:47 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	parse_file(const char *file_path, t_data *data)
 		if (line == NULL)
 			break ;
 		else if (*line != '\n')
+		{
 			parse_line(line, data, obj_cnt);
+			check_object_size(obj_cnt);
+		}
 		free(line);
 	}
 }
