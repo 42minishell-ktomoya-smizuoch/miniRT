@@ -22,6 +22,7 @@ SRC += srcs/event/wait_input.c \
 SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_file.c \
 	   srcs/parser/parse_line.c \
+	   srcs/parser/get_object_type.c \
 	   srcs/parser/parse_ambient_light.c \
 	   srcs/parser/parse_camera.c \
 	   srcs/parser/parse_light.c \
@@ -33,6 +34,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/is_rgb_out_of_range.c \
 	   srcs/parser/is_vec3_out_of_range.c \
 	   srcs/parser/parse_rectangle.c \
+	   srcs/parser/check_object_size.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \
