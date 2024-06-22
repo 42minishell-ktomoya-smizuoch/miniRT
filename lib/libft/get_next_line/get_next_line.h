@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 11:16:11 by smizuoch          #+#    #+#             */
-/*   Updated: 2023/06/17 12:50:47 by smizuoch         ###   ########.fr       */
+/*   Created: 2023/06/15 14:29:20 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/05/15 14:11:05 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stdio.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
+# include "../libft.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 42
 # endif
 
-char	*get_next_line(int fd);
+# define END_OF_FILE 0
+# define READ_ERROR -1
 
-size_t	ft_strlens(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strdup(const char *s1);
+char		*get_next_line(int fd);
+char		*gnl_strjoin(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:02:18 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/04/30 15:07:16 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:11:33 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <limits.h>
+# include "./get_next_line/get_next_line.h"
+# include "./get_next_line/get_next_line_bonus.h"
 
 typedef struct s_list
 {
@@ -52,6 +54,9 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
+char	*ft_strchrnul(const char *s, int c);
+size_t	ft_strspn(const char *s, const char *accept);
+size_t	ft_strcspn(const char *s, const char *reject);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -84,5 +89,11 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_sscanf(const char *str, const char *format, ...);
 double	read_double(const char **str, int s);
 double	ft_atof(const char *str);
+size_t	ft_strlens(const char *s);
+
+void	*ft_realloc(void *ptr, size_t new_size);
+void	*xmalloc(size_t size);
+int		ft_isxdigit(int c);
+int		ft_islower(int c);
 
 #endif

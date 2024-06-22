@@ -3,89 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 11:18:42 by smizuoch          #+#    #+#             */
-/*   Updated: 2023/06/17 12:01:00 by smizuoch         ###   ########.fr       */
+/*   Created: 2023/06/16 13:48:24 by ktomoya           #+#    #+#             */
+/*   Updated: 2023/06/26 15:35:46 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line_bonus.h"
-
-size_t	ft_strlens(const char *s)
-{
-	size_t	c;
-
-	c = 0;
-	if (!s)
-		return (0);
-	while (s[c])
-		c ++;
-	return (c);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*dest;
-	size_t	size;
-	size_t	i;
-
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	size = ft_strlens (s1) + ft_strlens (s2) + 1;
-	dest = malloc(size);
-	if (dest == NULL)
-		return (NULL);
-	while (s1[i] != '\0')
-	{
-		dest[i] = s1[i];
-		i ++;
-	}
-	while (*s2 != '\0')
-	{
-		dest[i] = *s2;
-		i ++;
-		s2 ++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {
-	if (!s)
-		return (NULL);
-	while (*s != (char) c)
-	{
-		if (*s == '\0')
-			return (NULL);
-		s ++;
-	}
-	return ((char *)s);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*dest;
-	size_t	size;
-
-	size = 0;
 	if (s == NULL)
 		return (NULL);
-	if (ft_strlens(s) > len)
-		dest = malloc(len + 1);
-	else
-		dest = malloc(ft_strlens(s) + 1);
-	if (dest == NULL)
-		return (NULL);
-	if (ft_strlens(s) < start)
-		len = 0;
-	while (size < len && s[start + size])
+	while (*s != '\0')
 	{
-		dest[size] = s[start + size];
-		size ++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	dest[size] = '\0';
-	return (dest);
+	if (*s == '\0' && (char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*memory;
+	size_t	i;
+
+	if (count == 0 || size == 0)
+	{
+		count = 1;
+		size = 1;
+	}
+	if (count > SIZE_MAX / size)
+		return (NULL);
+	memory = (void *)malloc(size * count);
+	if (memory == NULL)
+	{
+		errno = ENOMEM;
+		return (NULL);
+	}
+	i = 0;
+	while (i < count * size)
+	{
+		memory[i] = '\0';
+		i++;
+	}
+	return (memory);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	count;
+
+	count = 0;
+	while (s[count] != '\0')
+		count++;
+	return (count);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	unsigned char	*dst_ptr;
+	unsigned char	*src_ptr;
+	size_t			i;
+
+	dst_ptr = (unsigned char *)dst;
+	src_ptr = (unsigned char *)src;
+	i = 0;
+	if (dst <= src)
+	{
+		while (i < len)
+		{
+			dst_ptr[i] = src_ptr[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (len-- > 0)
+			dst_ptr[len] = src_ptr[len];
+	}
+	return (dst);
+}
+
+char	*gnl_strjoin(char *s1, char *s2)
+{
+	char	*newstr;
+
+	newstr = NULL;
+	if (s2 == NULL)
+		return (NULL);
+	if (s1 == NULL)
+	{
+		s1 = (char *)ft_calloc(1, sizeof(char));
+		if (s1 == NULL)
+			return (NULL);
+	}
+	newstr = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+	if (newstr == NULL)
+	{
+		free(s1);
+		return (NULL);
+	}
+	ft_memmove(newstr, s1, ft_strlen(s1));
+	ft_memmove(&newstr[ft_strlen(s1)], s2, ft_strlen(s2));
+	free(s1);
+	return (newstr);
 }

@@ -3,89 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 11:18:42 by smizuoch          #+#    #+#             */
-/*   Updated: 2023/06/17 12:50:45 by smizuoch         ###   ########.fr       */
+/*   Created: 2023/06/16 13:48:24 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/05/15 13:58:59 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line.h"
+#include "get_next_line.h"
 
-size_t	ft_strlens(const char *s)
+char	*gnl_strjoin(char *s1, char *s2)
 {
-	size_t	c;
+	char	*newstr;
 
-	c = 0;
-	if (!s)
-		return (0);
-	while (s[c])
-		c ++;
-	return (c);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*dest;
-	size_t	size;
-	size_t	i;
-
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
+	newstr = NULL;
+	if (s2 == NULL)
 		return (NULL);
-	size = ft_strlens (s1) + ft_strlens (s2) + 1;
-	dest = malloc(size);
-	if (dest == NULL)
-		return (NULL);
-	while (s1[i] != '\0')
+	if (s1 == NULL)
 	{
-		dest[i] = s1[i];
-		i ++;
-	}
-	while (*s2 != '\0')
-	{
-		dest[i] = *s2;
-		i ++;
-		s2 ++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s != (char) c)
-	{
-		if (*s == '\0')
+		s1 = (char *)ft_calloc(1, sizeof(char));
+		if (s1 == NULL)
 			return (NULL);
-		s ++;
 	}
-	return ((char *)s);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*dest;
-	size_t	size;
-
-	size = 0;
-	if (s == NULL)
-		return (NULL);
-	if (ft_strlens(s) > len)
-		dest = malloc(len + 1);
-	else
-		dest = malloc(ft_strlens(s) + 1);
-	if (dest == NULL)
-		return (NULL);
-	if (ft_strlens(s) < start)
-		len = 0;
-	while (size < len && s[start + size])
+	newstr = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+	if (newstr == NULL)
 	{
-		dest[size] = s[start + size];
-		size ++;
+		free(s1);
+		return (NULL);
 	}
-	dest[size] = '\0';
-	return (dest);
+	ft_memmove(newstr, s1, ft_strlen(s1));
+	ft_memmove(&newstr[ft_strlen(s1)], s2, ft_strlen(s2));
+	free(s1);
+	return (newstr);
 }
