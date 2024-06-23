@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/22 19:00:18 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 15:38:53 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	parse_line(const char *line, t_data *data, int obj_cnt[8])
 	else if (type == TYPE_CAMERA)
 		parse_camera(line + 1, &data->camera);
 	else if (type == TYPE_LIGHT)
-		parse_light(line + 1, &data->light);
+		parse_light(line + 1, data);
 	else if (type == TYPE_SPHERE)
 		parse_sphere(line + 2, &data->sphere);
 	else if (type == TYPE_PLANE)

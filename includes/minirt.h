@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 14:34:48 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/23 14:49:27 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ void	parse_file(const char *file, t_data *data);
 void	parse_line(const char *line, t_data *data, int obj_cnt[8]);
 void	parse_ambient_light(const char *line, t_ambient *amb);
 void	parse_camera(const char *line, t_camera *camera);
-void	parse_light(const char *line, t_light *light);
+void	parse_light(const char *line, t_data *data);
 void	parse_sphere(const char *line, t_sphere *sphere);
 void	parse_plane(const char *line, t_plane *plane);
 void	parse_cylinder(const char *line, t_cylinder *cylinder);
