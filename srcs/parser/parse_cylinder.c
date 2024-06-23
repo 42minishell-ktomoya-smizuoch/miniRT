@@ -6,7 +6,7 @@
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:26:22 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 17:58:28 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 20:01:47 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,4 @@ void	parse_cylinder(const char *line, t_hittable_list *obj_list)
 	if (is_out_of_range_int(cylinder.material, 0, 3) == true)
 		exit_with_error("Error:cy:material:out of range\n");
     add_hittable(obj_list, new_cylinder(cylinder));
-//	add_hittable(obj_list, new_lambertian(vec_new(4, 3, 5), 1.0, (t_color){0.4, 0.9, 0.1}));
 }
