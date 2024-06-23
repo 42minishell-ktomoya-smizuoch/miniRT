@@ -24,12 +24,12 @@ int main(int argc, char *argv[])
     // 地面
     add_hittable(data.world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
 
-    // // 球
-    add_hittable(data.world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
-    add_hittable(data.world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
-    add_hittable(data.world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
-
-    add_hittable(data.world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
+    // 球
+//    add_hittable(data.world, new_dielectric(vec_new(0, 1, 0), 1.0, 1.5)); // 大きなガラス球
+//    add_hittable(data.world, new_lambertian(vec_new(-4, 1, 0), 1.0, (t_color){0.4, 0.9, 0.1})); // 拡散球
+//    add_hittable(data.world, new_metal(vec_new(4, 1, 0), 1.0, (t_color){0.7, 0.6, 0.5}, 0.0)); // 金属球
+//
+//    add_hittable(data.world, new_dielectric(vec_new(0, 1, 0), -0.8, 1.5));
 
     // 長方形
 	t_rectangle r = {
