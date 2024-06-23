@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:01:43 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 14:15:31 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 14:28:11 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void	init_data(t_data *data)
 {
+	ft_memset(data, 0, sizeof(t_data));
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"miniRT");

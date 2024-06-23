@@ -17,10 +17,9 @@ int main(int argc, char *argv[])
 
 	 if (argc != 2)
 	 	exit(1);
-	ft_memset(&data, 0, sizeof(t_data));
+    init_data(&data);
 	parse_file(argv[1], &data);
 	//print_struct(data);
-    init_data(&data);
 
     // 地面
     add_hittable(data.world, new_lambertian(vec_new(0, -1000, 0), 1000, (t_color){0.5, 0.5, 0.5}));
