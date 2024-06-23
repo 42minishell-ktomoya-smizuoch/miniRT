@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 17:59:16 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 19:23:20 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parse_line(const char *line, t_data *data, int obj_cnt[8])
 	else if (type == TYPE_CYLINDER)
 		parse_cylinder(line + 2, data->world);
 	else if (type == TYPE_RECTANGLE)
-		parse_rectangle(line + 2, &data->rectangle);
+		parse_rectangle(line + 2, data->world);
 	else
 		exit_with_error("Error:The object could not be identified\n");
 	obj_cnt[type] += 1;
