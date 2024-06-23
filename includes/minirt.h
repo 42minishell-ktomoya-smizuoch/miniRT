@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 17:47:40 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 19:23:55 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ bool	is_out_of_range_int(int num, int lower, int upper);
 bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
 bool	is_vec3_out_of_range(t_vec3 vec3, double lower, double upper);
-void	parse_rectangle(const char *line, t_rectangle *rectangle);
+void	parse_rectangle(const char *line, t_hittable_list *obj_list);
 t_type	get_object_type(const char *id);
 void	check_object_size(int obj_cnt[8], int obj_size);
 

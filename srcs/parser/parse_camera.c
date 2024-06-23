@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:37:14 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/22 21:59:13 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 19:05:21 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void	parse_camera(const char *line, t_camera *camera)
 
 	// origin->lookfrom, normal->lookat, vup<-new, fov->vfov, lens_radius->aperture, focus_distance->focus_dist
 	// sscanfの対象: lookfrom, lookat, vup, vfov, aperture, focus_dist
-	if (ft_sscanf(line, "%lf,%lf,%lf %lf,%lf,%lf %lf,%lf,%lf %lf %lf %lf",
+	if (ft_sscanf(line, "%lf,%lf,%lf %lf,%lf,%lf %lf %lf,%lf,%lf %lf %lf",
 			&setter.lookfrom.x, &setter.lookfrom.y, &setter.lookfrom.z,
 			&setter.lookat.x, &setter.lookat.y, &setter.lookat.z,
+			&setter.vfov, 
 			&setter.vup.x, &setter.vup.y, &setter.vup.z,
-			&setter.vfov, 	&setter.aperture, &setter.focus_dist) != 12)
+			&setter.aperture, &setter.focus_dist) != 12)
 		exit_with_error("Error:C\n");
 	if (is_vec3_out_of_range(setter.lookat, -1.0, 1.0) == true)
 		exit_with_error("Error:C:vec3:out of ragne\n");
