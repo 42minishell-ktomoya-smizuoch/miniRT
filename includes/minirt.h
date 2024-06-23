@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/22 22:06:16 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 14:03:13 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DIELECTRIC 3
 
 # define OBJ_MAX_SIZE 100
+# define LIGHT_MAX_SIZE 100
 
 typedef int	t_material_type;
 struct		s_hittable;
@@ -224,6 +225,7 @@ typedef struct s_data
 	int				endian;
 	int				samples_per_pixel;
 	int				max_depth;
+	int				obj_size;
 	t_ambient		ambient;
 	t_camera		camera;
 	t_light			light;
@@ -256,7 +258,7 @@ bool	is_rgb_out_of_range(t_color color);
 bool	is_vec3_out_of_range(t_vec3 vec3, double lower, double upper);
 void	parse_rectangle(const char *line, t_rectangle *rectangle);
 t_type	get_object_type(const char *id);
-void	check_object_size(int obj_cnt[8]);
+void	check_object_size(int obj_cnt[8], int obj_size);
 
 // mlx
 void	init_data(t_data *data);
