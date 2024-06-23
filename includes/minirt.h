@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 14:49:27 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 15:57:02 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,5 +300,7 @@ t_color	scale_color(t_color color, int samples_per_pixel);
 
 //error
 void	exit_with_error(const char *err_msg);
+
+double	compress_rgb(double value);
 
 #endif
