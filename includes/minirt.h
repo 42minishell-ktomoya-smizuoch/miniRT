@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/22 22:06:16 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 12:56:45 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DIELECTRIC 3
 
 # define OBJ_MAX_SIZE 100
+# define LIGHT_MAX_SIZE 100
 
 typedef int	t_material_type;
 struct		s_hittable;
