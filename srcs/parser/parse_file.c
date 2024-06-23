@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/22 19:01:47 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 13:53:52 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	parse_file(const char *file_path, t_data *data)
 {
 	int		fd;
-	int		obj_cnt[10];
+	int		obj_cnt[8];
 	char	*line;
 
 	if (check_file_extension(file_path, ".rt") != 0)
@@ -32,7 +32,8 @@ void	parse_file(const char *file_path, t_data *data)
 		else if (*line != '\n')
 		{
 			parse_line(line, data, obj_cnt);
-			check_object_size(obj_cnt);
+			data->obj_size++;
+			check_object_size(obj_cnt, data->obj_size);
 		}
 		free(line);
 	}
