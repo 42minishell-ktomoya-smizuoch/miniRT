@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 15:38:53 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 17:59:16 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	parse_line(const char *line, t_data *data, int obj_cnt[8])
 	else if (type == TYPE_LIGHT)
 		parse_light(line + 1, data);
 	else if (type == TYPE_SPHERE)
-		parse_sphere(line + 2, &data->sphere);
+		parse_sphere(line + 2, data->world);
 	else if (type == TYPE_PLANE)
-		parse_plane(line + 2, &data->plane);
+		parse_plane(line + 2, data->world);
 	else if (type == TYPE_CYLINDER)
-		parse_cylinder(line + 2, &data->cylinder);
+		parse_cylinder(line + 2, data->world);
 	else if (type == TYPE_RECTANGLE)
 		parse_rectangle(line + 2, &data->rectangle);
 	else

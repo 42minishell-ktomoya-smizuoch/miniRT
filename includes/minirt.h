@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 15:57:02 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:47:40 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,9 +254,9 @@ void	parse_line(const char *line, t_data *data, int obj_cnt[8]);
 void	parse_ambient_light(const char *line, t_ambient *amb);
 void	parse_camera(const char *line, t_camera *camera);
 void	parse_light(const char *line, t_data *data);
-void	parse_sphere(const char *line, t_sphere *sphere);
-void	parse_plane(const char *line, t_plane *plane);
-void	parse_cylinder(const char *line, t_cylinder *cylinder);
+void	parse_sphere(const char *line, t_hittable_list *obj_list);
+void	parse_plane(const char *line, t_hittable_list *obj_list);
+void	parse_cylinder(const char *line, t_hittable_list *obj_list);
 bool	is_out_of_range_int(int num, int lower, int upper);
 bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
