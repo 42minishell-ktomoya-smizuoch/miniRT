@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 14:03:13 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/23 14:34:48 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,13 @@
 # define METAL 2
 # define DIELECTRIC 3
 
-# define OBJ_MAX_SIZE 100
-# define LIGHT_MAX_SIZE 100
+# ifndef OBJ_MAX_SIZE
+#  define OBJ_MAX_SIZE 100
+# endif
+
+# ifndef LIGHT_MAX_SIZE
+# define  LIGHT_MAX_SIZE 100
+# endif
 
 typedef int	t_material_type;
 struct		s_hittable;
