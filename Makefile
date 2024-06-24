@@ -27,6 +27,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_camera.c \
 	   srcs/parser/scan_camera.c \
 	   srcs/parser/parse_light.c \
+	   srcs/parser/scan_light.c \
 	   srcs/parser/parse_sphere.c \
 	   srcs/parser/parse_plane.c \
 	   srcs/parser/parse_cylinder.c \
