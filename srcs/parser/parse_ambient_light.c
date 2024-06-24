@@ -6,7 +6,7 @@
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:50:34 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/16 14:31:29 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 10:47:15 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	parse_ambient_light(const char *line, t_ambient *amb)
 {
-	if (ft_sscanf(line, "%lf %lf,%lf,%lf", &amb->ratio,
-			&amb->color.r, &amb->color.g, &amb->color.b) != 4)
+	char	extra;
+
+	extra = 0;
+	if (ft_sscanf(line, "%lf %lf,%lf,%lf %c", &amb->ratio,
+			&amb->color.r, &amb->color.g, &amb->color.b, &extra) != 5
+			|| extra != '\0')
 		exit_with_error("Error:A\n");
 	if (is_out_of_range_double(amb->ratio, 0.0, 1.0) == true)
 		exit_with_error("Error:A:ratio:out of range\n");
