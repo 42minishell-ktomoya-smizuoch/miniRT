@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 13:53:52 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 16:05:40 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parse_file(const char *file_path, t_data *data)
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 		exit_with_error(ERR_OPEN_FILE);
-	ft_memset(obj_cnt, 0, sizeof(int) * 10);
+	ft_memset(obj_cnt, 0, sizeof(int) * 8);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -37,4 +37,6 @@ void	parse_file(const char *file_path, t_data *data)
 		}
 		free(line);
 	}
+	if (obj_cnt[TYPE_AMBIENT_LIGHT] == 0 || obj_cnt[TYPE_CAMERA] == 0)
+		exit_with_error("Error\n");
 }

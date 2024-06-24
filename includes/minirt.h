@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/23 19:23:55 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:24:04 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ typedef struct s_data
 void	print_progress(int current, int total);
 void	print_struct(t_data data);
 void	print_camera(t_camera camera);
+void	print_sphere(t_sphere sphere);
 
 // parser
 int		check_file_extension(const char *file_path, const char *extension);
@@ -253,10 +254,15 @@ void	parse_file(const char *file, t_data *data);
 void	parse_line(const char *line, t_data *data, int obj_cnt[8]);
 void	parse_ambient_light(const char *line, t_ambient *amb);
 void	parse_camera(const char *line, t_camera *camera);
+void	scan_camera(const char *line, t_init_cam *setter);
 void	parse_light(const char *line, t_data *data);
+void	scan_light(const char *line, t_light *light);
 void	parse_sphere(const char *line, t_hittable_list *obj_list);
+void	scan_sphere(const char *line, t_sphere *sphere);
 void	parse_plane(const char *line, t_hittable_list *obj_list);
+void	scan_plane(const char *line, t_plane *plane);
 void	parse_cylinder(const char *line, t_hittable_list *obj_list);
+void	scan_cylinder(const char *line, t_cylinder *cylinder);
 bool	is_out_of_range_int(int num, int lower, int upper);
 bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);

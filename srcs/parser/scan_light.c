@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_light.c                                      :+:      :+:    :+:   */
+/*   scan_light.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/13 17:22:55 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 11:29:11 by ktomoya          ###   ########.fr       */
+/*   Created: 2024/06/24 11:17:59 by ktomoya           #+#    #+#             */
+/*   Updated: 2024/06/24 11:27:02 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "light.h"
 
-void	parse_light(const char *line, t_data *data)
+void	scan_light(const char *line, t_light *light)
 {
-	t_light	light;
+	char	extra;
 
-	ft_memset(&light, 0, sizeof(t_light));
-	scan_light(line, &light);
-	if (is_out_of_range_double(light.intensity, 0.0, 1.0) == true)
-		exit_with_error("Error:L:intensity:out of range\n");
-	if (is_rgb_out_of_range(light.color) == true)
-		exit_with_error("Error:L:rgb:out of range\n");
-	add_light(&data->lights, new_light(light.position, light.color, light.intensity));
+	extra = 0;
+	if (ft_sscanf(line, "%lf,%lf,%lf %lf %lf,%lf,%lf %c",
+			&light->position.x, &light->position.y, &light->position.z,
+			&light->intensity,
+			&light->color.r, &light->color.g, &light->color.b,
+			&extra) != 8 || extra != '\0')
+		exit_with_error("Error:L\n");
 }
