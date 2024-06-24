@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/24 11:22:03 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 11:34:05 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ void	scan_camera(const char *line, t_init_cam *setter);
 void	parse_light(const char *line, t_data *data);
 void	scan_light(const char *line, t_light *light);
 void	parse_sphere(const char *line, t_hittable_list *obj_list);
+void	scan_sphere(const char *line, t_sphere *sphere);
 void	parse_plane(const char *line, t_hittable_list *obj_list);
 void	parse_cylinder(const char *line, t_hittable_list *obj_list);
 bool	is_out_of_range_int(int num, int lower, int upper);
