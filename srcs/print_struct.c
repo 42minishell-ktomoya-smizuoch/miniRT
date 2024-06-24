@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:07:47 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/22 21:58:46 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:46:21 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ void	print_camera(t_camera camera)
 		camera.time0, camera.time1);
 }
 
+void	print_sphere(t_sphere sphere)
+{
+	printf("----------------------------sphere---------------------------------\n"
+       "center.x  : %lf\n"
+       "center.y  : %lf\n"
+       "center.z  : %lf\n"
+       "diameter  : %lf\n"
+       "color.r   : %lf\n"
+       "color.g   : %lf\n"
+       "color.b   : %lf\n"
+       "material  : %d\n",
+       sphere.center.x, sphere.center.y, sphere.center.z, 
+       sphere.diameter, sphere.color.r, sphere.color.g, sphere.color.b,
+	   sphere.material);
+}
+
 void	print_struct(t_data data)
 {
 	printf("-----------------------------ambient-----------------------------------\n"
@@ -78,18 +94,7 @@ void	print_struct(t_data data)
        data.light.position.x, data.light.position.y, data.light.position.z, 
        data.light.intensity, data.light.color.r, data.light.color.g, data.light.color.b);
 
-	printf("----------------------------sphere---------------------------------\n"
-       "center.x  : %lf\n"
-       "center.y  : %lf\n"
-       "center.z  : %lf\n"
-       "diameter  : %lf\n"
-       "color.r   : %lf\n"
-       "color.g   : %lf\n"
-       "color.b   : %lf\n"
-       "material  : %d\n",
-       data.sphere.center.x, data.sphere.center.y, data.sphere.center.z, 
-       data.sphere.diameter, data.sphere.color.r, data.sphere.color.g, data.sphere.color.b,
-	   data.sphere.material);
+	print_sphere(data.sphere);
 
 	printf("----------------------------plane----------------------------------\n"
        "point.x  : %lf\n"

@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:35:13 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 11:35:09 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:26:15 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parse_sphere(const char *line, t_hittable_list *obj_list)
 	if (sphere.material == LAMBERTIAN)
 		add_hittable(obj_list, new_lambertian(sphere.center, sphere.diameter, sphere.color));
 	else if (sphere.material == METAL)
-		add_hittable(obj_list, new_metal(sphere.center, sphere.diameter, sphere.color, 0.0)); // metalとdielectricの引数が違う
+		add_hittable(obj_list, new_metal(sphere.center, sphere.diameter, sphere.color, 0.0));
 	else if (sphere.material == DIELECTRIC)
 		add_hittable(obj_list, new_dielectric(sphere.center, sphere.diameter, 1.5));
 }
