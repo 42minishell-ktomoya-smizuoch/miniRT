@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 10:52:27 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 11:12:40 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 13:26:24 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,12 @@ void	scan_camera(const char *line, t_init_cam *setter)
 			&setter->vup.x, &setter->vup.y, &setter->vup.z,
 			&setter->aperture, &setter->focus_dist, &extra) != 13
 			|| extra != '\0')
+	{
+		if (ft_sscanf(line, "%lf,%lf,%lf %lf,%lf,%lf %lf %c",
+			&setter->lookfrom.x, &setter->lookfrom.y, &setter->lookfrom.z,
+			&setter->lookat.x, &setter->lookat.y, &setter->lookat.z,
+			&setter->vfov, &extra) != 8
+			|| extra != '\0')
 		exit_with_error("Error:camera\n");
+	}
 }
