@@ -33,6 +33,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/parse_plane.c \
 	   srcs/parser/scan_plane.c \
 	   srcs/parser/parse_cylinder.c \
+	   srcs/parser/scan_cylinder.c \
 	   srcs/parser/is_out_of_range_int.c \
 	   srcs/parser/is_out_of_range_double.c \
 	   srcs/parser/is_rgb_out_of_range.c \

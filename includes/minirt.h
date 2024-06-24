@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/24 11:41:43 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/24 11:48:39 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,7 @@ void	scan_sphere(const char *line, t_sphere *sphere);
 void	parse_plane(const char *line, t_hittable_list *obj_list);
 void	scan_plane(const char *line, t_plane *plane);
 void	parse_cylinder(const char *line, t_hittable_list *obj_list);
+void	scan_cylinder(const char *line, t_cylinder *cylinder);
 bool	is_out_of_range_int(int num, int lower, int upper);
 bool	is_out_of_range_double(double num, double lower, double upper);
 bool	is_rgb_out_of_range(t_color color);
