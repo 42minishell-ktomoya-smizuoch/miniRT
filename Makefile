@@ -25,6 +25,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/get_object_type.c \
 	   srcs/parser/parse_ambient_light.c \
 	   srcs/parser/parse_camera.c \
+	   srcs/parser/scan_camera.c \
 	   srcs/parser/parse_light.c \
 	   srcs/parser/parse_sphere.c \
 	   srcs/parser/parse_plane.c \
