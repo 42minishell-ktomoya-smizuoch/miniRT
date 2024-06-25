@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:35:13 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 15:26:15 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:44:00 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_sphere(const char *line, t_hittable_list *obj_list)
 		exit_with_error("Error:sp:rgb:out of range\n");
 	if (is_out_of_range_int(sphere.material, 0, 3) == true)
 		exit_with_error("Error:sp:material:out of range\n");
-	if (sphere.material == LAMBERTIAN)
+	if (sphere.material == LAMBERTIAN || sphere.material == 0)
 		add_hittable(obj_list, new_lambertian(sphere.center, sphere.diameter, sphere.color));
 	else if (sphere.material == METAL)
 		add_hittable(obj_list, new_metal(sphere.center, sphere.diameter, sphere.color, 0.0));

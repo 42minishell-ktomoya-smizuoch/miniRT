@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/24 15:24:04 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:25:37 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_init_cam
 	double focus_dist;
 	double time0;
 	double time1;
+	bool	no_option;
 }	t_init_cam;
 
 typedef struct s_light
