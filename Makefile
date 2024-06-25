@@ -13,7 +13,6 @@ MINILIBX_DIR = ./lib/minilibx_opengl
 # Source files
 SRC = srcs/main.c \
 	  srcs/init_data.c \
-	  srcs/print_struct.c \
 
 SRC += srcs/event/wait_input.c \
 	   srcs/event/esc_close.c \
