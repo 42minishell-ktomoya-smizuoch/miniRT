@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ktomoya <ktomoya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/25 17:36:16 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:42:36 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@
 # endif
 
 typedef int		t_material_type;
-struct	s_hittable;
 
-typedef enum
+typedef enum s_type
 {
 	TYPE_AMBIENT_LIGHT,
 	TYPE_CAMERA,
@@ -195,8 +194,9 @@ typedef struct s_hit_record
 	t_material_type	material;
 }	t_hit_record;
 
-typedef int	(*t_hit_fn)(struct s_hittable *,
-						t_ray *, t_limits, t_hit_record *);
+struct			s_hittable;
+typedef int		(*t_hit_fn)(struct s_hittable *,
+	t_ray *, t_limits, t_hit_record *);
 
 // Hittable structure
 typedef struct s_hittable
