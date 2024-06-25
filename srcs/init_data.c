@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:01:43 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 14:28:11 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:47:06 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	init_data(t_data *data)
 	data->samples_per_pixel = 1;
 	data->max_depth = 50;
 	data->world = new_hittable_list(OBJ_MAX_SIZE);
-    data->lights = new_light_list(LIGHT_MAX_SIZE);
+	data->lights = new_light_list(LIGHT_MAX_SIZE);
 }
