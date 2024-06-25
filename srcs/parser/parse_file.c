@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 09:04:34 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/24 16:05:40 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 14:10:46 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	parse_file(const char *file_path, t_data *data)
 		free(line);
 	}
 	if (obj_cnt[TYPE_AMBIENT_LIGHT] == 0 || obj_cnt[TYPE_CAMERA] == 0)
-		exit_with_error("Error\n");
+		error_pixselput(data);
 }
