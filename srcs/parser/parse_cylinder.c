@@ -6,7 +6,7 @@
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:26:22 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:23:46 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:41:54 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	parse_cylinder(const char *line, t_hittable_list *obj_list)
 		exit_with_error("Error:cy:rgb:out of range\n");
 	if (is_out_of_range_int(cylinder.material, 0, 3) == true)
 		exit_with_error("Error:cy:material:out of range\n");
+	cylinder.color = compress_rgb(cylinder.color);
 	add_hittable(obj_list, new_cylinder(cylinder));
 }

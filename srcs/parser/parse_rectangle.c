@@ -6,7 +6,7 @@
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 08:56:32 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 19:25:16 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:44:22 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	parse_rectangle(const char *line, t_hittable_list *obj_list)
 		exit_with_error("Error:rc:color:out of range\n");
 	if (is_out_of_range_int(rectangle.material, 0, 3) == true)
 		exit_with_error("Error:rc:material:out of range\n");
+	rectangle.color = compress_rgb(rectangle.color);
 	add_hittable(obj_list, new_rectangle(rectangle));
 }

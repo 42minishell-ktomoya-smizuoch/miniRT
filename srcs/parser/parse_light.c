@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:22:55 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:24:09 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:42:25 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	parse_light(const char *line, t_data *data)
 		exit_with_error("Error:L:intensity:out of range\n");
 	if (is_rgb_out_of_range(light.color) == true)
 		exit_with_error("Error:L:rgb:out of range\n");
+	light.color = compress_rgb(light.color);
 	add_light(&data->lights, new_light(light.position,
 			light.color, light.intensity));
 }
