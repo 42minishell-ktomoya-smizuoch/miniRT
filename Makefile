@@ -66,6 +66,7 @@ SRC += srcs/ray/ray_math.c \
 SRC += srcs/mlx/my_mlx_pixel_put.c \
 
 SRC += srcs/error/exit_with_error.c \
+		srcs/error/error_put.c	\
 
 # Objects directory
 OBJDIR = ./objs

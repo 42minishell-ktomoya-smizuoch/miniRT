@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/24 15:24:04 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 14:09:47 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_init_cam
 	double focus_dist;
 	double time0;
 	double time1;
+	bool	no_option;
 }	t_init_cam;
 
 typedef struct s_light
@@ -308,5 +309,7 @@ t_color	scale_color(t_color color, int samples_per_pixel);
 void	exit_with_error(const char *err_msg);
 
 double	compress_rgb(double value);
+
+void	error_pixselput(t_data *data);
 
 #endif

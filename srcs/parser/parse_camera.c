@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_camera.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:37:14 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 11:14:10 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:49:45 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ void	parse_camera(const char *line, t_camera *camera)
 		exit_with_error("Error:C:vec3:out of ragne\n");
 	if (is_out_of_range_double(setter.vfov, 0.0, 180.0) == true)
 		exit_with_error("Error:C:vfov:out of range\n");
+	if (setter.no_option)
+	{
+		setter.vup.x = 0;
+		setter.vup.y = 1;
+		setter.vup.z = 0;
+		setter.aperture = 0.1;
+		setter.focus_dist = 10;
+	}
     setter.aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
 	setter.time0 = 0.0;
 	setter.time1 = 1.0;

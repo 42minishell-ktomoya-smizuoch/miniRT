@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 21:25:56 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/21 13:57:17 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:49:25 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ t_hittable	new_cylinder(t_cylinder c)
 	t_cylinder	*cyl_data;
 	t_hittable	hittable_cylinder;
 
+	if (c.material == 0)
+		c.material = LAMBERTIAN;
 	cyl_data = xmalloc(sizeof(t_cylinder));
 	cyl_data->center = c.center;
 	cyl_data->axisnorm = vec_normalize(c.axisnorm);

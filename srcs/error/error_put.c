@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_with_error.c                                  :+:      :+:    :+:   */
+/*   error_put.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 18:31:32 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 14:03:01 by smizuoch         ###   ########.fr       */
+/*   Created: 2024/06/25 14:10:57 by smizuoch          #+#    #+#             */
+/*   Updated: 2024/06/25 14:40:54 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
+#include "minirt.h"
 
-void	exit_with_error(const char *err_msg)
+void	error_pixselput(t_data *data)
 {
-	ft_putstr_fd((char *)err_msg, 2);
-	exit(1);
+	mlx_string_put(data->mlx, data->win, WINDOW_WIDTH / 2.5,
+		WINDOW_HEIGHT / 2, 0xFF0000, "Error: No ambient light or camera");
+	wait_input(data);
 }
