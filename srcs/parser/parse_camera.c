@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:37:14 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 13:49:45 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:23:18 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	parse_camera(const char *line, t_camera *camera)
 		setter.aperture = 0.1;
 		setter.focus_dist = 10;
 	}
-    setter.aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
+	setter.aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
 	setter.time0 = 0.0;
 	setter.time1 = 1.0;
 	*camera = camera_new(setter);

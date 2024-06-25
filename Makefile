@@ -13,7 +13,6 @@ MINILIBX_DIR = ./lib/minilibx_opengl
 # Source files
 SRC = srcs/main.c \
 	  srcs/init_data.c \
-	  srcs/print_struct.c \
 
 SRC += srcs/event/wait_input.c \
 	   srcs/event/esc_close.c \
@@ -40,6 +39,7 @@ SRC += srcs/parser/check_file_extension.c \
 	   srcs/parser/is_vec3_out_of_range.c \
 	   srcs/parser/parse_rectangle.c \
 	   srcs/parser/check_object_size.c \
+	   srcs/parser/compress_rgb.c \
 
 SRC += srcs/ray/ray_math.c \
 	   srcs/ray/ray_math2.c \

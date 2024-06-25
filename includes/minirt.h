@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/25 14:09:47 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:36:16 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@
 # endif
 
 # ifndef LIGHT_MAX_SIZE
-# define  LIGHT_MAX_SIZE 100
+#  define LIGHT_MAX_SIZE 100
 # endif
 
-typedef int	t_material_type;
-struct		s_hittable;
+typedef int		t_material_type;
+struct	s_hittable;
 
 typedef enum
 {
@@ -107,20 +107,21 @@ typedef struct s_camera
 	double	fov;
 	double	lens_radius;
 	double	focus_distance;
-	double	time0, time1;
+	double	time0;
+	double	time1;
 }	t_camera;
 
 typedef struct s_init_cam
 {
-	t_vec3 lookfrom;
-	t_vec3 lookat;
-	t_vec3 vup;
-	double vfov;
-	double aspect_ratio;
-	double aperture;
-	double focus_dist;
-	double time0;
-	double time1;
+	t_vec3	lookfrom;
+	t_vec3	lookat;
+	t_vec3	vup;
+	double	vfov;
+	double	aspect_ratio;
+	double	aperture;
+	double	focus_dist;
+	double	time0;
+	double	time1;
 	bool	no_option;
 }	t_init_cam;
 
@@ -214,10 +215,10 @@ typedef struct s_hittable_list
 
 typedef struct s_ray_color
 {
-	t_hittable_list *world;
-	t_light_list *lights;
-	t_ambient *ambient;
-	int depth;
+	t_hittable_list	*world;
+	t_light_list	*lights;
+	t_ambient		*ambient;
+	int				depth;
 }	t_ray_color;
 
 typedef struct s_data
@@ -245,9 +246,6 @@ typedef struct s_data
 
 //utils
 void	print_progress(int current, int total);
-void	print_struct(t_data data);
-void	print_camera(t_camera camera);
-void	print_sphere(t_sphere sphere);
 
 // parser
 int		check_file_extension(const char *file_path, const char *extension);
@@ -281,7 +279,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 //ray
 void	render(t_data *data);
-t_color ray_color(t_ray *ray, t_ray_color r);
+t_color	ray_color(t_ray *ray, t_ray_color r);
 t_vec3	vec_new(double x, double y, double z);
 t_vec3	vec_add(t_vec3 a, t_vec3 b);
 t_vec3	vec_sub(t_vec3 a, t_vec3 b);
@@ -308,7 +306,7 @@ t_color	scale_color(t_color color, int samples_per_pixel);
 //error
 void	exit_with_error(const char *err_msg);
 
-double	compress_rgb(double value);
+t_color	compress_rgb(t_color color);
 
 void	error_pixselput(t_data *data);
 

@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 19:47:12 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/23 19:23:20 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:52:40 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	parse_line(const char *line, t_data *data, int obj_cnt[8])
 
 	while (ft_isspace(*line))
 		line++;
-	printf("%s", line);
 	type = get_object_type(line);
 	if (type == TYPE_AMBIENT_LIGHT)
 		parse_ambient_light(line + 1, &data->ambient);

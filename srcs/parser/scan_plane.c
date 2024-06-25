@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:37:55 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 15:37:23 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:30:14 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	scan_plane(const char *line, t_plane *plane)
 			&plane->point.x, &plane->point.y, &plane->point.z,
 			&plane->normal.x, &plane->normal.y, &plane->normal.z,
 			&plane->color.r, &plane->color.g, &plane->color.b,
-			&plane->material, &extra) != 11
-			|| extra != '\0')
+			&plane->material, &extra) != 11 || extra != '\0')
 	{
 		if (ft_sscanf(line, "%lf,%lf,%lf %lf,%lf,%lf %lf,%lf,%lf %c",
 				&plane->point.x, &plane->point.y, &plane->point.z,
