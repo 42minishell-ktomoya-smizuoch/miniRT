@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:44:38 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/25 16:41:21 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:53:23 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # endif
 
 typedef int		t_material_type;
-typedef struct	s_hittable;
+struct	s_hittable;
 
 typedef enum
 {

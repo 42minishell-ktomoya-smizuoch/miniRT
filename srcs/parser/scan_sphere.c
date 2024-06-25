@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:30:49 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:30:38 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:52:50 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ void	scan_sphere(const char *line, t_sphere *sphere)
 				&sphere->diameter, &sphere->color.r, &sphere->color.g,
 				&sphere->color.b, &extra) != 8 || extra != '\0')
 			exit_with_error("Error:sphere\n");
-		print_sphere(*sphere);
 	}
 }
