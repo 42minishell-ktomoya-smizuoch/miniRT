@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:17:59 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/24 11:27:02 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:43:45 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	scan_light(const char *line, t_light *light)
 			&light->intensity,
 			&light->color.r, &light->color.g, &light->color.b,
 			&extra) != 8 || extra != '\0')
-		exit_with_error("Error:L\n");
+		exit_with_error("Error:light:The format is incorrect\n");
 }

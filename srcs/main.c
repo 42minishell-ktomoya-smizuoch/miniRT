@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:33:38 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:36:21 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:25:23 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 	t_data	data;
 
 	if (argc != 2)
-		exit(1);
+		exit_with_error("Error: The number of arguments is incorrect\n");
 	init_data(&data);
 	parse_file(argv[1], &data);
 	render(&data);
