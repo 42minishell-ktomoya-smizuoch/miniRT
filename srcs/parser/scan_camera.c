@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 10:52:27 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:29:45 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:43:11 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	scan_camera(const char *line, t_init_cam *setter)
 				&setter->lookat.x, &setter->lookat.y, &setter->lookat.z,
 				&setter->vfov, &extra) != 8
 			|| extra != '\0')
-			exit_with_error("Error:camera\n");
+			exit_with_error("Error:camera:The format is incorrect\n");
 	}
 }

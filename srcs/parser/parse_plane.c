@@ -6,7 +6,7 @@
 /*   By: ktomoya <twbtomoya2@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:18:57 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 17:43:20 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:39:37 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	parse_plane(const char *line, t_hittable_list *obj_list)
 	ft_memset(&plane, 0, sizeof(t_plane));
 	scan_plane(line, &plane);
 	if (is_vec3_out_of_range(plane.normal, -1.0, 1.0) == true)
-		exit_with_error("Error:plane:vec3:out of ragne\n");
+		exit_with_error("Error:plane:normalized_vector:out of ragne\n");
 	if (is_rgb_out_of_range(plane.color) == true)
-		exit_with_error("Error:plane:rgb:out of range\n");
+		exit_with_error("Error:plane:color:out of range\n");
 	if (is_out_of_range_int(plane.material, 0, 3) == true)
 		exit_with_error("Error:plane:material:out of range\n");
 	plane.color = compress_rgb(plane.color);

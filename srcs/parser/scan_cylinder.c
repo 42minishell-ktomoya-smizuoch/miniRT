@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:46:05 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:28:52 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:45:21 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	scan_cylinder(const char *line, t_cylinder *cylinder)
 				&cylinder->diameter, &cylinder->height,
 				&cylinder->color.r, &cylinder->color.g, &cylinder->color.b,
 				&extra) != 12 || extra != '\0')
-			exit_with_error("Error:cylinder\n");
+			exit_with_error("Error:cylinder:The format is incorrect\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ktomoya <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:37:55 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 16:30:14 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:44:38 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	scan_plane(const char *line, t_plane *plane)
 				&plane->normal.x, &plane->normal.y, &plane->normal.z,
 				&plane->color.r, &plane->color.g, &plane->color.b,
 				&extra) != 10 || extra != '\0')
-			exit_with_error("Error:plane\n");
+			exit_with_error("Error:plane:The format is incorrect\n");
 	}
 }

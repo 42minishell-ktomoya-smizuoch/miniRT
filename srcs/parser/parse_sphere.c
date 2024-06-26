@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:35:13 by ktomoya           #+#    #+#             */
-/*   Updated: 2024/06/25 17:45:44 by ktomoya          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:48:38 by ktomoya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	parse_sphere(const char *line, t_hittable_list *obj_list)
 	ft_memset(&sphere, 0, sizeof(t_sphere));
 	scan_sphere(line, &sphere);
 	if (is_rgb_out_of_range(sphere.color) == true)
-		exit_with_error("Error:sp:rgb:out of range\n");
+		exit_with_error("Error:sphere:color:out of range\n");
 	if (is_out_of_range_int(sphere.material, 0, 3) == true)
-		exit_with_error("Error:sp:material:out of range\n");
+		exit_with_error("Error:sphere:material:out of range\n");
 	sphere.color = compress_rgb(sphere.color);
 	if (sphere.material == LAMBERTIAN || sphere.material == 0)
 		add_hittable(obj_list,
