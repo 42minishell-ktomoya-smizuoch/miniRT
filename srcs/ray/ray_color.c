@@ -6,7 +6,7 @@
 /*   By: smizuoch <smizuoch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:39 by smizuoch          #+#    #+#             */
-/*   Updated: 2024/06/19 15:08:46 by smizuoch         ###   ########.fr       */
+/*   Updated: 2024/06/25 22:01:43 by smizuoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,26 @@ typedef struct s_ray_context
 	t_vec3			result_color;
 }	t_ray_context;
 
+static int	is_shadowed(t_ray_color *r, t_vec3 light_pos, t_hit_record *rec)
+{
+	t_ray			shadow_ray;
+	t_hit_record	temp_rec;
+	t_vec3			direction;
+	double			distance;
+	t_limits		l;
+
+	direction = vec_sub(light_pos, rec->point);
+	distance = vec_length(direction);
+	shadow_ray.origin = rec->point;
+	shadow_ray.direction = vec_normalize(direction);
+	shadow_ray.time = 0;
+	l.min = 0.001;
+	l.max = distance;
+	if (hit_list(r->world, &shadow_ray, l, &temp_rec))
+		return (1);
+	return (0);
+}
+
 static t_color	compute_lighting(t_ray_color r, t_hit_record *rec)
 {
 	t_compute_lighting	c;
@@ -66,14 +86,17 @@ static t_color	compute_lighting(t_ray_color r, t_hit_record *rec)
 	{
 		c.light = &r.lights->lights[c.i];
 		c.light_dir = vec_normalize(vec_sub(c.light->position, rec->point));
-		c.light_intensity = c.light->intensity
-			* fmax(0.0, vec_dot(rec->normal, c.light_dir));
-		c.light_color_vec = vec_scalar
-			(color_to_vec3(c.light->color), c.light_intensity);
-		c.light_color = vec3_to_color(c.light_color_vec);
-		c.total_light_color = vec3_to_color(vec_add(
-					color_to_vec3(c.total_light_color),
-					color_to_vec3(c.light_color)));
+		if (!is_shadowed(&r, c.light->position, rec))
+		{
+			c.light_intensity = c.light->intensity
+				* fmax(0.0, vec_dot(rec->normal, c.light_dir));
+			c.light_color_vec = vec_scalar(
+					color_to_vec3(c.light->color), c.light_intensity);
+			c.light_color = vec3_to_color(c.light_color_vec);
+			c.total_light_color = vec3_to_color(vec_add(
+						color_to_vec3(c.total_light_color),
+						color_to_vec3(c.light_color)));
+		}
 		c.i++;
 	}
 	return (c.total_light_color);
